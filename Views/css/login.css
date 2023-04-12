@@ -1,0 +1,73 @@
+@import url(http://localhost/sysfac/Views/css/main.css);
+.container_all {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--c_semidark);
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:1rem;
+  padding: 0 1em;
+}
+.section__welcome{
+  font-size: x-large;
+  color: white;
+}
+.logo{
+  width: 15em;
+}
+.logo__img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.form{
+  width: min(100%,22em);
+  display: flex;
+  flex-direction: column;
+  gap:1rem;
+}
+.form__title{
+  text-align: center;
+  color: var(--c_lightPurple);
+}
+.form__group{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid var(--c_lightPurple);
+  border-radius: 3px;
+}
+.form__group i{
+  color: var(--c_lightPurple);
+}
+.form__input{
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: small;
+  background-color: transparent;
+  padding: 0 5px;
+  caret-color: white;
+  color: white;
+}
+.form__input::placeholder{
+  color: var(--c_lightPurple);
+}
+.form__submit{
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid var(--c_green);
+  border-radius: 3px;
+  color: var(--c_green);
+  font-size: small;
+  font-weight: 500;
+}
+.form__submit:hover{
+  padding: 10px;
+  background-color: var(--c_green);
+  color: var(--c_dark);
+}

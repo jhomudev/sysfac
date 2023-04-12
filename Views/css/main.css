@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Lexend:wght@100;200;300;400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Maven+Pro:wght@400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500&family=Urbanist:wght@100;200;300;400;500;600;700;800&display=swap');
+:root {
+  --c_dark: #131320;
+  --c_dark2: #191830;
+  --c_semidark: #24263a;
+  --c_green: #a0e548;
+  --c_sky: #9ac1f0;
+  --c_orange: #e45f2b;
+  --c_yellow: #f6c445;
+  --c_lightPurple: #a599e9;
+
+  --f_montserrat: "Montserrat", sans-serif;
+  --f_manrope: "Manrope", sans-serif;
+  --f_maven: "Maven Pro", sans-serif;
+  --f_lexend: "Lexend", sans-serif;
+  --f_urbanist: "Urbanist", sans-serif;
+  --f_comfortaa: "Comfortaa", cursive;
+}
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: var(--f_urbanist);
+  letter-spacing: 0.8px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  appearance: none;
+  font-weight: normal;
+  font-size: medium;
+}
+.container_main {
+  width: 100%;
+}
+.container {
+  margin: auto;
+  padding: 0 1rem;
+}
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 0 4rem;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .container {
+    padding: 0 5rem;
+  }
+}
+@media screen and (min-width: 1536px) {
+  .container {
+    padding: 0 6rem;
+  }
+}
