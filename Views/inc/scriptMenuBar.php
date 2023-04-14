@@ -8,6 +8,7 @@
       const res = await req.text();
 
       viewBox.innerHTML = res;
+      onToggleForm();
     } catch (error) {
       console.log(error);
     }

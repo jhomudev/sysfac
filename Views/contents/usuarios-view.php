@@ -4,7 +4,7 @@
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del usuario">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_yellow);">Nuevo usuario</button>
+    <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo usuario</button>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
   </div>
 </div>
@@ -13,7 +13,7 @@
     <h2 class="filter__for">Todos</h2>
   </div>
   <div class="filter">
-    <label for="fil_acceso" class="filter__for">Acceso: </label>
+    <legend for="fil_acceso" class="filter__for">Acceso: </legend>
     <select name="tx_acceso" id="fil_acceso" class="filter__select">
       <option selected disabled>--</option>
       <option value="">Administrador</option>
@@ -21,7 +21,7 @@
     </select>
   </div>
   <div class="filter">
-    <label for="fil_activo" class="filter__for">Activo: </label>
+    <legend for="fil_activo" class="filter__for">Activo: </legend>
     <select name="tx_activo" id="fil_activo" class="filter__select">
       <option selected disabled>--</option>
       <option value="">Sí</option>
@@ -134,4 +134,43 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div class="modalForm">
+  <form action="POST" class="form formFetch">
+    <button class="form__btnclose toggleForm"><i class="ph ph-x"></i></button>
+    <h1 class="form__title">Agregar usuario</h1>
+    <fieldset class="form__group">
+      <legend class="form__legend">DNI</legend>
+      <input type="text" class="form__input" id="dni" name="tx_dni" maxlength="8" minlength="8" number>
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Nombres</legend>
+      <input type="text" class="form__input" id="nombres" name="tx_nombres">
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Apellidos</legend>
+      <input type="text" class="form__input" id="apellidos" name="tx_apellidos">
+    </fieldset>
+    <fieldset class="form__group">
+      <legend for="correo" class="form__legend">Correo</legend>
+      <input type="email" class="form__input" id="correo" name="tx_correo">
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Acceso</legend>
+      <select name="tx_acceso" id="acceso" class="form__input">
+        <option selected disabled>Asigne el acceso</option>
+        <option value="1">Administrador</option>
+        <option value="0">Vendedor</option>
+      </select>
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Activo</legend>
+      <select name="tx_activo" id="activo" class="form__input">
+        <option selected disabled>Asigne el estado</option>
+        <option value="1">Sí</option>
+        <option value="0">No</option>
+      </select>
+    </fieldset>
+    <input type="submit" value="Agregar" class="form__submit">
+  </form>
 </div>
