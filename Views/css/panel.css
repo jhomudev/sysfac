@@ -298,6 +298,9 @@
 .filter {
   position: relative;
   width: max-content;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   border: 1px solid var(--c_green);
   padding: 5px 10px;
   border-radius: 10px;
@@ -324,7 +327,6 @@
 }
 /* Selector para el input de tipo "date" */
 .filter__date {
-  padding: 5px 10px;
   font-size: small;
   color: var(--c_green);
   background-color: transparent;
@@ -398,6 +400,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
   background: var(--cl);
   border-radius: 3px;
   border: none;
@@ -452,6 +455,80 @@
   font-weight: 600;
   color: var(--c_sky);
 }
+.modalForm{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100vh;
+  background-color:rgba(15, 15, 15, 0.7);
+  display:none;
+  place-items: center;
+}
+.modalForm.show{
+  display: grid;
+}
+.form{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%,400px);
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.form__btnclose{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 5px 2px 5px;
+  border-radius: 3px;  
+  color: var(--c_dark);
+  border: none;
+  font-weight: 600;
+  font-size: large;
+}
+.form__btnclose:active{
+  filter: brightness(90%);
+}
+.form__title{
+  font-size: medium;
+  text-align: center;
+  font-weight: 600;
+}
+.form__group{
+  width: 100%;
+}
+.form__group{
+  border-radius: 4px;
+  border: 1px solid var(--c_sky);
+}
+.form__legend{
+  font-size: small;
+  font-weight: 600;
+  color: var(--c_orange);
+  margin-left: 5px;
+}
+.form__input{
+  width: 100%;
+  padding: 7px 10px;
+  font-size: small;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.form__submit{
+  padding: 10px;
+  background-color: var(--c_green);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.form__submit:hover{
+  filter: brightness(90%);
+}
 
 @media screen and (max-width: 842px) {
   .buttons_btn {
@@ -476,6 +553,9 @@
     padding: 10px;
     margin-top: 3em;
   }
+  .modalForm{
+    padding: 0 5px;
+  }
 }
 @media screen and (max-width: 400px) {
   .browser {
@@ -487,5 +567,8 @@
   }
   .buttons_btn {
     flex: 1 1 200px;
+  }
+  .form{
+    padding: 1em;
   }
 }
