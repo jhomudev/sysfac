@@ -1,7 +1,7 @@
 <?php
 $requestFetch = false;
-require_once "./Controllers/viewController.php";
-$IV = new viewController();
+require_once "./Controllers/ViewController.php";
+$IV = new ViewController();
 $vista = $IV->getViewController();
 ?>
 <!DOCTYPE html>
@@ -14,9 +14,9 @@ $vista = $IV->getViewController();
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="shortcut icon" href="<?php echo SERVER_URL ?>/Views/assets/iconLogo.png" type="image/x-icon">
-  <?php 
-    if ($vista === "login") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/login.css">';
-    else if ($vista !== "login" || $vista !== "404") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/panel.css">';
+  <?php
+  if ($vista === "login") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/login.css">';
+  else if ($vista !== "login" || $vista !== "404") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/panel.css">';
   ?>
   <?php  ?>
   <title><?php echo COMPANY ?></title>
@@ -30,8 +30,8 @@ $vista = $IV->getViewController();
     session_name(NAMESESSION);
     session_start();
 
-    require_once "Controllers/logincontroller.php";
-    $lc = new loginController();
+    require_once "Controllers/LoginController.php";
+    $lc = new LoginController();
 
     if (!isset($_SESSION["token"])) {
       $lc->forceLogoutController();
@@ -50,8 +50,10 @@ $vista = $IV->getViewController();
     </div>
     <script src="<?php echo SERVER_URL; ?>/Views/js/main.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/alerts.js"></script>
+    <script src="<?php echo SERVER_URL; ?>/Views/js/<?php echo $vista; ?>.js"></script>
   <?php
     include "./Views/inc/logout.php";
-    include "./Views/inc/scriptMenuBar.php";
+    include "./Views/inc/scriptMenuBar.php"
+    ;
   } ?>
 </body>

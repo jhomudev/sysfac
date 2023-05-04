@@ -1,11 +1,28 @@
-const formsFetch = document.querySelectorAll(".formFetch");
+function alertFetch(alert = {}) {
+  if (alert.Alert === "simple") {
+    Swal.fire({
+      icon: alert.icon,
+      title: alert.title,
+      text: alert.text,
+      confirmButtonText: "Aceptar",
+    });
+  } else if (alert.Alert === "clear") {
+    Swal.fire({
+      icon: alert.icon,
+      title: alert.title,
+      text: alert.text,
+      confirmButtonText: "Aceptar",
+    });
+  } else if (alert.Alert === "reload") {
+    window.location.reload();
+  }
+}
 
-function sendFormFetch(e) {
-  e.preventDefault();
-
-  const data = new FormData(this);
-  const method = this.getAttribute("method");
-  const action = this.getAttribute("action");
+// Funcio enviar formulario
+function sendFormFetch(e, functionToExec) {
+  const data = new FormData(e.target);
+  const method = e.target.getAttribute("method");
+  const action = e.target.getAttribute("action");
 
   const config = {
     method: method,
@@ -27,36 +44,11 @@ function sendFormFetch(e) {
         const req = await fetch(action, config);
         const res = await req.json();
         alertFetch(res);
-        // console.log(res)
+        if (functionToExec !== "undefined" || functionToExec !== null)
+          functionToExec();
       }
     } catch (error) {
       console.log(error);
     }
   });
-}
-
-formsFetch.forEach((form) => {
-  form.addEventListener("submit", sendFormFetch);
-});
-
-function alertFetch(alert = {}) {
-  if (alert.Alert === "simple") {
-    Swal.fire({
-      icon: alert.icon,
-      title: alert.title,
-      text: alert.text,
-      confirmButtonText: "Aceptar",
-    });
-  } else if (alert.Alert === "clear") {
-    Swal.fire({
-      icon: alert.icon,
-      title: alert.title,
-      text: alert.text,
-      confirmButtonText: "Aceptar",
-    });
-    toggleForm();
-  }
-  else if (alert.Alert === "reload") {
-    window.location.reload();
-  }
 }

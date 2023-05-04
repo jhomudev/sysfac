@@ -1,18 +1,18 @@
 <?php
 
 if ($requestFetch) {
-  require_once "./../Models/loginModel.php";
+  require_once "./../Models/LoginModel.php";
 } else {
-  require_once "./Models/loginModel.php";
+  require_once "./Models/LoginModel.php";
 }
 
-class loginController extends loginModel
+class LoginController extends LoginModel
 {
   // Función controlador para inicio de sesión
-  public function loginController()
+  public function LoginController()
   {
-    $username = mainModel::clearString($_POST['tx_username']);
-    $password = mainModel::clearString($_POST['tx_password']);
+    $username = MainModel::clearString($_POST['tx_username']);
+    $password = MainModel::clearString($_POST['tx_password']);
 
     // Comprabar campos vacios
     if ($username == "" || $password == "") {
@@ -35,7 +35,7 @@ class loginController extends loginModel
       "password" => $password,
     ];
 
-    $data_user = loginModel::loginModel($data_login);
+    $data_user = LoginModel::LoginModel($data_login);
 
     if ($data_user->rowCount() > 0) {
       $data_user = $data_user->fetch();

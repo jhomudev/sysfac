@@ -1,3 +1,6 @@
+// Variables globales
+const serverURL = "http://localhost/sysfac";
+
 // Funcion toggle para mostrar elementos
 function toggleShowElement(element) {
   element.classList.toggle("show");
@@ -16,20 +19,15 @@ btnToggleBar.forEach((btn) => {
   btn.addEventListener("click", () => toggleShowElement(menuBarResponsive));
 });
 
-// Funcion para mostrar formulario
-function onToggleForm() {
-  const btnToggleForm = document.querySelectorAll(".toggleForm");
-  const modalForm = document.querySelector(".modalForm");
-
-  btnToggleForm.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      toggleShowElement(modalForm);
-    });
+// funcion para cambiar imagen al colocar link
+const formImg = document.querySelector(".form__img");
+const linkImage = document.getElementById("linkImage");
+if (linkImage !== null && linkImage !== undefined) {
+  linkImage.addEventListener("input", (e) => {
+    const link = e.target.value;
+    formImg.setAttribute("src", link);
   });
 }
-
-onToggleForm();
 
 // Funciones validaciones de inputs numeros
 const inputsNumber = document.querySelectorAll("input[number]");

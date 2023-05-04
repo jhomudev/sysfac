@@ -1,14 +1,14 @@
 <?php
 
-require_once "mainModel.php";
+require_once "MainModel.php";
 
-class loginModel extends mainModel
+class LoginModel extends MainModel
 {
 
   // Función para inicio de sesión
-  protected static function loginModel(array $data)
+  protected static function LoginModel(array $data)
   {
-    $sql = mainModel::connect()->prepare("SELECT * FROM users WHERE username = :username AND password = :password AND is_active=1");
+    $sql = MainModel::connect()->prepare("SELECT * FROM users WHERE username = :username AND password = :password AND is_active=1");
     $sql->bindParam(':username', $data['username']);
     $sql->bindParam(':password', $data['password']);
     $sql->execute();

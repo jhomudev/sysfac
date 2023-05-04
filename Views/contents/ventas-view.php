@@ -45,7 +45,7 @@
         <td>S/250</td>
         <td>13-02-2021</td>
         <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
+          <a href="" target="_blank" class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</a>
         </td>
       </tr>
       <tr>

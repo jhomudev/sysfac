@@ -4,7 +4,7 @@
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del almacén">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_yellow);">Nuevo almacén</button>
+    <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo almacén</button>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
   </div>
 </div>
@@ -82,4 +82,27 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div class="modalForm">
+  <form action="POST" class="form formFetch">
+    <button class="form__btnclose toggleForm"><i class="ph ph-x"></i></button>
+    <h1 class="form__title">Agregar almacén</h1>
+    <fieldset class="form__group">
+      <legend class="form__legend">Nombre del almacén</legend>
+      <input type="text" class="form__input" id="nombre" name="tx_nombre">
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Dirección</legend>
+      <input type="text" class="form__input" id="direccion" name="tx_direccion">
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">CanStore</legend>
+      <select name="tx_canStore" id="canStore" class="form__input">
+        <option selected disabled>Puede almacenar</option>
+        <option value="1">Sí</option>
+        <option value="0">No</option>
+      </select>
+    </fieldset>
+    <input type="submit" value="Agregar" class="form__submit">
+  </form>
 </div>

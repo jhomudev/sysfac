@@ -2,7 +2,7 @@
 if ($requestFetch) require_once "../config/SERVER.php";
 else require_once "./config/SERVER.php";
 
-class mainModel
+class MainModel
 {
 
   // Funcion para conectar a la BD
@@ -99,12 +99,5 @@ class mainModel
     if (count($values_array) == 3 && checkdate($values_array[1], $values_array[0], $values_array[2])) {
       return true;
     } else return false;
-  }
-
-  // Funcion para paginación de filas/registros
-  protected static function pagerRows($page, $num_pages, $url, $num_buttons)
-  {
-    $tabla = "";
-    // Esta funcionalidad no es necesaria para eel funcionamiento, x el moento lo dejamos
   }
 }
