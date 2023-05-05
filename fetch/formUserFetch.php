@@ -11,7 +11,8 @@ if (isset($_SESSION['token'])) {
   require_once "../Controllers/UserController.php";
   $IU = new UserController();
 
-  echo $IU->createOrEditUserController();
+  if (empty($_POST['tx_user_id'])) echo $IU->createUserController();
+  else echo $IU->editUserController();
 } else {
   session_unset();
   session_destroy();

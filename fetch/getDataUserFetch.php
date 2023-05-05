@@ -12,12 +12,9 @@ if (isset($_SESSION['token'])) {
   $IU = new UserController();
 
   echo $IU->getDataUserController();
-  // print_r($_POST);
 } else {
   session_unset();
   session_destroy();
   header("Location:" . SERVER_URL . "/login");
   exit();
 }
-
-// print_r($_POST);

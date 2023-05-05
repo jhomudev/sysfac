@@ -5,6 +5,16 @@ const serverURL = "http://localhost/sysfac";
 function toggleShowElement(element) {
   element.classList.toggle("show");
 }
+
+// funcion de convettir a mayuculas
+const mayus = document.querySelectorAll("[mayus]");
+mayus.forEach((input) => {
+  input.addEventListener(
+    "input",
+    () => (input.value = input.value.toUpperCase())
+  );
+});
+
 //funcion toggle para mostrar el userBar
 const btnUserbar = document.getElementById("btnUserbar");
 const userBar = document.querySelector(".user__details");

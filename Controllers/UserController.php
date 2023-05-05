@@ -24,104 +24,148 @@ class UserController extends UserModel
   }
 
   // Funcion controlador para crear o editar usuario
-  public function createOrEditUserController()
+  public function createUserController()
   {
-    try {
-      $user_id = mainModel::clearString($_POST['tx_user_id']);
-      $dni = mainModel::clearString($_POST['tx_dni']);
-      $names = mainModel::clearString($_POST['tx_nombres']);
-      $lastnames = mainModel::clearString($_POST['tx_apellidos']);
-      $username = mainModel::clearString($_POST['tx_username']);
-      $password = mainModel::clearString($_POST['tx_password']);
-      $email = mainModel::clearString($_POST['tx_correo']);
-      $is_admin = intval($_POST['tx_acceso']);
-      $is_active = intval($_POST['tx_activo']);
+    $dni = mainModel::clearString($_POST['tx_dni']);
+    $names = mainModel::clearString($_POST['tx_nombres']);
+    $lastnames = mainModel::clearString($_POST['tx_apellidos']);
+    $username = mainModel::clearString($_POST['tx_username']);
+    $password = mainModel::clearString($_POST['tx_password']);
+    $email = mainModel::clearString($_POST['tx_correo']);
+    $type = intval($_POST['tx_acceso']);
+    $is_active = intval($_POST['tx_activo']);
 
-      if (empty($dni) || empty($names) || empty($lastnames) || empty($username) || empty($password) || empty($email)) {
-        $alert = [
-          "Alert" => "simple",
-          "title" => "Campos vacios",
-          "text" => "Por favor. Complete todos los campos.",
-          "icon" => "warning"
-        ];
-        return json_encode($alert);
-        exit();
-      }
-
-      if (empty($user_id)) {
-        $data = [
-          "dni" => $dni,
-          "names" => $names,
-          "lastnames" => $lastnames,
-          "username" => $username,
-          "password" => $password,
-          "email" => $email,
-          "is_active" => $is_active,
-          "is_admin" => $is_admin,
-          "created_at" =>  date('Y-m-d H:i:s'),
-        ];
-
-        $stm = UserModel::createUserModel($data);
-
-        if ($stm) {
-          $alert = [
-            "Alert" => "simple",
-            "title" => "Usuario creado",
-            "text" => "El usuario se creó exitosamente.",
-            "icon" => "success"
-          ];
-          return json_encode($alert);
-        } else {
-          $alert = [
-            "Alert" => "simple",
-            "title" => "Opps. Ocurrió un problema",
-            "text" => "El usuario no se creó.",
-            "icon" => "error"
-          ];
-          return json_encode($alert);
-        }
-      } else {
-        $new_data = [
-          "user_id" => $user_id,
-          "dni" => $dni,
-          "names" => $names,
-          "lastnames" => $lastnames,
-          "username" => $username,
-          "password" => $password,
-          "email" => $email,
-          "is_active" => $is_active,
-          "is_admin" => $is_admin,
-        ];
-
-        $stm = UserModel::editUserModel($new_data);
-
-        if ($stm) {
-          $alert = [
-            "Alert" => "simple",
-            "title" => "Usuario actualizado",
-            "text" => "El usuario se actualizó exitosamente.",
-            "icon" => "success"
-          ];
-          return json_encode($alert);
-        } else {
-          $alert = [
-            "Alert" => "simple",
-            "title" => "Opps. Ocurrió un problema",
-            "text" => "El usuario no se actualizó.",
-            "icon" => "error"
-          ];
-          return json_encode($alert);
-        }
-      }
-    } catch (PDOException $e) {
+    // Validacion de campos vacios
+    if (empty($dni) || empty($names) || empty($lastnames) || empty($username) || empty($password) || empty($email)) {
       $alert = [
         "Alert" => "simple",
-        "title" => "Opps. Al parecer ocurrió un error.",
-        "text" => "Error: " . $e->getMessage(),
-        "icon" => "error"
+        "title" => "Campos vacios",
+        "text" => "Por favor. Complete todos los campos.",
+        "icon" => "warning"
       ];
       return json_encode($alert);
+      exit();
     }
+
+    // validación de dni, correo duplicados
+    $sql_verify = MainModel::executeQuerySimple("SELECT * FROM users WHERE dni=$dni OR email='$email' OR username='$username'");
+    $users = $sql_verify->fetchAll();
+    $duplicated = count($users) > 0;
+    if ($duplicated) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Duplicidad de datos",
+        "text" => "El DNI, el correo y el nombre de usuario son datos únicos por usuario, no pueden repetirse.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    $data = [
+      "dni" => $dni,
+      "names" => $names,
+      "lastnames" => $lastnames,
+      "username" => $username,
+      "password" => $password,
+      "email" => $email,
+      "is_active" => $is_active,
+      "type" => $type,
+      "created_at" =>  date('Y-m-d H:i:s'),
+    ];
+
+    $stm = UserModel::createUserModel($data);
+
+    if ($stm) {
+      $alert = [
+        "Alert" => "alert&reload",
+        "title" => "Usuario creado",
+        "text" => "El usuario se creó exitosamente.",
+        "icon" => "success"
+      ];
+    } else {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Opps. Ocurrió un problema",
+        "text" => "El usuario no se creó.",
+        "icon" => "error"
+      ];
+    }
+
+    return json_encode($alert);
+    exit();
+  }
+  // Funcion controlador para crear o editar usuario
+  public function editUserController()
+  {
+    $user_id = mainModel::clearString($_POST['tx_user_id']);
+    $dni = mainModel::clearString($_POST['tx_dni']);
+    $names = mainModel::clearString($_POST['tx_nombres']);
+    $lastnames = mainModel::clearString($_POST['tx_apellidos']);
+    $username = mainModel::clearString($_POST['tx_username']);
+    $password = mainModel::clearString($_POST['tx_password']);
+    $email = mainModel::clearString($_POST['tx_correo']);
+    $type = intval($_POST['tx_acceso']);
+    $is_active = intval($_POST['tx_activo']);
+
+    // Valididación de campos vacios
+    if (empty($dni) || empty($names) || empty($lastnames) || empty($username) || empty($password) || empty($email)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Campos vacios",
+        "text" => "Por favor. Complete todos los campos.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    // validación de dni, correo duplicados
+    $sql_verify = MainModel::executeQuerySimple("SELECT * FROM users WHERE user_id<>$user_id AND (dni=$dni OR email='$email' OR username='$username')");
+    $users = $sql_verify->fetchAll();
+    $duplicated = count($users) > 0;
+    if ($duplicated) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Duplicidad de datos",
+        "text" => "El DNI, el correo y el nombre de usuario son datos únicos por usuario, no pueden repetirse.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    $new_data = [
+      "user_id" => $user_id,
+      "dni" => $dni,
+      "names" => $names,
+      "lastnames" => $lastnames,
+      "username" => $username,
+      "password" => $password,
+      "email" => $email,
+      "is_active" => $is_active,
+      "type" => $type,
+    ];
+
+    $stm = UserModel::editUserModel($new_data);
+
+    if ($stm) {
+      $alert = [
+        "Alert" => "alert&reload",
+        "title" => "Usuario actualizado",
+        "text" => "El usuario se actualizó exitosamente.",
+        "icon" => "success"
+      ];
+    } else {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Opps. Ocurrió un problema",
+        "text" => "El usuario no se actualizó.",
+        "icon" => "error"
+      ];
+    }
+
+    return json_encode($alert);
   }
 
   // Funcion controlador para eliminar usuario
@@ -129,11 +173,16 @@ class UserController extends UserModel
   {
     $user_id = $_POST['tx_user_id'];
 
-    if ($user_id == 1) {
+    // Verificacion si usuario a eliminar es superadmin
+    $query_verify = MainModel::executeQuerySimple("SELECT * FROM users WHERE user_id=$user_id AND type=" . USER_TYPE['superadmin'] . "");
+    $users = $query_verify->fetchAll();
+    $isSuperAdmin = count($users) > 0;
+
+    if ($isSuperAdmin) {
       $alert = [
         "Alert" => "simple",
         "title" => "Acción rechazada",
-        "text" => "El usuario principal no puede ser eliminado.",
+        "text" => "Los superadmins no pueden ser eliminados.",
         "icon" => "warning"
       ];
 
@@ -145,7 +194,7 @@ class UserController extends UserModel
 
     if ($stm) {
       $alert = [
-        "Alert" => "simple",
+        "Alert" => "alert&reload",
         "title" => "Usuario eliminado",
         "text" => "El usuario se eliminó exitosamente.",
         "icon" => "success"
@@ -160,5 +209,6 @@ class UserController extends UserModel
     }
 
     return json_encode($alert);
+    exit();
   }
 }

@@ -1,8 +1,9 @@
 <div class="flexnav">
-  <div class="browser">
+  <h1 class="titleView">Gestión de usuarios</h1>
+  <!-- <div class="browser">
     <label for="inputSearch" class="browser__label">Buscar usuario</label>
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del usuario">
-  </div>
+  </div> -->
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo usuario</button>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
@@ -19,6 +20,33 @@
       <th>Acciones</th>
     </thead>
     <tbody class="table__tbody">
+      <?php
+      $users = MainModel::executeQuerySimple("SELECT * FROM users");
+      $users = $users->fetchAll();
+      // if (count($users) > 0);
+      foreach ($users as $key => $user) {
+        $type = ($user["type"] == USER_TYPE['superadmin']) ? "SUPERADMIN" : (($user["type"] == USER_TYPE['admin']) ? "ADMINISTRADOR" : "VENDEDOR");
+        $is_active = ($user["is_active"]) ? "SI" : "NO";
+        echo
+        '
+        <tr>
+          <td>' . $user["dni"] . '</td>
+          <td>' . $user["names"] . ' ' . $user["lastnames"] . '</td>
+          <td>' . $user["email"] . '</td>
+          <td>' . $type . '</td>
+          <td>' . $is_active . '</td>
+          <td class="actions">
+            <button data-key="' . $user["user_id"] . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+            <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
+              <input type="hidden" value="' . $user["user_id"] . '" name="tx_user_id">
+              <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+            </form>
+            <button data-key="' . $user["user_id"] . '" class="actions__btn toggleDetails" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
+          </td>
+        </tr>
+        ';
+      }
+      ?>
       <!-- <tr>
         <td>71749122</td>
         <td>Jhonan caleb muñoz carrillo</td>
@@ -36,7 +64,7 @@
   </table>
 </div>
 <div class="modal" id="modalForm">
-  <form action="<?php echo SERVER_URL; ?>/fetch/formUserFetch.php" method="POST" class="form formFetch formCreate">
+  <form action="<?php echo SERVER_URL; ?>/fetch/formUserFetch.php" method="POST" class="form form__create formFetch">
     <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
     <h1 class="form__title">Agregar usuario</h1>
     <fieldset class="form__group">
@@ -46,30 +74,31 @@
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Nombres</legend>
-      <input type="text" class="form__input" id="nombres" name="tx_nombres" required>
+      <input type="text" class="form__input" id="nombres" name="tx_nombres" mayus required>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Apellidos</legend>
-      <input type="text" class="form__input" id="apellidos" name="tx_apellidos" required required>
+      <input type="text" class="form__input" id="apellidos" name="tx_apellidos" mayus required>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Nombre de usuario</legend>
-      <input type="text" class="form__input" id="username" name="tx_username" required required>
+      <input type="text" class="form__input" id="username" name="tx_username" required>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Contraseña</legend>
-      <input type="text" class="form__input" id="password" name="tx_password" required required required>
+      <input type="text" class="form__input" id="password" name="tx_password" required>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Correo</legend>
-      <input type="email" class="form__input" id="correo" name="tx_correo" required required required>
+      <input type="email" class="form__input" id="correo" name="tx_correo" required>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Acceso</legend>
       <select name="tx_acceso" id="acceso" class="form__input" required>
         <option value="" selected>Asigne el acceso</option>
-        <option value="1">Administrador</option>
-        <option value="0">Vendedor</option>
+        <option value="1">Superadministrador</option>
+        <option value="2">Administrador</option>
+        <option value="3">Vendedor</option>
       </select>
     </fieldset>
     <fieldset class="form__group">

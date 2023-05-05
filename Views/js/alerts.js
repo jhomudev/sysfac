@@ -15,11 +15,19 @@ function alertFetch(alert = {}) {
     });
   } else if (alert.Alert === "reload") {
     window.location.reload();
+  } else if (alert.Alert === "alert&reload") {
+    Swal.fire({
+      icon: alert.icon,
+      title: alert.title,
+      text: alert.text,
+      confirmButtonText: "Aceptar",
+    }).then((e) => window.location.reload());
   }
 }
 
 // Funcio enviar formulario
-function sendFormFetch(e, functionToExec) {
+function sendFormFetch(e) {
+  e.preventDefault();
   const data = new FormData(e.target);
   const method = e.target.getAttribute("method");
   const action = e.target.getAttribute("action");
@@ -43,9 +51,8 @@ function sendFormFetch(e, functionToExec) {
       if (result.isConfirmed) {
         const req = await fetch(action, config);
         const res = await req.json();
+        console.log(res);
         alertFetch(res);
-        if (functionToExec !== "undefined" || functionToExec !== null)
-          functionToExec();
       }
     } catch (error) {
       console.log(error);
