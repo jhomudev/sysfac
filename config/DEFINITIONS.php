@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-const USER_TYPE=[
-  "superadmin"=>1,
-  "admin"=>2,
-  "vendedor"=>3,
+$user_type =[
+  "superadmin" => 1,
+  "admin" => 2,
+  "vendedor" => 3,
 ];
-// const STATE=[
+$user_type= json_decode(json_encode($user_type));
 
-// ];
+define('USER_TYPE', $user_type);
