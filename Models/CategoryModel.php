@@ -52,13 +52,12 @@ class CategoryModel extends MainModel
   // Funcion para editar usuario  
   protected static function editcategoryModel(array $new_data)
   {
-    $statement = MainModel::connect()->prepare("UPDATE categories SET link_image=:link_image, name=:name, description=:description,created_at=:created_at WHERE cat_id=:category_id");
+    $statement = MainModel::connect()->prepare("UPDATE categories SET link_image=:link_image, name=:name, description=:description WHERE cat_id=:category_id");
 
     $statement->bindParam(":category_id", $new_data['category_id']);
     $statement->bindParam(":link_image", $new_data['link_image']);
     $statement->bindParam(":name", $new_data['name']);
     $statement->bindParam(":description", $new_data['description']);
-    $statement->bindParam(":created_at", $new_data['created_at']);
 
     $statement->execute();
 
