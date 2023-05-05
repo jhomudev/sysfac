@@ -21,27 +21,41 @@
     </thead>
     <tbody class="table__tbody">
       <?php
-      $users = MainModel::executeQuerySimple("SELECT * FROM users");
-      $users = $users->fetchAll();
-      // if (count($users) > 0);
-      foreach ($users as $key => $user) {
-        $type = ($user["type"] == USER_TYPE['superadmin']) ? "SUPERADMIN" : (($user["type"] == USER_TYPE['admin']) ? "ADMINISTRADOR" : "VENDEDOR");
-        $is_active = ($user["is_active"]) ? "SI" : "NO";
-        echo
-        '
+      require_once "./Controllers/UserController.php";
+      $IU = new UserController();
+      $users = $IU->getUsersController();
+      $users = json_decode($users);
+      if (count($users) > 0) {
+        foreach ($users as $key => $user) {
+          $type = ($user->type == USER_TYPE->superadmin) ? "SUPERADMIN" : (($user->type  == USER_TYPE->admin) ? "ADMINISTRADOR" : "VENDEDOR");
+          $is_active = ($user->is_active) ? "SI" : "NO";
+          echo
+          '
+          <tr>
+            <td>' . $user->dni  . '</td>
+            <td>' . $user->names  . ' ' . $user->lastnames  . '</td>
+            <td>' . $user->email . '</td>
+            <td>' . $type . '</td>
+            <td>' . $is_active . '</td>
+            <td class="actions">
+              <button data-key="' . $user->user_id . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+              <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
+                <input type="hidden" value="' . $user->user_id  . '" name="tx_user_id">
+                <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+              </form>
+              <button data-key="' . $user->user_id  . '" class="actions__btn toggleDetails" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
+            </td>
+          </tr>
+          ';
+        }
+      } else {
+        echo '
         <tr>
-          <td>' . $user["dni"] . '</td>
-          <td>' . $user["names"] . ' ' . $user["lastnames"] . '</td>
-          <td>' . $user["email"] . '</td>
-          <td>' . $type . '</td>
-          <td>' . $is_active . '</td>
-          <td class="actions">
-            <button data-key="' . $user["user_id"] . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-            <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
-              <input type="hidden" value="' . $user["user_id"] . '" name="tx_user_id">
-              <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
-            </form>
-            <button data-key="' . $user["user_id"] . '" class="actions__btn toggleDetails" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
+          <td aria-colspan="7" colspan="7">
+            <div class="empty">
+              <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+            </div>
+            <p class="empty__message">No hay registros</p>
           </td>
         </tr>
         ';

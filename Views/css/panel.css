@@ -1,4 +1,7 @@
 @import url(http://localhost/sysfac/Views/css/main.css);
+textarea {
+  resize: vertical;
+}
 .container_all {
   width: 100%;
   height: 100vh;
@@ -248,7 +251,7 @@
   border-radius: 5px;
   padding: 1em;
 }
-.titleView{
+.titleView {
   color: var(--c_lightPurple);
 }
 .browser {
@@ -441,19 +444,18 @@
   font-weight: 600;
   color: var(--c_orange);
 }
-.categoriesBox {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+.categorysBox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10em), 1fr));
   gap: 10px;
   padding: 1em;
   background-color: var(--c_semidark);
   border-radius: 5px;
 }
-.categorie {
+.category {
   position: relative;
-  flex: 1 1 200px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -462,23 +464,25 @@
   border-radius: 5px;
   background-color: var(--c_dark);
   padding: 10px;
+  cursor: pointer;
 }
-.categorie__link {
+.category__link {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.categorie__imgBox {
+.category__imgBox {
   width: 100%;
+  height: min(100%, 10em);
 }
-.categorie__img {
+.category__img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
-.categorie__name {
+.category__name {
   text-transform: uppercase;
   font-size: small;
   font-weight: 600;
@@ -570,7 +574,6 @@
   border: none;
   outline: none;
   font-size: small;
-  resize: none;
 }
 .form__submit {
   width: 100%;
