@@ -32,7 +32,7 @@ btnToggleBar.forEach((btn) => {
 // funcion para cambiar imagen al colocar link
 const formImg = document.querySelector(".form__img");
 const linkImage = document.getElementById("linkImage");
-if (linkImage !== null && linkImage !== undefined) {
+if (linkImage) {
   linkImage.addEventListener("input", (e) => {
     const link = e.target.value;
     formImg.setAttribute("src", link);
