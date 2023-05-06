@@ -173,6 +173,21 @@ class UserController extends UserModel
   {
     $user_id = $_POST['tx_user_id'];
 
+    // Verificacion si usuario a eliminar es el q esta logeado
+    $isLoged = $user_id == $_SESSION['user_id'];
+
+    if ($isLoged) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Acción rechazada",
+        "text" => "Usted esta logeado.No puede eliminarse a si mismo.",
+        "icon" => "warning"
+      ];
+
+      return json_encode($alert);
+      exit();
+    }
+
     // Verificacion si usuario a eliminar es superadmin
     $query_verify = MainModel::executeQuerySimple("SELECT * FROM users WHERE user_id=$user_id AND type=" . USER_TYPE->superadmin . "");
     $users = $query_verify->fetchAll();
