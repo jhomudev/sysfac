@@ -502,7 +502,19 @@ textarea {
 .modal.show {
   display: grid;
 }
-.form,
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 400px);
+  max-height: 100vh;
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: #fff;
+  overflow: auto;
+}
 .details {
   position: relative;
   display: flex;
@@ -515,6 +527,13 @@ textarea {
   border-radius: 5px;
   background-color: #fff;
   overflow: auto;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 .form__btnclose,
 .details__btnclose {

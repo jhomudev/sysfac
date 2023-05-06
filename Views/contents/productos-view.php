@@ -54,57 +54,59 @@
   </table>
 </div>
 <div class="modal" id="modalForm">
-  <form action="<?php echo SERVER_URL; ?>/fetch/formProductFetch.php" method="POST" class="form form__create formFetch">
-    <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
-    <h1 class="form__title">Agregar producto</h1>
-    <div class="form__imgBox">
-      <img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" class="form__img" alt="producto">
-    </div>
-    <input type="hidden" id="productId" name="tx_product_id">
-    <fieldset class="form__group">
-      <legend class="form__legend">Nombre*</legend>
-      <input type="text" class="form__input" id="nombre" name="tx_nombre">
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Precio de venta*</legend>
-      <input type="text" class="form__input" id="precio" name="tx_precio" decimal>
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Unidad*</legend>
-      <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus>
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Mínimo en en inventario*</legend>
-      <input type="text" class="form__input" id="unidad" name="tx_minimo" mayus>
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Imagen</legend>
-      <input type="text" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Link de la imagen">
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Categoría*</legend>
-      <select name="tx_category" id="acceso" class="form__input">
-        <option selected disabled>Seleccione la categoría</option>
-        <?php
-        require_once "./Controllers/CategoryController.php";
-        $IP = new CategoryController();
-        $categories = $IP->getCategoriesController();
-        $categories = json_decode($categories);
-
-        foreach ($categories as $key => $category) {
-          echo '<option value="' . $category->cat_id . '">' . $category->name . '</option>';
-        }
-        ?>
-      </select>
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Activo*</legend>
-      <select name="tx_activo" id="activo" class="form__input">
-        <option selected disabled>Asigne el estado</option>
-        <option value="<?php echo STATE->active ?>">Sí</option>
-        <option value="<?php echo STATE->inactive  ?>">No</option>
-      </select>
-    </fieldset>
-    <input type="submit" value="Agregar" class="form__submit">
-  </form>
+  <div class="box">
+    <form action="<?php echo SERVER_URL; ?>/fetch/formProductFetch.php" method="POST" class="form form__create formFetch">
+      <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
+      <h1 class="form__title">Agregar producto</h1>
+      <div class="form__imgBox">
+        <img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" class="form__img" alt="producto">
+      </div>
+      <input type="hidden" id="productId" name="tx_product_id">
+      <fieldset class="form__group">
+        <legend class="form__legend">Nombre*</legend>
+        <input type="text" class="form__input" id="nombre" name="tx_nombre">
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Precio de venta*</legend>
+        <input type="text" class="form__input" id="precio" name="tx_precio" decimal>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Unidad*</legend>
+        <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Mínimo en en inventario*</legend>
+        <input type="text" class="form__input" id="unidad" name="tx_minimo" mayus>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Imagen</legend>
+        <input type="text" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Link de la imagen">
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Categoría*</legend>
+        <select name="tx_category" id="acceso" class="form__input">
+          <option selected disabled>Seleccione la categoría</option>
+          <?php
+          require_once "./Controllers/CategoryController.php";
+          $IP = new CategoryController();
+          $categories = $IP->getCategoriesController();
+          $categories = json_decode($categories);
+    
+          foreach ($categories as $key => $category) {
+            echo '<option value="' . $category->cat_id . '">' . $category->name . '</option>';
+          }
+          ?>
+        </select>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Activo*</legend>
+        <select name="tx_activo" id="activo" class="form__input">
+          <option selected disabled>Asigne el estado</option>
+          <option value="<?php echo STATE->active ?>">Sí</option>
+          <option value="<?php echo STATE->inactive  ?>">No</option>
+        </select>
+      </fieldset>
+      <input type="submit" value="Agregar" class="form__submit">
+    </form>
+  </div>
 </div>
