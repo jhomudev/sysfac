@@ -9,26 +9,31 @@
   </div>
 </div>
 <div class="filterBox">
-  <div class="filter">
+  <div class="filter" id="all">
     <h2 class="filter__for">Todos</h2>
   </div>
   <div class="filter">
     <label for="fil_categoria" class="filter__for">Categoría: </label>
-    <select name="tx_categoria" id="fil_categoria" class="filter__select">
+    <select name="tx_categoria" data-col="category_id" class="filter__select">
       <option selected disabled>--</option>
-      <option value="">Impresión</option>
-      <option value="">Periféricos</option>
-      <option value="">Sonido</option>
-      <option value="">Laptops</option>
-      <option value="">Pc</option>
+      <?php
+      require_once "./Controllers/CategoryController.php";
+      $IP = new CategoryController();
+      $categories = $IP->getCategoriesController();
+      $categories = json_decode($categories);
+
+      foreach ($categories as $key => $category) {
+        echo '<option value="' . $category->cat_id . '">' . $category->name . '</option>';
+      }
+      ?>
     </select>
   </div>
   <div class="filter">
     <label for="fil_activo" class="filter__for">Activo: </label>
-    <select name="tx_categoria" id="fil_activo" class="filter__select">
+    <select name="tx_categoria" data-col="is_active" class="filter__select">
       <option selected disabled>--</option>
-      <option value="1">Sí</option>
-      <option value="0">No</option>
+      <option value="<?php echo STATE->active; ?>">Sí</option>
+      <option value="<?php echo STATE->inactive; ?>">No</option>
     </select>
   </div>
 </div>
@@ -44,152 +49,60 @@
       <th>Acciones</th>
     </thead>
     <tbody class="table__tbody">
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" alt="producto_name"></td>
-        <td>Impresora EPSON L3250</td>
-        <td>S/650</td>
-        <td>Unidad</td>
-        <td>Impresión</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr>
+      <!-- peticion -->
     </tbody>
   </table>
 </div>
-<div class="modalForm">
-  <form action="POST" class="form formFetch">
-    <button class="form__btnclose toggleForm"><i class="ph ph-x"></i></button>
+<div class="modal" id="modalForm">
+  <form action="<?php echo SERVER_URL; ?>/fetch/formProductFetch.php" method="POST" class="form form__create formFetch">
+    <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
     <h1 class="form__title">Agregar producto</h1>
     <div class="form__imgBox">
       <img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" class="form__img" alt="producto">
     </div>
+    <input type="hidden" id="productId" name="tx_product_id">
     <fieldset class="form__group">
-      <legend class="form__legend">Nombre</legend>
+      <legend class="form__legend">Nombre*</legend>
       <input type="text" class="form__input" id="nombre" name="tx_nombre">
     </fieldset>
     <fieldset class="form__group">
-      <legend class="form__legend">Precio de venta</legend>
+      <legend class="form__legend">Precio de venta*</legend>
       <input type="text" class="form__input" id="precio" name="tx_precio" decimal>
     </fieldset>
     <fieldset class="form__group">
-      <legend class="form__legend">Unidad</legend>
-      <input type="text" class="form__input" id="unidad" name="tx_unidad">
+      <legend class="form__legend">Unidad*</legend>
+      <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus>
+    </fieldset>
+    <fieldset class="form__group">
+      <legend class="form__legend">Mínimo en en inventario*</legend>
+      <input type="text" class="form__input" id="unidad" name="tx_minimo" mayus>
     </fieldset>
     <fieldset class="form__group">
       <legend class="form__legend">Imagen</legend>
       <input type="text" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Link de la imagen">
     </fieldset>
     <fieldset class="form__group">
-      <legend class="form__legend">Categoría</legend>
-      <select name="tx_acceso" id="acceso" class="form__input">
+      <legend class="form__legend">Categoría*</legend>
+      <select name="tx_category" id="acceso" class="form__input">
         <option selected disabled>Seleccione la categoría</option>
-        <option value="">IMPRESIÓN</option>
-        <option value="">MOUSES</option>
-        <option value="">LAPTOPS</option>
-        <option value="">TECLADOS</option>
+        <?php
+        require_once "./Controllers/CategoryController.php";
+        $IP = new CategoryController();
+        $categories = $IP->getCategoriesController();
+        $categories = json_decode($categories);
+
+        foreach ($categories as $key => $category) {
+          echo '<option value="' . $category->cat_id . '">' . $category->name . '</option>';
+        }
+        ?>
       </select>
     </fieldset>
     <fieldset class="form__group">
-      <legend class="form__legend">Activo</legend>
+      <legend class="form__legend">Activo*</legend>
       <select name="tx_activo" id="activo" class="form__input">
         <option selected disabled>Asigne el estado</option>
-        <option value="1">Sí</option>
-        <option value="0">No</option>
+        <option value="<?php echo STATE->active ?>">Sí</option>
+        <option value="<?php echo STATE->inactive  ?>">No</option>
       </select>
     </fieldset>
     <input type="submit" value="Agregar" class="form__submit">
