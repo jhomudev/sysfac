@@ -16,7 +16,7 @@ class CategoryModel extends MainModel
   protected static function getDataCategoryModel(int $category_id)
   {
     $category = MainModel::connect()->prepare("SELECT * FROM categories WHERE cat_id =:category_id");
-    $category->bindParam(":category_id",$category_id);
+    $category->bindParam(":category_id", $category_id);
     $category->execute();
 
     return $category;
@@ -39,17 +39,7 @@ class CategoryModel extends MainModel
     return $statement;
   }
 
-  // Funciòn eliminar usuario
-  protected static function deleteCategoryModel(int $category_id)
-  {
-    $statement = MainModel::connect()->prepare("DELETE FROM categories WHERE cat_id=:category_id");
-    $statement->bindParam(":category_id", $category_id);
-    $statement->execute();
-
-    return $statement;
-  }
-
-  // Funcion para editar usuario  
+  // Funcion para editar categoria  
   protected static function editcategoryModel(array $new_data)
   {
     $statement = MainModel::connect()->prepare("UPDATE categories SET link_image=:link_image, name=:name, description=:description WHERE cat_id=:category_id");
@@ -59,6 +49,16 @@ class CategoryModel extends MainModel
     $statement->bindParam(":name", $new_data['name']);
     $statement->bindParam(":description", $new_data['description']);
 
+    $statement->execute();
+
+    return $statement;
+  }
+
+  // Funciòn eliminar categoria
+  protected static function deleteCategoryModel(int $category_id)
+  {
+    $statement = MainModel::connect()->prepare("DELETE FROM categories WHERE cat_id=:category_id");
+    $statement->bindParam(":category_id", $category_id);
     $statement->execute();
 
     return $statement;

@@ -152,18 +152,18 @@ class CategoryController extends CategoryModel
   // Funcion controlador para eliminar usuario
   public function deleteCategoryController()
   {
-    $category_id = $_POST['tx_user_id'];
+    $category_id = intval($_POST['tx_category_idDel']);
 
-    // Verificacion si usuario a eliminar es superadmin
-    $query_verify = MainModel::executeQuerySimple("SELECT * FROM users WHERE user_id=$category_id AND type=" . USER_TYPE->superadmin . "");
-    $categories = $query_verify->fetchAll();
-    $isSuperAdmin = count($categories) > 0;
+    // Verificacion si usexisten productos de esta categoria
+    $query_verify = MainModel::executeQuerySimple("SELECT * FROM products WHERE category_id=$category_id");
+    $products = $query_verify->fetchAll();
+    $exist_products = count($products) > 0;
 
-    if ($isSuperAdmin) {
+    if ($exist_products) {
       $alert = [
         "Alert" => "simple",
         "title" => "Acción rechazada",
-        "text" => "Los superadmins no pueden ser eliminados.",
+        "text" => "Hay productos que pertenecen a esta categoría, por lo cual no puede eliminarla.",
         "icon" => "warning"
       ];
 
@@ -176,15 +176,15 @@ class CategoryController extends CategoryModel
     if ($stm) {
       $alert = [
         "Alert" => "alert&reload",
-        "title" => "Usuario eliminado",
-        "text" => "El usuario se eliminó exitosamente.",
+        "title" => "Categoría eliminado",
+        "text" => "Las categoría se eliminó exitosamente.",
         "icon" => "success"
       ];
     } else {
       $alert = [
         "Alert" => "simple",
         "title" => "Opps. Al parecer ocurrió  un error",
-        "text" => "Usuario no eliminado.",
+        "text" => "Categoría no eliminada.",
         "icon" => "error"
       ];
     }
