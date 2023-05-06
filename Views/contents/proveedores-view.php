@@ -111,25 +111,27 @@
   </table>
 </div>
 <div class="modalForm">
-  <form action="POST" class="form formFetch">
-    <button class="form__btnclose toggleForm"><i class="ph ph-x"></i></button>
-    <h1 class="form__title">Agregar proveedor</h1>
-    <fieldset class="form__group">
-      <legend class="form__legend">RUC</legend>
-      <input type="text" class="form__input" id="ruc" name="tx_ruc" maxlength="11" minlength="11" number>
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Nombre del proveedor</legend>
-      <input type="text" class="form__input" id="nombre" name="tx_nombre">
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Dirección</legend>
-      <input type="text" class="form__input" id="direccion" name="tx_direccion">
-    </fieldset>
-    <fieldset class="form__group">
-      <legend class="form__legend">Teléfono</legend>
-      <input type="text" class="form__input" id="telefono" name="tx_telefono" number>
-    </fieldset>
-    <input type="submit" value="Agregar" class="form__submit">
-  </form>
+  <div class="box">
+    <form action="POST" class="form formFetch">
+      <button class="form__btnclose toggleForm"><i class="ph ph-x"></i></button>
+      <h1 class="form__title">Agregar proveedor</h1>
+      <fieldset class="form__group">
+        <legend class="form__legend">RUC</legend>
+        <input type="text" class="form__input" id="ruc" name="tx_ruc" maxlength="11" minlength="11" number>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Nombre del proveedor</legend>
+        <input type="text" class="form__input" id="nombre" name="tx_nombre">
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Dirección</legend>
+        <input type="text" class="form__input" id="direccion" name="tx_direccion">
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Teléfono</legend>
+        <input type="text" class="form__input" id="telefono" name="tx_telefono" number>
+      </fieldset>
+      <input type="submit" value="Agregar" class="form__submit">
+    </form>
+  </div>
 </div>
