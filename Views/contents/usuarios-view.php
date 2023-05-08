@@ -61,19 +61,6 @@
         ';
       }
       ?>
-      <!-- <tr>
-        <td>71749122</td>
-        <td>Jhonan caleb muñoz carrillo</td>
-        <td>99999999</td>
-        <td>jhonna@gmail.com</td>
-        <td>Administrador</td>
-        <td>Sí</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:red;" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_sky);" title="Eliminar"><i class="ph ph-trash"></i></button>
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>
