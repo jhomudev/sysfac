@@ -58,6 +58,6 @@ async function setDataCategory(categoryId) {
     document.getElementById("linkImage").value = res.link_image;
     document.getElementById("descripcion").value = res.description;
   } catch (error) {
-    console.log(erro);
+    console.log(error);
   }
 }
