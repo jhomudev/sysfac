@@ -39,6 +39,22 @@ class LoginController extends LoginModel
 
     if ($data_user->rowCount() > 0) {
       $data_user = $data_user->fetch();
+
+      // Verificacion si esta activo o no
+      if ($data_user['is_active'] == STATE->inactive) {
+        echo '
+        <script>
+          Swal.fire({
+            icon: "error",
+            title: "Usuario inactivo",
+            text: "Su usuario no tiene acceso al sistema, ya que está inactivo.",
+            confirmButtonText: "Aceptar",
+          });
+        </script>
+        ';
+        exit();
+      }
+
       $data_user['token'] = md5(uniqid(mt_rand(), true));
 
       session_name(NAMESESSION);
