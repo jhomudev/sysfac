@@ -43,8 +43,12 @@ $vista = $IV->getViewController();
       <div class="col_2">
         <?php include "./views/inc/header.php"; ?>
         <main class="view">
-          <!-- Aqui va la vista  seleccionada en el menú-->
-          <?php include  "./Views/contents/" . $vista . "-view.php"; ?>
+          <?php
+          // Condicionales para las viostas dependiendo del tipo de usuario
+          if (($_SESSION['type'] == USER_TYPE->vendedor) && ($vista == "ventas" || $vista == "clientes" || $vista == "dashboard")) include  "./Views/contents/" . $vista . "-view.php";
+          else if ($_SESSION['type'] == USER_TYPE->superadmin || $_SESSION['type'] == USER_TYPE->admin) include  "./Views/contents/" . $vista . "-view.php";
+          else echo "No tiene acceso a este módulo";
+          ?>
         </main>
       </div>
     </div>
@@ -53,7 +57,6 @@ $vista = $IV->getViewController();
     <script src="<?php echo SERVER_URL; ?>/Views/js/<?php echo $vista; ?>.js"></script>
   <?php
     include "./Views/inc/logout.php";
-    include "./Views/inc/scriptMenuBar.php"
-    ;
+    include "./Views/inc/scriptMenuBar.php";
   } ?>
 </body>
