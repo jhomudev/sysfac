@@ -47,31 +47,37 @@ function habilityDOM() {
 
 // Peticion para llenar campos de formulario para edición
 async function setDataProduct(productId) {
-  const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-    method: "POST",
-    body: new URLSearchParams(`productId=${productId}`),
-  });
-  const res = await req.json();
+  try {
+    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
+      method: "POST",
+      body: new URLSearchParams(`productId=${productId}`),
+    });
+    const res = await req.json();
 
-  document.querySelector(".form__title").textContent = "Modificar usuario";
-  document.querySelector(".form__submit").value = "Modificar";
-  document.getElementById("productId").value = res.product_id;
-  document.getElementById("nombre").value = res.name;
-  document.getElementById("precio").value = res.price_sale;
-  document.getElementById("unidad").value = res.unit;
-  document.getElementById("linkImage").value = res.link_image;
-  
+    document.querySelector(".form__title").textContent = "Modificar usuario";
+    document.querySelector(".form__submit").value = "Modificar";
+    document.getElementById("productId").value = res.product_id;
+    document.getElementById("nombre").value = res.name;
+    document.getElementById("precio").value = res.price_sale;
+    document.getElementById("unidad").value = res.unit;
+    document.getElementById("linkImage").value = res.link_image;
+  } catch (error) {
+    console.log(erro);
+  }
 }
 // Peticion para llenar campos de formulario para edición
 async function setDetailsProduct(productId) {
-  const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-    method: "POST",
-    body: new URLSearchParams(`productId=${productId}`),
-  });
-  const res = await req.json();
-
-  document.getElementById("userDNI").textContent = res.dni;
+  try {
+    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
+      method: "POST",
+      body: new URLSearchParams(`productId=${productId}`),
+    });
+    const res = await req.json();
   
+    document.getElementById("userDNI").textContent = res.dni;
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // peticion para traer productos

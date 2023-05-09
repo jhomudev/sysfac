@@ -29,17 +29,21 @@ btnsEdit.forEach((btn) => {
 
 // Peticion para llenar campos de formulario para edición
 async function setDataSupplier(supplierId) {
-  const req = await fetch(`${serverURL}/fetch/getDataSupplierFetch.php`, {
-    method: "POST",
-    body: new URLSearchParams(`supplierId=${supplierId}`),
-  });
-  const res = await req.json();
+  try {
+    const req = await fetch(`${serverURL}/fetch/getDataSupplierFetch.php`, {
+      method: "POST",
+      body: new URLSearchParams(`supplierId=${supplierId}`),
+    });
+    const res = await req.json();
 
-  document.querySelector(".form__title").textContent = "Modificar proveedor";
-  document.querySelector(".form__submit").value = "Modificar";
-  document.getElementById("supplierId").value = res.supplier_id;
-  document.getElementById("ruc").value = res.RUC;
-  document.getElementById("nombre").value = res.name;
-  document.getElementById("direccion").value = res.address;
-  document.getElementById("telefono").value = res.phone;
+    document.querySelector(".form__title").textContent = "Modificar proveedor";
+    document.querySelector(".form__submit").value = "Modificar";
+    document.getElementById("supplierId").value = res.supplier_id;
+    document.getElementById("ruc").value = res.RUC;
+    document.getElementById("nombre").value = res.name;
+    document.getElementById("direccion").value = res.address;
+    document.getElementById("telefono").value = res.phone;
+  } catch (error) {
+    console.log(error);
+  }
 }
