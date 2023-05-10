@@ -1,9 +1,5 @@
 <div class="flexnav">
   <h1 class="titleView">Gestión de categorías de productos</h1>
-  <!-- <div class="browser">
-    <label for="inputSearch" class="browser__label">Buscar categoría</label>
-    <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del categoría">
-  </div> -->
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo categoría</button>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
@@ -29,19 +25,13 @@
     }
   } else {
     echo '
-        <tr>
-          <td aria-colspan="7" colspan="7">
-            <div class="empty">
-              <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
-            </div>
-            <p class="empty__message">No hay registros</p>
-          </td>
-        </tr>
-        ';
+      <div class="empty">
+        <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+      </div>
+      <p class="empty__message">No hay registros</p>
+    ';
   }
   ?>
-
-
 </div>
 <div class="modal" id="modalForm">
   <div class="box">

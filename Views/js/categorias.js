@@ -1,20 +1,9 @@
 // TODO: DECLARACIÓN DE ELEMENTOS
-const categoriesBox = document.querySelector(".categoriesBox");
 const modalForm = document.getElementById("modalForm");
-const modalDetails = document.getElementById("modalDetails");
-
 const formsFetch = document.querySelectorAll(".formFetch");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 const categories = document.querySelectorAll(".category");
-// const btnToggleDetails = document.querySelectorAll(".toggleDetails");
 const formCreate = document.querySelector(".form__create");
-
-// btnToggleDetails.forEach((btn) => {
-//   btn.addEventListener("click", function (e) {
-//     toggleShowElement(modalDetails);
-//     setDetailsUser(this.dataset.key);
-//   });
-// });
 
 btnToggleForm.forEach((btn) => {
   btn.addEventListener("click", () => {
