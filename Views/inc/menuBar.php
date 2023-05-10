@@ -46,7 +46,7 @@
           <a href="<?php echo SERVER_URL; ?>/proveedores" data-view="proveedores" class="nav__link nav_item_link"><i class="ph ph-user-list"></i><span>Proveedores</span></a>
         </li>
         <li>
-          <a href="<?php echo SERVER_URL; ?>/almacenes" data-view="almacenes" class="nav__link nav_item_link"><i class="ph ph-warehouse"></i><span>Almacenes</span></a>
+          <a href="<?php echo SERVER_URL; ?>/locales" data-view="locales" class="nav__link nav_item_link"><i class="ph ph-warehouse"></i><span>Locales</span></a>
         </li>
       <?php
       }
