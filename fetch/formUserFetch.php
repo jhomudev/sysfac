@@ -19,5 +19,3 @@ if (isset($_SESSION['token'])) {
   header("Location:" . SERVER_URL . "/login");
   exit();
 }
-
-// print_r($_POST);
