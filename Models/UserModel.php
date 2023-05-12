@@ -13,7 +13,7 @@ class UserModel extends MainModel
     return $users->fetchAll();
   }
 
-  // Funcion de obtener datos de un suario
+  // Funcion de obtener datos de un usuario
   protected static function getDataUserModel(int $user_id):array
   {
     $user = MainModel::connect()->prepare("SELECT * FROM users WHERE user_id = :user_id");
