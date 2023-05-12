@@ -1,9 +1,5 @@
 <div class="flexnav">
   <h1 class="titleView">Gestión de usuarios</h1>
-  <!-- <div class="browser">
-    <label for="inputSearch" class="browser__label">Buscar usuario</label>
-    <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del usuario">
-  </div> -->
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo usuario</button>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>

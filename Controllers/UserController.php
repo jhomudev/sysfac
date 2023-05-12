@@ -23,7 +23,7 @@ class UserController extends UserModel
     return json_encode($user);
   }
 
-  // Funcion controlador para crear o editar usuario
+  // Funcion controlador para crear usuario
   public function createUserController()
   {
     $dni = MainModel::clearString($_POST['tx_dni']);
