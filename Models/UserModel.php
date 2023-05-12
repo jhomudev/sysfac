@@ -6,25 +6,25 @@ class UserModel extends MainModel
 {
 
   // Funcion de obtener usuarios
-  protected static function getUsersModel()
+  protected static function getUsersModel():array
   {
     $users = MainModel::executeQuerySimple("SELECT * FROM users");
 
-    return $users;
+    return $users->fetchAll();
   }
 
   // Funcion de obtener datos de un suario
-  protected static function getDataUserModel(int $user_id)
+  protected static function getDataUserModel(int $user_id):array
   {
     $user = MainModel::connect()->prepare("SELECT * FROM users WHERE user_id = :user_id");
     $user->bindParam(":user_id", $user_id);
     $user->execute();
 
-    return $user;
+    return $user->fetch();
   }
 
   // Funcion para crear usuarios 
-  protected static function createUserModel(array $data)
+  protected static function createUserModel(array $data):bool
   {
     $statement = MainModel::connect()->prepare("INSERT INTO 
     users(dni,names,lastnames,username,email,password,is_active,type,created_at) 
@@ -44,7 +44,7 @@ class UserModel extends MainModel
   }
 
   // Funciòn eliminar usuario
-  protected static function deleteUserModel(int $user_id)
+  protected static function deleteUserModel(int $user_id):bool
   {
     $statement = MainModel::connect()->prepare("DELETE FROM users WHERE user_id=:user_id");
     $statement->bindParam(":user_id", $user_id);
@@ -53,7 +53,7 @@ class UserModel extends MainModel
   }
 
   // Funcion para editar usuario  
-  protected static function editUserModel(array $new_data)
+  protected static function editUserModel(array $new_data):bool
   {
     $statement = MainModel::connect()->prepare("UPDATE users SET dni=:dni, names=:names, lastnames=:lastnames, username=:username, email=:email, password=:password, is_active=:is_active, type=:type WHERE user_id=:user_id");
 

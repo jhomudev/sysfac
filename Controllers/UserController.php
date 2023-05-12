@@ -12,7 +12,7 @@ class UserController extends UserModel
   public function getUsersController()
   {
     $users = UserModel::getUsersModel();
-    return json_encode($users->fetchAll());
+    return json_encode($users);
   }
 
   // Funcion controlador para obetenr los datos de usuario
@@ -20,7 +20,7 @@ class UserController extends UserModel
   {
     $user_id = intval($_POST['userId']);
     $user = UserModel::getDataUserModel($user_id);
-    return json_encode($user->fetch());
+    return json_encode($user);
   }
 
   // Funcion controlador para crear o editar usuario

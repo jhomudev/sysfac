@@ -12,7 +12,7 @@ class CategoryController extends CategoryModel
   public function getCategoriesController()
   {
     $categories = CategoryModel::getCategoriesModel();
-    return json_encode($categories->fetchAll());
+    return json_encode($categories);
   }
 
   // Funcion controlador para obetenr los datos de usuario
@@ -20,7 +20,7 @@ class CategoryController extends CategoryModel
   {
     $category_id = intval($_POST['categoryId']);
     $category = CategoryModel::getDataCategoryModel($category_id);
-    return json_encode($category->fetch());
+    return json_encode($category);
   }
 
   // Funcion controlador para crear o editar usuario

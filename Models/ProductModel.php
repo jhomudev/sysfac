@@ -6,7 +6,7 @@ class ProductModel extends MainModel
 {
 
   // Funcion de obtener productos
-  protected static function getProductsModel(array $filters = [])
+  protected static function getProductsModel(array $filters = []): array
   {
     $words = $filters['words'];
     $column = $filters['column'];
@@ -27,11 +27,11 @@ class ProductModel extends MainModel
 
     $products->execute();
 
-    return $products;
+    return $products->fetchAll();
   }
 
   // Funcion de obtener productos
-  protected static function getDataProductModel(int $product_id)
+  protected static function getDataProductModel(int $product_id): array
   {
     $query = "SELECT * FROM products WHERE product_id=:product_id";
     $product = MainModel::connect()->prepare($query);
@@ -39,11 +39,11 @@ class ProductModel extends MainModel
 
     $product->execute();
 
-    return $product;
+    return $product->fetch();
   }
 
   // Funcion para crear producto
-  protected static function createProductModel(array $data)
+  protected static function createProductModel(array $data): bool
   {
     $statement = MainModel::connect()->prepare("INSERT INTO 
     products(link_image, name,inventary_min,price_sale,unit,category_id,is_active,created_at) 
@@ -57,13 +57,12 @@ class ProductModel extends MainModel
     $statement->bindParam(":category_id", $data['category_id'], PDO::PARAM_INT);
     $statement->bindParam(":is_active", $data['is_active'], PDO::PARAM_BOOL);
     $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
-    $statement->execute();
 
-    return $statement;
+    return $statement->execute();
   }
 
   // Funcion para editar producto  
-  protected static function editProductModel(array $new_data)
+  protected static function editProductModel(array $new_data): bool
   {
     $statement = MainModel::connect()->prepare("UPDATE products SET link_image=:link_image, name=:name, inventary_min=:inventary_min, price_sale=:price_sale, unit=:unit, category_id=:category_id, is_active=:is_active WHERE product_id=:product_id");
 
@@ -76,18 +75,15 @@ class ProductModel extends MainModel
     $statement->bindParam(":category_id", $new_data['category_id'], PDO::PARAM_INT);
     $statement->bindParam(":is_active", $new_data['is_active'], PDO::PARAM_BOOL);
 
-    $statement->execute();
-
-    return $statement;
+    return $statement->execute();
   }
 
   // Funciòn eliminar producto
-  protected static function deleteProductModel(int $product_id)
+  protected static function deleteProductModel(int $product_id): bool
   {
     $statement = MainModel::connect()->prepare("DELETE FROM products WHERE product_id=:product_id");
     $statement->bindParam(":product_id", $product_id);
-    $statement->execute();
 
-    return $statement;
+    return $statement->execute();
   }
 }

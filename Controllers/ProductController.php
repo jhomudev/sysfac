@@ -17,8 +17,8 @@ class ProductController extends ProductModel
       "value" => MainModel::clearString($_POST['value']),
     ];
     $product = ProductModel::getProductsModel($filters);
-    return json_encode($product->fetchAll());
-    // return json_encode($filters);
+
+    return json_encode($product);
   }
 
   // Funcion controlador para obetenr los datos de usuario
@@ -26,7 +26,7 @@ class ProductController extends ProductModel
   {
     $product_id = intval($_POST['productId']);
     $product = ProductModel::getDataProductModel($product_id);
-    return json_encode($product->fetch());
+    return json_encode($product);
   }
 
   // Funcion controlador para crear o editar usuario
