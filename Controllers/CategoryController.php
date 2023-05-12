@@ -26,9 +26,9 @@ class CategoryController extends CategoryModel
   // Funcion controlador para crear o editar usuario
   public function createCategoryController()
   {
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $link_image = mainModel::clearString($_POST['tx_linkImage']);
-    $description = mainModel::clearString($_POST['tx_descripcion']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $description = MainModel::clearString($_POST['tx_descripcion']);
 
     // Validacion de campos vacios
     if (empty($name)) {
@@ -88,10 +88,10 @@ class CategoryController extends CategoryModel
   // Funcion controlador para crear o editar usuario
   public function editCategoryController()
   {
-    $cat_id = mainModel::clearString($_POST['tx_category_id']);
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $link_image = mainModel::clearString($_POST['tx_linkImage']);
-    $description = mainModel::clearString($_POST['tx_descripcion']);
+    $cat_id = MainModel::clearString($_POST['tx_category_id']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $description = MainModel::clearString($_POST['tx_descripcion']);
 
     // Validacion de campos vacios
     if (empty($name)) {

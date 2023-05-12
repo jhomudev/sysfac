@@ -32,12 +32,12 @@ class ProductController extends ProductModel
   // Funcion controlador para crear o editar usuario
   public function createProductController()
   {
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $price = mainModel::clearString($_POST['tx_precio']);
-    $unit = mainModel::clearString($_POST['tx_unidad']);
-    $min = mainModel::clearString($_POST['tx_minimo']);
-    $link_image = mainModel::clearString($_POST['tx_linkImage']);
-    $category = mainModel::clearString($_POST['tx_category']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $price = MainModel::clearString($_POST['tx_precio']);
+    $unit = MainModel::clearString($_POST['tx_unidad']);
+    $min = MainModel::clearString($_POST['tx_minimo']);
+    $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
 
     // Validacion de campos vacios
@@ -102,13 +102,13 @@ class ProductController extends ProductModel
   // Funcion controlador para crear o editar usuario
   public function editProductController()
   {
-    $product_id = mainModel::clearString($_POST['tx_product_id']);
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $price = mainModel::clearString($_POST['tx_precio']);
-    $unit = mainModel::clearString($_POST['tx_unidad']);
-    $min = mainModel::clearString($_POST['tx_minimo']);
-    $link_image = mainModel::clearString($_POST['tx_linkImage']);
-    $category = mainModel::clearString($_POST['tx_category']);
+    $product_id = MainModel::clearString($_POST['tx_product_id']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $price = MainModel::clearString($_POST['tx_precio']);
+    $unit = MainModel::clearString($_POST['tx_unidad']);
+    $min = MainModel::clearString($_POST['tx_minimo']);
+    $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
 
     // Valididación de campos vacios

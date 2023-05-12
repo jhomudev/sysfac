@@ -26,12 +26,12 @@ class UserController extends UserModel
   // Funcion controlador para crear o editar usuario
   public function createUserController()
   {
-    $dni = mainModel::clearString($_POST['tx_dni']);
-    $names = mainModel::clearString($_POST['tx_nombres']);
-    $lastnames = mainModel::clearString($_POST['tx_apellidos']);
-    $username = mainModel::clearString($_POST['tx_username']);
-    $password = mainModel::clearString($_POST['tx_password']);
-    $email = mainModel::clearString($_POST['tx_correo']);
+    $dni = MainModel::clearString($_POST['tx_dni']);
+    $names = MainModel::clearString($_POST['tx_nombres']);
+    $lastnames = MainModel::clearString($_POST['tx_apellidos']);
+    $username = MainModel::clearString($_POST['tx_username']);
+    $password = MainModel::clearString($_POST['tx_password']);
+    $email = MainModel::clearString($_POST['tx_correo']);
     $type = intval($_POST['tx_acceso']);
     $is_active = intval($_POST['tx_activo']);
 
@@ -98,13 +98,13 @@ class UserController extends UserModel
   // Funcion controlador para crear o editar usuario
   public function editUserController()
   {
-    $user_id = mainModel::clearString($_POST['tx_user_id']);
-    $dni = mainModel::clearString($_POST['tx_dni']);
-    $names = mainModel::clearString($_POST['tx_nombres']);
-    $lastnames = mainModel::clearString($_POST['tx_apellidos']);
-    $username = mainModel::clearString($_POST['tx_username']);
-    $password = mainModel::clearString($_POST['tx_password']);
-    $email = mainModel::clearString($_POST['tx_correo']);
+    $user_id = MainModel::clearString($_POST['tx_user_id']);
+    $dni = MainModel::clearString($_POST['tx_dni']);
+    $names = MainModel::clearString($_POST['tx_nombres']);
+    $lastnames = MainModel::clearString($_POST['tx_apellidos']);
+    $username = MainModel::clearString($_POST['tx_username']);
+    $password = MainModel::clearString($_POST['tx_password']);
+    $email = MainModel::clearString($_POST['tx_correo']);
     $type = intval($_POST['tx_acceso']);
     $is_active = intval($_POST['tx_activo']);
 

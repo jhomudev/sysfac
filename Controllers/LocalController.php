@@ -26,10 +26,10 @@ class LocalController extends LocalModel
   // Funcion controlador para crear o editar usuario
   public function createLocalController()
   {
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $address = mainModel::clearString($_POST['tx_direccion']);
-    $type = mainModel::clearString($_POST['tx_type']);
-    $canStoreMore = mainModel::clearString($_POST['tx_canStore']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $address = MainModel::clearString($_POST['tx_direccion']);
+    $type = MainModel::clearString($_POST['tx_type']);
+    $canStoreMore = MainModel::clearString($_POST['tx_canStore']);
 
     // Validacion de campos vacios
     if (empty($name) || empty($address) || empty($type)) {
@@ -90,11 +90,11 @@ class LocalController extends LocalModel
   // Funcion controlador para crear o editar usuario
   public function editLocalController()
   {
-    $local_id = mainModel::clearString($_POST['tx_local_id']);
-    $name = mainModel::clearString($_POST['tx_nombre']);
-    $address = mainModel::clearString($_POST['tx_direccion']);
-    $type = mainModel::clearString($_POST['tx_type']);
-    $canStoreMore = mainModel::clearString($_POST['tx_canStore']);
+    $local_id = MainModel::clearString($_POST['tx_local_id']);
+    $name = MainModel::clearString($_POST['tx_nombre']);
+    $address = MainModel::clearString($_POST['tx_direccion']);
+    $type = MainModel::clearString($_POST['tx_type']);
+    $canStoreMore = MainModel::clearString($_POST['tx_canStore']);
 
     // Validacion de campos vacios
     if (empty($name) || empty($address) || empty($type)) {
