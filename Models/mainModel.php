@@ -33,7 +33,7 @@ class MainModel
   }
 
   // Desencriptación de cadenas
-  protected static function decryption(string $string): string
+  public function decryption(string $string): string
   {
     $key = hash('sha256', SECRET_KEY);
     $iv = substr(hash('sha256', SECRET_IV), 0, 16);

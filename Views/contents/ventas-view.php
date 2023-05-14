@@ -4,7 +4,7 @@
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe término a buscar">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_yellow);">Nueva venta</button>
+    <a href="<?php echo SERVER_URL; ?>/newsale" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva venta</a>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
   </div>
 </div>

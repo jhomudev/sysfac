@@ -8,7 +8,7 @@ if ($requestFetch) {
 
 class ProductController extends ProductModel
 {
-  // Función controlador para obtener los usuarios
+  // Función controlador para obtener los productos
   public function getProductsController()
   {
     $filters = [
@@ -21,7 +21,7 @@ class ProductController extends ProductModel
     return json_encode($product);
   }
 
-  // Funcion controlador para obetenr los datos de usuario
+  // Funcion controlador para obetenr los datos de producto
   public function getDataProductController()
   {
     $product_id = intval($_POST['productId']);
@@ -29,7 +29,27 @@ class ProductController extends ProductModel
     return json_encode($product);
   }
 
-  // Funcion controlador para crear o editar usuario
+  // Función controlador para obtener todos los productos en inventario
+  public function getProductsInventaryController()
+  {
+    $filters = [
+      "words" => MainModel::clearString($_POST['words']),
+      "column" => MainModel::clearString($_POST['column']),
+      "value" => MainModel::clearString($_POST['value']),
+    ];
+
+    $products_all = ProductModel::getProductsInventaryModel($filters);
+
+    foreach ($products_all as $key => $product_unit) {
+      if ($products_all[$key]['state'] == STATE_IN->stock) $products_all[$key]['state'] = 'En stock';
+      if ($products_all[$key]['state'] == STATE_IN->damaged) $products_all[$key]['state'] = 'Dañado';
+      if ($products_all[$key]['state'] == STATE_IN->sold) $products_all[$key]['state'] = 'Vendido';
+    }
+
+    return json_encode($products_all);
+  }
+
+  // Funcion controlador para crear o editar producto
   public function createProductController()
   {
     $name = MainModel::clearString($_POST['tx_nombre']);
@@ -99,7 +119,7 @@ class ProductController extends ProductModel
     return json_encode($alert);
     exit();
   }
-  // Funcion controlador para crear o editar usuario
+  // Funcion controlador para crear o editar producto
   public function editProductController()
   {
     $product_id = MainModel::clearString($_POST['tx_product_id']);
@@ -171,7 +191,7 @@ class ProductController extends ProductModel
     return json_encode($alert);
   }
 
-  // Funcion controlador para eliminar usuario
+  // Funcion controlador para eliminar producto
   public function deleteProductController()
   {
     $product_id = $_POST['tx_product_id'];

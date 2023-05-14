@@ -22,6 +22,7 @@
   box-sizing: border-box;
   font-family: var(--f_urbanist);
   letter-spacing: 0.8px;
+  text-decoration: none;
 }
 h1,
 h2,

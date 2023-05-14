@@ -42,6 +42,31 @@ class ProductModel extends MainModel
     return $product->fetch();
   }
 
+  // Funcion de obtener todos los productos en el inventario
+  protected static function getProductsInventaryModel(array $filters=[]): array
+  {
+    $words = $filters['words'];
+    $column = $filters['column'];
+    $value = $filters['value'];
+
+    if (empty($words) && empty($column) && empty($value)) $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number,pa.price_purchase,pa.state, p.name AS product_name,l.name AS local_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN locations l ON l.local_id=pa.local_id ORDER BY p.product_id DESC");
+    else {
+      if (!empty($words)) {
+        $words = "%$words%";
+        $products_all = MainModel::connect()->prepare("SELECT p.product_id, pa.serial_number,pa.price_purchase,pa.state, p.name AS product_name,l.name AS local_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN locations l ON l.local_id=pa.local_id WHERE p.name LIKE :words OR pa.serial_number LIKE :words ORDER BY p.product_id DESC");
+        $products_all->bindParam(":words", $words, PDO::PARAM_STR);
+      };
+      if (!empty($column) && isset($value)) {
+        $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number,pa.price_purchase,pa.state, p.name AS product_name,l.name AS local_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN categories c ON p.category_id = c.cat_id INNER JOIN locations l ON l.local_id=pa.local_id WHERE pa.$column=:value ORDER BY p.product_id DESC");
+        $products_all->bindParam(":value", $value, PDO::PARAM_STR);
+      }
+    }
+
+    $products_all->execute();
+
+    return $products_all->fetchAll();
+  }
+
   // Funcion para crear producto
   protected static function createProductModel(array $data): bool
   {
