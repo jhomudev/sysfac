@@ -26,6 +26,14 @@ $locations = [
 $locations = json_decode(json_encode($locations));
 define("LOCATION", $locations);
 
+// Tipos de operaciones
+$type_operation = [
+  "output" => 1,
+  "input" => 0,
+];
+$type_operation = json_decode(json_encode($type_operation));
+define("OPERATION", $type_operation);
+
 // Estados en el sistema
 $state = [
   "active" => 1,
@@ -33,3 +41,12 @@ $state = [
 ];
 $state = json_decode(json_encode($state));
 define("STATE", $state);
+
+// estados de un producto en inventario
+$state_in = [
+  "stock" => 1,
+  "damaged" => 2,
+  "sold" => 3,
+];
+$state_in = json_decode(json_encode($state_in));
+define("STATE_IN", $state_in);
