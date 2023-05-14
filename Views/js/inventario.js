@@ -2,9 +2,8 @@
 const inputSearch = document.getElementById("inputSearch");
 const allBtn = document.getElementById("all");
 const filterSelect = document.querySelectorAll(".filter__select");
+const rowsCount = document.getElementById("rowsCount");
 const tbody = document.querySelector(".table__tbody");
-const modalForm = document.getElementById("modalForm");
-const modalDetails = document.getElementById("modalDetails");
 
 function habilityDOM() {
   const formCreate = document.querySelector(".form__create");
@@ -45,76 +44,39 @@ function habilityDOM() {
   });
 }
 
-// Peticion para llenar campos de formulario para edición
-async function setDataProduct(productId) {
-  try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`productId=${productId}`),
-    });
-    const res = await req.json();
-
-    document.querySelector(".form__title").textContent = "Modificar usuario";
-    document.querySelector(".form__submit").value = "Modificar";
-    document.getElementById("productId").value = res.product_id;
-    document.getElementById("nombre").value = res.name;
-    document.getElementById("precio").value = res.price_sale;
-    document.getElementById("unidad").value = res.unit;
-    document.getElementById("linkImage").value = res.link_image;
-  } catch (error) {
-    console.log(erro);
-  }
-}
-// Peticion para llenar campos de formulario para edición
-async function setDetailsProduct(productId) {
-  try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`productId=${productId}`),
-    });
-    const res = await req.json();
-
-    document.getElementById("userDNI").textContent = res.dni;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // peticion para traer productos
-async function getProducts(words = "", column = "", value = "") {
+async function getProductsInventary(words = "", column = "", value = "") {
   try {
     const formData = new FormData();
     formData.append("words", words);
     formData.append("column", column);
     formData.append("value", value);
-    const req = await fetch(`${serverURL}/fetch/getProductsFetch.php`, {
-      method: "POST",
-      body: formData,
-    });
+    const req = await fetch(
+      `${serverURL}/fetch/getProductsInventaryFetch.php`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const res = await req.json();
+    rowsCount.innerHTML = res.length;
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((product) => {
         tbody.innerHTML += `
         <tr>
-          <td><img src="${product.link_image}" alt="${product.name}"></td>
-          <td>${product.name}</td>
-          <td>S/ ${product.price_sale}</td>
-          <td>${product.unit}</td>
-          <td>${product.category}</td>
-          <td>${product.is_active ? "SI" : "NO"}</td>
+          <td>${product.product_name}</td>
+          <td>${product.serial_number}</td>
+          <td>S/ ${product.price_purchase}</td>
+          <td>${product.local_name}</td>
+          <td>${product.state}</td>
           <td class="actions">
-            <button data-key="${
-              product.product_id
-            }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-            <form action="${serverURL}/fetch/deleteProductFetch.php" method="POST" class="formFetch formDelete">
-              <input type="hidden" value="${
-                product.product_id
-              }" name="tx_product_id">
-              <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+            <form action="${serverURL}/fetch/.php" method="POST" class="formFetch formDelete">
+              <input type="hidden" value="${product.product_id}" name="tx_product_id">
+              <button class="actions__btn" style="--cl:var(--c_sky);" title="Cambiar estado"><i class="ph ph-swap"></i></button>
             </form>
             <form action="${serverURL}/fetch/.php" method="POST" class="formFetch formDelete">
-              <input type="text" value="${product.product_id}" name="tx_product_id">
+              <input type="hidden" value="${product.product_id}" name="tx_product_id">
               <button class="actions__btn" style="--cl:var(--c_green);" title="Añadir a venta"><i class="ph ph-shopping-cart"></i></button>
             </form>
           </td>
@@ -139,17 +101,19 @@ async function getProducts(words = "", column = "", value = "") {
   }
 }
 
-getProducts();
+getProductsInventary();
 
-inputSearch.addEventListener("input", () => getProducts(inputSearch.value));
+inputSearch.addEventListener("input", () =>
+  getProductsInventary(inputSearch.value)
+);
 allBtn.addEventListener("click", () => {
-  getProducts();
+  getProductsInventary();
   filterSelect.forEach((filter) => {
     filter.selectedIndex = -1;
   });
 });
 filterSelect.forEach((filter) => {
   filter.addEventListener("change", () => {
-    getProducts("", filter.dataset.col, filter.value);
+    getProductsInventary("", filter.dataset.col, filter.value);
   });
 });
