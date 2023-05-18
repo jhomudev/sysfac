@@ -51,5 +51,13 @@ $state_in = [
 $state_in = json_decode(json_encode($state_in));
 define("STATE_IN", $state_in);
 
+// estados de un producto en inventario
+$type_proof = [
+  "boleta" => 1,
+  "factura" => 2,
+];
+$type_proof = json_decode(json_encode($type_proof));
+define("TYPE_PROOF", $type_proof);
+
 // IGV
 define("IGV", 18);

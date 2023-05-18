@@ -206,7 +206,7 @@ textarea {
   left: 60%;
   width: 15px;
   height: 15px;
-  display:grid;
+  display: grid;
   place-items: center;
   background: var(--c_yellow);
   border-radius: 50%;
@@ -386,13 +386,13 @@ textarea {
   color: var(--c_green);
 }
 
-.productsBox{
+.productsBox {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%,150px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
   gap: 1em;
 }
-.product{
+.product {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -400,30 +400,30 @@ textarea {
   background-color: var(--c_dark);
   text-align: center;
 }
-.product:hover{
+.product:hover {
   filter: brightness(130%);
 }
-.product__imgBox{
+.product__imgBox {
   width: 100%;
 }
-.product__img{
+.product__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.product_name{
-  display:grid;
+.product_name {
+  display: grid;
   place-items: center;
   text-transform: uppercase;
   font-size: small;
   color: var(--c_lightPurple);
   height: 4em;
 }
-.product_price{
+.product_price {
   font-size: large;
   color: var(--c_orange);
 }
-.form__input__quantity{
+.form__input__quantity {
   display: block;
   width: 3em;
   max-height: 0;
@@ -434,13 +434,13 @@ textarea {
   font-weight: 800;
   font-size: large;
   text-align: center;
-  transition: all .3s;
+  transition: all 0.3s;
 }
-.product:hover .form__input__quantity{
+.product:hover .form__input__quantity {
   padding: 5px 10px;
   max-height: 4em;
 }
-.product__form__submit{
+.product__form__submit {
   width: 100%;
   padding: 3px 10px;
   background-color: var(--c_sky);
@@ -628,12 +628,12 @@ textarea {
   background-color: #fff;
   overflow: auto;
 }
-.form {
+.form__part {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
+  text-align: left;
 }
 .form__btnclose,
 .details__btnclose {
@@ -671,6 +671,7 @@ textarea {
   width: 100%;
   border-radius: 4px;
   border: 1px solid var(--c_sky);
+  padding: 7px 10px;
 }
 .form__legend,
 .form__label {
@@ -681,7 +682,6 @@ textarea {
 }
 .form__input {
   width: 100%;
-  padding: 7px 10px;
   font-size: small;
   background-color: transparent;
   border: none;
@@ -707,6 +707,10 @@ textarea {
 }
 .form__submit:hover {
   filter: brightness(90%);
+}
+.search_client_box {
+  display: flex;
+  gap: 5px;
 }
 .details__table {
   width: 100%;
@@ -736,7 +740,7 @@ textarea {
   gap: 1em;
   padding: 1em;
 }
-.cart__modal.show{
+.cart__modal.show {
   display: flex;
 }
 .cart {

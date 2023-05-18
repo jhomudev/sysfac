@@ -18,17 +18,20 @@ class ClientController extends ClientModel
   // Funcion controlador para obtener los datos de cliente
   public function getDataClientController()
   {
-    if (empty($_POST['tx_search']) || empty($_POST['tx_dni_ruc'])) {
+    $type_proof = intval($_POST['typeProof']);
+    $dni_ruc = intval($_POST['dni_ruc']);
+
+    if (empty($type_proof) || empty($dni_ruc)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
-        "text" => "Por favor. Complete los campos.",
+        "text" => "Por favor. Elija el tipo de comprobante de pago y escriba el RUC/DNI.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
     }
-    if (!(is_string($_POST['tx_search'])) || !(is_numeric($_POST['tx_dni_ruc']))) {
+    if (is_string($type_proof) || !(is_numeric($dni_ruc))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Datos inválidos",

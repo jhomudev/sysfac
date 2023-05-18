@@ -3,13 +3,14 @@ const cartModal = document.querySelector(".cart__modal");
 const cart = document.getElementById("cart");
 const cartTitle = document.querySelector(".cart__title");
 const toggleCartModal = document.querySelectorAll(".toggleShowCart");
+const typeProof = document.getElementById("typeProof");
 const cartCount = document.querySelector(".cart_icon_count");
 const totalPay = document.getElementById("totalPay");
 const totalImport = document.getElementById("totalImport");
 const discount = document.getElementById("discount");
 const discountvalue = document.getElementById("discountvalue");
 const btnApplyDiscount = document.getElementById("btnApplyDiscount");
-const formClientSearch = document.querySelector(".client__search");
+const btnClientSearch = document.getElementById("btnClientSearch");
 
 document.addEventListener("click", function (e) {
   if (
@@ -52,7 +53,6 @@ async function getDataCart() {
     };
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
-    console.log(res);
 
     cartCount.innerHTML = res.items_count;
     discount.innerHTML = "S/" + res.discount.toFixed(2);
@@ -159,28 +159,34 @@ btnApplyDiscount.addEventListener("click", (e) => {
 });
 
 // Poner placeholder de acuerdo al dato x el q buscar cliente
-selectSearchFor.addEventListener(
-  "change",
-  () => (dni_ruc.placeholder = "Escriba el " + selectSearchFor.value)
-);
+typeProof.addEventListener("change", () => {
+  let doc = "";
+  if (typeProof.value == 1) doc = "DNI";
+  else if (typeProof.value == 2) doc = "RUC";
+
+  dni_ruc.placeholder = "Escriba el " + doc;
+});
 
 // funcion getDataclient
 async function getDataClient(e) {
   try {
     e.preventDefault();
 
-    const config = {
+    const req = await fetch(`${serverURL}/fetch/getDataClientFetch.php`, {
       method: "POST",
-      body: new FormData(e.target),
-    };
-    const req = await fetch(
-      `${serverURL}/fetch/getDataClientFetch.php`,
-      config
-    );
+      body: new URLSearchParams(
+        `typeProof=${typeProof.value}&dni_ruc=${dni_ruc.value}`
+      ),
+    });
     const res = await req.json();
+    console.log(res);
     if (res.Alert) {
       alertFetch(res);
-      document.getElementById("form__client").reset();
+      document.getElementById("clientId").value = "";
+      document.getElementById("clientDNI").value = "";
+      document.getElementById("clientRUC").value = "";
+      document.getElementById("clientNames").value = "";
+      document.getElementById("clientLastnames").value = "";
     }
     if (!res.Alert && typeof res === "object") {
       document.getElementById("clientId").value = res.person_id;
@@ -194,4 +200,4 @@ async function getDataClient(e) {
   }
 }
 
-formClientSearch.addEventListener("submit", (e) => getDataClient(e));
+btnClientSearch.addEventListener("click", (e) => getDataClient(e));

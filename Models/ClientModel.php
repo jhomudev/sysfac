@@ -23,11 +23,10 @@ class ClientModel extends MainModel
   }
 
   // Funcion de obtener datos de un cliente mediamte su dni o RUC
-  protected static function getDataClientModel(array $data):mixed
+  protected static function getDataClientModel(array $data): mixed
   {
-
-    $column = $data['tx_search'];
-    $dni_ruc = $data['tx_dni_ruc'];
+    $column = ($data['typeProof'] == TYPE_PROOF->boleta) ? $column = "dni" : (($data['typeProof'] == TYPE_PROOF->factura) ? $column = "RUC" : "");
+    $dni_ruc = $data['dni_ruc'];
     $query = "SELECT * FROM persons WHERE $column=:dni_ruc";
     $client = MainModel::connect()->prepare($query);
     $client->bindParam(":dni_ruc", $dni_ruc);
