@@ -77,7 +77,7 @@
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Mínimo en en inventario*</legend>
-        <input type="text" class="form__input" id="unidad" name="tx_minimo" mayus>
+        <input type="number" class="form__input" id="minimo" name="tx_minimo" number>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Imagen</legend>

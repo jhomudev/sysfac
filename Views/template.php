@@ -39,7 +39,7 @@ $vista = $IV->getViewController();
     }
   ?>
     <div class="container_all">
-      <?php include "./views/inc/menuBar.php"; ?>
+      <?php include_once "./views/inc/menuBar.php"; ?>
       <div class="col_2">
         <?php include "./views/inc/header.php"; ?>
         <main class="view">
@@ -51,9 +51,86 @@ $vista = $IV->getViewController();
           ?>
         </main>
       </div>
+      <div class="cart__modal">
+        <h2 class="cart__title">Carrito de venta</h2>
+        <div class="cart" id="cart">
+          <div class="cart__tableBox">
+            <table class="cart__table">
+              <thead class="cart__table__thead">
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th></th>
+              </thead>
+              <tbody class="cart__table__tbody" id="cartTableItems">
+                <!-- peticion -->
+              </tbody>
+            </table>
+          </div>
+          <div class="cart__details">
+            <table class="cart__details_table cart__table">
+              <thead class="cart__table__thead">
+                <tr>
+                  <th>Importe</th>
+                  <th>Descuento</th>
+                  <th>IGV</th>
+                  <th>Importe total</th>
+                </tr>
+              </thead>
+              <tbody class="cart__table__tbody">
+                <tr>
+                  <td id="totalImport">00</td>
+                  <td id="discount">00</td>
+                  <td><?php echo IGV; ?>%</td>
+                  <td id="totalPay">00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="cart__client">
+            <h2 class="cart__subtitle">Datos del cliente</h2>
+            <form action="<?php echo SERVER_URL; ?>/fetch/getDataClientFetch.php" method="POST" class="client__search">
+              <select name="tx_search" id="selectSearchFor" class="client__select">
+                <option value="RUC">RUC</option>
+                <option value="dni" selected>DNI</option>
+              </select>
+              <input type="text" class="client__inputSearch" name="tx_dni_ruc" id="dni_ruc" placeholder="Escriba el dni" number required>
+              <button class="client__btnSearch"><i class="ph ph-magnifying-glass"></i></button>
+            </form>
+            <form action="" class="form__client" id="form__client">
+              <input type="text" name="tx_cliente_id" id="clientId">
+              <div class="form__group">
+                <label for="clientDNI" class="form__label">DNI</label>
+                <input type="text" name="tx_cliente_dni" id="clientDNI" class="form__input" minlength="8" maxlength="8" number>
+              </div>
+              <div class="form__group">
+                <label for="clientRUC" class="form__label">RUC</label>
+                <input type="text" name="tx_cliente_RUC" id="clientRUC" class="form__input" minlength="11" maxlength="11" number>
+              </div>
+              <div class="form__group">
+                <label for="clientNames" class="form__label">Nombres</label>
+                <input type="text" name="tx_cliente_names" id="clientNames" class="form__input" mayus>
+              </div>
+              <div class="form__group">
+                <label for="clientLastnames" class="form__label">Apellidos</label>
+                <input type="text" name="tx_cliente_lastnames" id="clientLastnames" class="form__input" mayus>
+              </div>
+              <hr>
+              <div class="form__group">
+                <label for="discount" class="form__label">DESCUENTO S/</label>
+                <input type="number" name="tx_cliente_discount" id="discountvalue" class="form__input" placeholder="Descuento a aplicar" decimal>
+              </div>
+              <button class="form__submit" id="btnApplyDiscount" style="background:var(--c_sky);">Aplicar descuento</button>
+              <input type="text" class="form__submit" value="Generar venta">
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="<?php echo SERVER_URL; ?>/Views/js/main.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/alerts.js"></script>
+    <script src="<?php echo SERVER_URL; ?>/Views/js/cart.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/<?php echo $vista; ?>.js"></script>
   <?php
     include "./Views/inc/logout.php";
