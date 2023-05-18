@@ -60,23 +60,10 @@ async function setDataProduct(productId) {
     document.getElementById("nombre").value = res.name;
     document.getElementById("precio").value = res.price_sale;
     document.getElementById("unidad").value = res.unit;
+    document.getElementById("minimo").value = res.inventary_min;
     document.getElementById("linkImage").value = res.link_image;
   } catch (error) {
     console.log(erro);
-  }
-}
-// Peticion para llenar campos de formulario para edición
-async function setDetailsProduct(productId) {
-  try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`productId=${productId}`),
-    });
-    const res = await req.json();
-
-    document.getElementById("userDNI").textContent = res.dni;
-  } catch (error) {
-    console.log(error);
   }
 }
 
@@ -114,7 +101,9 @@ async function getProducts(words = "", column = "", value = "") {
               <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
             </form>
             <form action="${serverURL}/fetch/.php" method="POST" class="formFetch formDelete">
-              <input type="text" value="${product.product_id}" name="tx_product_id">
+              <input type="hidden" value="${
+                product.product_id
+              }" name="tx_product_id">
               <button class="actions__btn" style="--cl:var(--c_green);" title="Añadir a venta"><i class="ph ph-shopping-cart"></i></button>
             </form>
           </td>
