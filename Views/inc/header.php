@@ -1,5 +1,6 @@
 <header class="header">
   <span class="header__welcome">Hola <b><?php echo $_SESSION['username'] ?></b></span>
+  <div class="cart_icon toggleShowCart"><span class="cart_icon_count"></span><i class="ph ph-shopping-cart"></i></div>
   <div class="user">
     <div class="user__icon" id="btnUserbar">
       <i class="ph ph-user-circle"></i>

@@ -204,12 +204,17 @@ textarea {
   position: absolute;
   bottom: 60%;
   left: 60%;
+  width: 15px;
+  height: 15px;
+  display:grid;
+  place-items: center;
   background: var(--c_yellow);
-  padding: 2px 4px;
   border-radius: 50%;
   color: var(--c_dark);
   font-size: xx-small;
+  font-weight: 600;
   cursor: pointer;
+  visibility: hidden;
 }
 .user__details {
   position: absolute;
@@ -396,7 +401,7 @@ textarea {
   text-align: center;
 }
 .product:hover{
-  filter: brightness(120%);
+  filter: brightness(130%);
 }
 .product__imgBox{
   width: 100%;
@@ -418,13 +423,31 @@ textarea {
   font-size: large;
   color: var(--c_orange);
 }
+.form__input__quantity{
+  display: block;
+  width: 3em;
+  max-height: 0;
+  outline: none;
+  margin: auto;
+  background-color: var(--c_lightPurple);
+  color: var(--c_dark);
+  font-weight: 800;
+  font-size: large;
+  text-align: center;
+  transition: all .3s;
+}
+.product:hover .form__input__quantity{
+  padding: 5px 10px;
+  max-height: 4em;
+}
 .product__form__submit{
   width: 100%;
-  padding: 5px 10px;
+  padding: 3px 10px;
   background-color: var(--c_sky);
   border-radius: 4px;
   color: var(--c_dark);
-  font-weight: 600;
+  font-weight: bold;
+  font-size: x-large;
 }
 
 .table__numrows {

@@ -50,3 +50,6 @@ $state_in = [
 ];
 $state_in = json_decode(json_encode($state_in));
 define("STATE_IN", $state_in);
+
+// IGV
+define("IGV", 18);
