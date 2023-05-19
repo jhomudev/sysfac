@@ -10,12 +10,22 @@
 </div>
 <div class="filterBox">
   <div class="filter">
-    <h2 class="filter__for">Todos</h2>
+    <h2 class="filter__for" id="all">Todos</h2>
   </div>
   <div class="filter">
     <label for="fil_almacen" class="filter__for">Usuario: </label>
     <select name="tx_almacen" id="fil_almacen" class="filter__select">
       <option selected disabled>--</option>
+      <?php
+      require_once "./Controllers/UserController.php";
+      $IU = new UserController();
+      $users = $IU->getUsersController();
+      $users = json_decode($users);
+
+      foreach ($users as $key => $user) {
+        echo '<option value="' . $user->user_id . '">' . $user->names . ' ' . $user->lastnames . '</option>';
+      }
+      ?>
       <option value="">Tulio Ormeño</option>
       <option value="">Isaias Morlaes</option>
       <option value="">Lucía Navarro</option>
@@ -32,82 +42,14 @@
     <thead class="table__thead">
       <th>Usuario</th>
       <th>Cliente</th>
-      <th>Descuento</th>
       <th>Importe total</th>
+      <th>Descuento</th>
+      <th>Total pagado</th>
       <th>Fecha</th>
-      <th>Acciones</th>
+      <th>Detalles</th>
     </thead>
     <tbody class="table__tbody">
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <a href="" target="_blank" class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</a>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>Julian Casabalncas</td>
-        <td>S/25</td>
-        <td>S/250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
+      <!-- peticion -->
     </tbody>
   </table>
 </div>

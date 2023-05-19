@@ -490,7 +490,7 @@ textarea {
 }
 .table__tbody td {
   padding: 10px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   height: 6em;
 }
 .table__tbody img {

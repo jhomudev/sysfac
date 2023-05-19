@@ -10,14 +10,23 @@ if ($requestFetch) {
 
 class SellController extends SellModel
 {
-  // Función controlador para obtener los usuarios
+  // Función controlador para obtener los ventas
   public function getSellsController()
   {
     $sells = SellModel::getSellsModel();
     return json_encode($sells);
   }
 
-  // Funcion controlador para crear o editar usuario
+  // Función controlador para obtener datos de una venta
+  public function getSellDataController()
+  {
+
+    $sell = SellModel::getDataSellModel($_GET['proof_code']);
+
+    return json_encode($sell);
+  }
+
+  // Funcion controlador para crear o editar venta
   public function generateSellController()
   {
     $ICart = new CartController();

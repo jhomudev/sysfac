@@ -15,36 +15,8 @@ async function getSells(words = "", column = "", value = "") {
       method: "POST",
       body: formData,
     });
-    const res = await req.json();
-    if (res.length > 0) {
-      tbody.innerHTML = "";
-      res.forEach((sell) => {
-        tbody.innerHTML += `
-        <tr>
-          <td>${sell.user}</td>
-          <td>${sell.client}</td>
-          <td>S/${sell.total_import}</td>
-          <td>S/${sell.discount}</td>
-          <td>S/${sell.total_pay}</td>
-          <td>${sell.created_at}</td>
-          <td class="actions">
-            <a href="${serverURL}/fetch/proof.php" target="_blank" class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-newspaper-clipping"></i></a>
-          </td>
-        </tr>
-        `;
-      });
-    } else {
-      tbody.innerHTML = `
-      <tr>
-        <td aria-colspan="7" colspan="7">
-          <div class="empty">
-            <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
-          </div>
-          <p class="empty__message">No hay registros</p>
-        </td>
-      </tr>
-    `;
-    }
+    const res = await req.text();
+    tbody.innerHTML = res;
   } catch (error) {
     console.log(error);
   }
