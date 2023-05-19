@@ -70,5 +70,6 @@ class CartModel extends MainModel
   public function clearModel()
   {
     $_SESSION['cart']['items'] = array();
+    $_SESSION['cart']['discount'] = 0.00;
   }
 }

@@ -115,8 +115,21 @@ class CartController extends CartModel
 
   public function applyDiscountController()
   {
-    // floatval($_POST['discount'])
     $discount = ($_POST['discount'] != "") ? floatval($_POST['discount']) : "";
+
+    // Validacion de carrito vacio
+    $items = json_decode($this->getItemsController(), true);
+    if (count($items) < 1) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Carrito vacio",
+        "text" => "No se puede aplicar el descuento porque no hay ningún producto en el carrito.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
 
     // validacion de descuento
     if ($discount == "" || is_string($discount)) {
@@ -160,16 +173,17 @@ class CartController extends CartModel
   public function getTotalImportController()
   {
     $total_import = CartModel::getTotalModel();
-    return number_format($total_import, 2);
+    return round($total_import, 2);
   }
 
   public function getTotalPayController()
   {
     $total_import = CartModel::getTotalModel();
     $discount = $_SESSION['cart']['discount'];
-    $total = $total_import - $discount;
-    $total = $total + ((IGV / 100) * $total);
-    return number_format($total, 2);
+    $total = $total_import + ((IGV / 100) * $total_import);
+    $total = $total - $discount;
+    $total = round($total, 2);
+    return $total;
   }
 
   public function getDataCartController()
@@ -190,6 +204,6 @@ class CartController extends CartModel
 
   public function clearController()
   {
-    $stm = CartModel::clearModel();
+    CartModel::clearModel();
   }
 }
