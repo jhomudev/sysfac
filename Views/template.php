@@ -3,6 +3,11 @@ $requestFetch = false;
 require_once "./Controllers/ViewController.php";
 $IV = new ViewController();
 $vista = $IV->getViewController();
+
+if ($vista == "proof") {
+  include_once "./Views/contents/$vista-view.php";
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,7 +30,7 @@ $vista = $IV->getViewController();
 <body>
   <?php
   if ($vista == "login" || $vista == "404") {
-    require_once "./Views/contents/$vista-view.php";
+    include_once "./Views/contents/$vista-view.php";
   } else {
     session_name(NAMESESSION);
     session_start();
@@ -39,14 +44,18 @@ $vista = $IV->getViewController();
     }
   ?>
     <div class="container_all">
-      <?php include_once "./views/inc/menuBar.php"; ?>
+      <?php include_once "./views/inc/menuBar.php";
+      // require "./Controllers/CartController.php";
+      // $ICart = new CartController();
+      // print_r($ICart->getDataCartController());
+      ?>
       <div class="col_2">
-        <?php include "./views/inc/header.php"; ?>
+        <?php include_once "./views/inc/header.php"; ?>
         <main class="view">
           <?php
           // Condicionales para las viostas dependiendo del tipo de usuario
-          if (($_SESSION['type'] == USER_TYPE->vendedor) && ($vista == "ventas" || $vista == "clientes" || $vista == "dashboard")) include  "./Views/contents/" . $vista . "-view.php";
-          else if ($_SESSION['type'] == USER_TYPE->superadmin || $_SESSION['type'] == USER_TYPE->admin) include  "./Views/contents/" . $vista . "-view.php";
+          if (($_SESSION['type'] == USER_TYPE->vendedor) && ($vista == "ventas" || $vista == "clientes" || $vista == "dashboard")) include_once  "./Views/contents/" . $vista . "-view.php";
+          else if ($_SESSION['type'] == USER_TYPE->superadmin || $_SESSION['type'] == USER_TYPE->admin) include_once  "./Views/contents/" . $vista . "-view.php";
           else echo "No tiene acceso a este módulo";
           ?>
         </main>
