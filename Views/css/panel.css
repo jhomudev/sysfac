@@ -103,7 +103,7 @@ textarea {
   gap: 5px;
   list-style: none;
 }
-.nav__link {
+.nav_item_link {
   position: relative;
   display: block;
   padding: 13px;
@@ -112,13 +112,13 @@ textarea {
   color: var(--c_lightPurple);
   display: flex;
   gap: 15px;
-  font-size: 14px;
+  font-size: 14px !important;
   cursor: pointer;
 }
-.nav__link.selected {
+.nav_item_link.selected {
   background-color: var(--c_dark);
 }
-.nav__link.selected::before {
+.nav_item_link.selected::before {
   content: "";
   position: absolute;
   right: 0;
@@ -129,7 +129,7 @@ textarea {
   border-radius: 0 0 50% 0;
   box-shadow: 2px 4px 0 var(--c_dark);
 }
-.nav__link.selected::after {
+.nav_item_link.selected::after {
   content: "";
   position: absolute;
   right: 0;
@@ -140,10 +140,10 @@ textarea {
   border-radius: 0 50% 0 0;
   box-shadow: 2px -4px 0 var(--c_dark);
 }
-.nav__link:hover {
+.nav_item_link:hover {
   filter: brightness(90%);
 }
-.nav__link i {
+.nav_item_link i {
   font-size: large;
 }
 .logout {
@@ -151,7 +151,7 @@ textarea {
   padding: 10px 0;
   border-top: 1px solid var(--c_dark);
 }
-.logout .nav__link {
+.logout .nav_item_link {
   border-radius: 5px;
 }
 .col_2 {
@@ -751,7 +751,8 @@ textarea {
     "details details details";
   gap: 1em;
   width: 100%;
-  padding: 2em;
+  height: 100%;
+  padding: 1em;
   background-color: #fff;
   border-radius: 3px;
   overflow: auto;
@@ -812,7 +813,9 @@ textarea {
   padding: 10px 20px;
 }
 .cart__subtitle {
-  margin-bottom: 5px;
+  font-size: small;
+  font-weight: 600;
+  /* margin-bottom: 5px; */
 }
 .client__search {
   width: 100%;
@@ -820,7 +823,6 @@ textarea {
   align-items: center;
   flex-wrap: nowrap;
   gap: 5px;
-  margin-bottom: 1em;
 }
 .client__select,
 .client__inputSearch {

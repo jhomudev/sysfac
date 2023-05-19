@@ -45,7 +45,7 @@
   // });
 
   // seleccion de item del menu segun la URL
-  const itemsNavSelect = document.querySelectorAll(".nav__link");
+  const itemsNavSelect = document.querySelectorAll(".nav_item_link");
 
   function selectItem() {
     const URL = window.location.href;

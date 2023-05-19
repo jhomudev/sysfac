@@ -1,23 +1,20 @@
 // Funcion showModal cart
 const cartModal = document.querySelector(".cart__modal");
 const cart = document.getElementById("cart");
-const cartTitle = document.querySelector(".cart__title");
+// const cartTitle = document.querySelector(".cart__title");
 const toggleCartModal = document.querySelectorAll(".toggleShowCart");
 const typeProof = document.getElementById("typeProof");
-const cartCount = document.querySelector(".cart_icon_count");
+const cartCount = document.querySelectorAll(".cart_icon_count");
 const totalPay = document.getElementById("totalPay");
 const totalImport = document.getElementById("totalImport");
 const discount = document.getElementById("discount");
 const discountvalue = document.getElementById("discountvalue");
 const btnApplyDiscount = document.getElementById("btnApplyDiscount");
 const btnClientSearch = document.getElementById("btnClientSearch");
+const formSell = document.getElementById("formSell");
 
 document.addEventListener("click", function (e) {
-  if (
-    cartModal.contains(e.target) &&
-    !cart.contains(e.target) &&
-    !cartTitle.contains(e.target)
-  ) {
+  if (cartModal.contains(e.target) && !cart.contains(e.target)) {
     cartModal.classList.remove("show");
   }
 });
@@ -54,16 +51,20 @@ async function getDataCart() {
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
 
-    cartCount.innerHTML = res.items_count;
+    cartCount.forEach(
+      (cartCountItem) => (cartCountItem.innerHTML = res.items_count)
+    );
     discount.innerHTML = "S/" + res.discount.toFixed(2);
     totalPay.innerHTML = "S/" + res.total_pay;
     totalImport.innerHTML = "S/" + res.total_import;
 
-    if (res.items_count < 1) {
-      cartCount.style.visibility = "hidden";
-    } else {
-      cartCount.style.visibility = "visible";
-    }
+    cartCount.forEach((cartCountItem) => {
+      if (res.items_count < 1) {
+        cartCountItem.style.visibility = "hidden";
+      } else {
+        cartCountItem.style.visibility = "visible";
+      }
+    });
   } catch (error) {
     console.log(error);
   }
@@ -179,7 +180,6 @@ async function getDataClient(e) {
       ),
     });
     const res = await req.json();
-    console.log(res);
     if (res.Alert) {
       alertFetch(res);
       document.getElementById("clientId").value = "";
@@ -201,3 +201,6 @@ async function getDataClient(e) {
 }
 
 btnClientSearch.addEventListener("click", (e) => getDataClient(e));
+
+// generate sell
+formSell.addEventListener("submit", (e) => sendFormFetch(e));
