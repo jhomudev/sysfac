@@ -35,13 +35,22 @@ class SellModel extends MainModel
 
   protected static function getDataSellModel(string $proof_code): array
   {
-    $sell = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+    // DATOS DEL SELL
+    $sell = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client, p.dni FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
     INNER JOIN users u ON u.user_id=s.user_id 
     WHERE s.proof_code=:proof_code");
     $sell->bindParam(":proof_code", $proof_code, PDO::PARAM_STR);
     $sell->execute();
 
-    return $sell->fetch();
+    $sell_arr = $sell->fetch();
+
+    // DATOS DE LAS OPERACIONES
+    $ops = MainModel::executeQuerySimple("SELECT * FROM operations WHERE sell_code='" . $sell_arr['sell_code'] . "'");
+    $ops = $ops->fetchAll();
+
+    $sell_arr['ops'] = $ops;
+
+    return $sell_arr;
   }
 
   // Funcion para generar venta

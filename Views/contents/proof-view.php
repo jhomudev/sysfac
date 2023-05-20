@@ -19,8 +19,8 @@ $componentes_url = parse_url($url_actual);
 // Obtenemos los valores de los parámetros
 parse_str($componentes_url['query'], $parametros);
 
-$proof_code = $parametros['proof_code'];
-$proof_code = $IS->decryption($proof_code);
+$proof_code_enc = $parametros['proof_code'];
+$proof_code = $IS->decryption($proof_code_enc);
 $_GET['proof_code'] = $proof_code;
 
 $sell = json_decode($IS->getSellDataController());
@@ -33,48 +33,42 @@ $sell = json_decode($IS->getSellDataController());
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo SERVER_URL; ?>/assets/iconLogo.png" type="image/x-icon">
-    <title>Boleta_<?php echo $sell->proof_code; ?></title>
+    <link rel="shortcut icon" href="<?php echo SERVER_URL; ?>/Views/assets/iconLogo.png" type="image/x-icon">
+    <title>Sysfac_<?php echo $sell->proof_code; ?></title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: "arial";
-        }
+        @import url(http://localhost/sysfac/Views/css/main.css);
 
         .hoja {
             position: relative;
             width: 660px;
             height: 1000px;
-            padding: 40px 70px;
+            padding: 3em;
+            margin: auto;
         }
 
-        .empresa {
+        .company {
             width: 100%;
             height: auto;
         }
 
-        .empresa img {
+        .company__img {
             width: 270px;
             height: 240px;
         }
 
-        .empresa h1 {
-            font-size: 18px;
-            font-family: "Century Gothic";
-            color: #010127;
+        .company__name {
+            font-size: medium;
         }
 
-        .boleta {
+        .proof {
             position: absolute;
             outline: 2px solid #0f0f0f;
-            right: 30px;
+            right: 0;
             top: 40px;
             margin: 70px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 1em;
             text-align: center;
             padding: 30px 60px;
             border-radius: 10px;
@@ -84,164 +78,143 @@ $sell = json_decode($IS->getSellDataController());
             -o-border-radius: 10px;
         }
 
-        table.datos-cliente {
+        table.data__sell {
             margin: 20px 0;
-            font-size: 15px;
-            text-transform: uppercase;
+            font-size: small;
         }
 
-        table.detalle {
+        table.table__sell__items {
             width: 100%;
-            font-size: 13px;
+            font-size: small;
+            border: 1px solid gray;
             border-collapse: collapse;
-            text-transform: uppercase;
+            text-align: center;
         }
 
-        table.detalle th {
+        table.table__pay,
+        table.table__sell__items {
+            font-size: x-small;
+        }
+
+        table.table__pay th,
+        table.table__sell__items th {
             padding: 7px 20px;
-            background: #22a7be;
-            color: white;
-            border: 2px solid #2370b8;
+            border: 1px solid gray;
         }
 
-        table.detalle td {
+        table.table__pay td,
+        table.table__sell__items td {
             padding: 5px;
+            border: 1px solid gray;
         }
 
-        .seccion-2 {
-            position: relative;
-            width: 100%;
-            margin: 20px 0;
-            font-size: 14px;
-        }
-
-        .seccion-2 .aviso {
-            width: 50%;
-            text-align: justify;
-            float: left;
-            margin: 0 20px 0 0;
-        }
-
-        .seccion-2 table.paga {
-            width: 45%;
-            height: 50px;
-            font-size: 15px;
+        table.table__pay {
+            border-collapse: collapse;
+            width: 250px;
+            font-size: small;
             float: right;
+            margin-top: 2em;
         }
 
-        .seccion-2 table.paga td {
-            padding: 4px;
+        table.table__pay th {
+            text-align: left;
         }
 
-        .seccion-2 table.paga .impo {
-            background: rgb(232, 238, 241);
+        table.table__pay td {
+            padding: 4px 1em;
         }
 
-        .seccion-2 table.paga .t-impo {
-            background: rgb(210, 229, 238);
-        }
-
-        .tex-right {
-            text-align: right;
-        }
-
-        footer {
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            text-align: justify;
-            font-size: 14px;
-            margin: 250px 0 0 0;
+            text-align: center;
+            font-size: small;
         }
+
     </style>
 </head>
 
 <body>
     <div class="hoja">
-        <div class="empresa">
-            <img src="http://localhost/transportes/assets/img/logo.png" alt="logo">
-            <h1>EMPRESA DE TRANSPORTE CARGO TRANSPORT S.A.</h1>
+        <div class="company">
+            <img src="<?php echo SERVER_URL; ?>/Views/assets/logoMax.png" class="company__img" alt="logo Sysfac">
+            <h1 class="company__name">SYSTEC CORP PERÚ S.A.C.</h1>
         </div>
-        <div class="boleta">
-            <p>R.U.C. 20154673626 </p>
-            <p>BOLETA DE VENTA </p>
-            <strong>BTVI-0000</strong>
+        <div class="proof">
+            <p style="color:red;">R.U.C. 20608004590 </p>
+            <p><?php echo ($sell->proof_type == TYPE_PROOF->boleta) ? "BOLETA" : "FACTURA" ?> DE VENTA </p>
+            <strong style="color:blue;"><?php echo $sell->proof_code; ?></strong>
         </div>
-        <table class="datos-cliente">
-            <tr height="25">
+        <table class="data__sell">
+            <tr>
                 <td>Cliente </td>
-                <td>:&nbsp;&nbsp; </td>
+                <td>:&nbsp;&nbsp; <?php echo $sell->client; ?></td>
             </tr>
-            <tr height="25">
+            <tr>
                 <td>DNI </td>
-                <td>:&nbsp;&nbsp;</td>
+                <td>:&nbsp;&nbsp; <?php echo $sell->dni; ?></td>
             </tr>
-            <tr height="25">
-                <td>Fecha </td>
-                <td>:&nbsp;&nbsp; </td>
+            <tr>
+                <td>Fecha de emisión </td>
+                <td>:&nbsp;&nbsp; <?php echo date("d-m-Y", strtotime($sell->created_at)); ?></td>
             </tr>
         </table>
-        <table class="detalle">
-            <th colspan="2">DETALLE</th>
-            <th>IMPORTE</th>
+        <table class="table__sell__items">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>CANTIDAD</th>
+                    <th>P.U.</th>
+                    <th>IMPORTE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($sell->ops as $key => $op) {
+                    $op = json_decode(json_encode($op));
+                    echo '
+                        <tr>
+                            <td>' . sprintf("%02d", $key + 1) . '</td>
+                            <td style="text-align:left;">' . MainModel::executeQuerySimple("SELECT name FROM products WHERE product_id=" . $op->product_id)->fetchColumn() . '</td>
+                            <td>' . $op->quantity . '</td>
+                            <td>S/' . $op->price . '</td>
+                            <td>S/' . $op->import . '</td>
+                        </tr>
+                        ';
+                }
+                ?>
+            </tbody>
+        </table>
+
+        <table class="table__pay">
             <tr>
-                <td>SERVICIO DE TRANPORTE DE PASAJEROS</td>
-                <td>RUTA : </td>
-                <td class="tex-right">S/ </td>
+                <th>Subtotal</th>
+                <td> S/ <?php echo $sell->total_import; ?></td>
             </tr>
             <tr>
-                <td>FECHA DE VIAJE:</td>
-                <td>HORA: &nbsp;&nbsp;&nbsp; ASIENTO : </td>
-                <td></td>
+                <th>IGV 18%</th>
+                <td> S/ <?php echo $sell->total_import * 0.18; ?></td>
             </tr>
             <tr>
-                <td>PASAJERO:</td>
-                <td></td>
-                <td></td>
+                <th>Descuento</th>
+                <td> S/ <?php echo $sell->discount; ?></td>
             </tr>
             <tr>
-                <td>DNI:</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2">EMBARQUE : TERMINAL DE LA CIUDAD</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2">DESEMBARQUE : TERMINAL DE LA CIUDAD </td>
-                <td></td>
+                <th>Importe total</th>
+                <td> S/ <?php echo $sell->total_pay; ?></td>
             </tr>
         </table>
-        <div class="seccion-2">
-            <div class="aviso">
-                <p>EL PASAJERO deberá presentarse 45 minutos antes de la hora de su viaje para entregar su equipaje. El boleto no puedes ser postergado.</p>
-                <p>Cualquier cambio deberá ser solicitado de manera presencial y hasta 6 horas antes de la hora de viaje impresa en el boleto, previo integro en caso de incremento de tarifa. Después de la hora de partida del bus, no habrá lugar a realizar cambios ni devolución de dinero.</p>
-            </div>
-            <table class="paga">
-                <tr>
-                    <td class="t-impo"><strong>SUBTOTAL</strong> </td>
-                    <td class="impo tex-right"> S/ <?php echo $monto; ?></td>
-                </tr>
-                <tr>
-                    <td class="t-impo"><strong>DESCUENTO</strong> </td>
-                    <td class="impo tex-right"> S/ 0.00</td>
-                </tr>
-                <tr>
-                    <td class="t-impo"><strong>IGV 18%</strong> </td>
-                    <td class="impo tex-right"> S/</td>
-                </tr>
-                <tr>
-                    <td class="t-impo"><strong>IMPORTE TOTAL</strong></td>
-                    <td class="impo tex-right"> S/ </td>
-                </tr>
-            </table>
-        </div>
-        <footer>
-            La hora de embarque en escala es referencial, ya que estando el bus en tránsito esta sujeto a factores ajenos de transporte. Al recibir el presente DOCUMENTO, acepta todos los términos y condiciones del contrato de transporte publicado en esta boleta. Debe imprimir este documento y presentarlo al momento del embarque.
+        <footer class="footer">
+            <p>Representación impresa de la proof electrónica.<?php echo date("d-m-Y") ?> Código Hash: <?php echo $proof_code_enc; ?></p>
         </footer>
     </div>
 </body>
 
 </html>
+
 <?php
 $html = ob_get_clean();
 // echo $html;
