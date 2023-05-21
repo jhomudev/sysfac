@@ -59,5 +59,13 @@ $type_proof = [
 $type_proof = json_decode(json_encode($type_proof));
 define("TYPE_PROOF", $type_proof);
 
+// addfor
+$add_for = [
+  "quantity" => 1,
+  "serial_number" => 2,
+];
+$add_for = json_decode(json_encode($add_for));
+define("ADD_FOR", $add_for);
+
 // IGV
 define("IGV", 18);

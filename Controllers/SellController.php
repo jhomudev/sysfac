@@ -75,6 +75,7 @@ class SellController extends SellModel
       return json_encode($alert);
       exit();
     }
+    
     // Generar codigo de comprobante
     $last_id = MainModel::executeQuerySimple("SELECT sell_id FROM sells WHERE sell_id=(SELECT MAX(sell_id) FROM sells)")->fetchColumn(); // Implementa esta función para obtener el último número de boleta
 

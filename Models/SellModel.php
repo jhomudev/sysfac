@@ -85,13 +85,15 @@ class SellModel extends MainModel
       // Insercion a tabla operations
       foreach ($cart_items as $key => $item) {
         $stm_op = MainModel::connect()->prepare("INSERT INTO 
-        operations(product_id,price, quantity, import, sell_code)
-        VALUES(:product_id, :price, :quantity, :import, :sell_code)");
+        operations(product_id,serial_number,price, quantity, import,details, sell_code)
+        VALUES(:product_id,:serial_number, :price, :quantity, :import,:details, :sell_code)");
 
         $stm_op->bindParam(":product_id", $item['product_id'], PDO::PARAM_INT);
+        $stm_op->bindParam(":serial_number", $item['serial_number'], PDO::PARAM_STR);
         $stm_op->bindParam(":price", $item['price'], PDO::PARAM_STR);
         $stm_op->bindParam(":quantity", $item['quantity'], PDO::PARAM_INT);
         $stm_op->bindParam(":import", $item['total'], PDO::PARAM_STR);
+        $stm_op->bindParam(":details", $item['details'], PDO::PARAM_STR);
         $stm_op->bindParam(":sell_code", $sell_data['sell_code'], PDO::PARAM_STR);
 
         $OK = $stm_op->execute();

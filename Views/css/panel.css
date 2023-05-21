@@ -425,23 +425,6 @@ textarea {
   font-size: large;
   color: var(--c_orange);
 }
-.form__input__quantity {
-  display: block;
-  width: 3em;
-  max-height: 0;
-  outline: none;
-  margin: auto;
-  background-color: var(--c_lightPurple);
-  color: var(--c_dark);
-  font-weight: 800;
-  font-size: large;
-  text-align: center;
-  transition: all 0.3s;
-}
-.product:hover .form__input__quantity {
-  padding: 5px 10px;
-  max-height: 4em;
-}
 .product__form__submit {
   width: 100%;
   padding: 3px 10px;

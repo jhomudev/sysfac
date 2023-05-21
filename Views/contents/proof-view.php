@@ -178,10 +178,11 @@ if ($sell == []) {
                 <?php
                 foreach ($sell->ops as $key => $op) {
                     $op = json_decode(json_encode($op));
+                    $ns = ($op->serial_number) ? " / N.S." . $op->serial_number : "";
                     echo '
                         <tr>
                             <td>' . sprintf("%02d", $key + 1) . '</td>
-                            <td style="text-align:left;">' . MainModel::executeQuerySimple("SELECT name FROM products WHERE product_id=" . $op->product_id)->fetchColumn() . '</td>
+                            <td style="text-align:left;">' . MainModel::executeQuerySimple("SELECT name FROM products WHERE product_id=" . $op->product_id)->fetchColumn() . $ns . '</td>
                             <td>' . $op->quantity . '</td>
                             <td>S/' . $op->price . '</td>
                             <td>S/' . $op->import . '</td>

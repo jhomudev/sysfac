@@ -31,3 +31,42 @@
 <div class="productsBox">
   <!-- peticion -->
 </div>
+<div class="modal" id="modalForm">
+  <div class="box">
+    <form action="<?php echo SERVER_URL; ?>/fetch/cartFetch.php" method="POST" class="form product__form">
+      <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
+      <h1 class="form__title">Agregar a carrito</h1>
+      <input type="hidden" class="form__input" id="productId" name="tx_product_id">
+      <fieldset class="form__group">
+        <legend class="form__legend">Producto</legend>
+        <input type="text" class="form__input" id="productName" disabled>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Precio S/</legend>
+        <input type="number" class="form__input" id="productPrice" number disabled>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Agregar por:</legend>
+        <select name="tx_add_for" id="addFor" class="form__input" required>
+          <option value="" selected disabled>--</option>
+          <option value="<?php echo ADD_FOR->quantity; ?>">Cantidad</option>
+          <option value="<?php echo ADD_FOR->serial_number; ?>">Número de serie</option>
+        </select>
+      </fieldset>
+      <fieldset class="form__group quantityBox hidden">
+        <legend class="form__legend">Cantidad</legend>
+        <input type="number" class="form__input" id="quantity" name="tx_quantity" number>
+      </fieldset>
+      <fieldset class="form__group nsBox hidden">
+        <legend class="form__legend">Número(s) de serie</legend>
+        <input type="text" class="form__input" id="ns" name="tx_ns" placeholder="Ejm: NjkJ787J88, T87Y76j88877">
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Detalles</legend>
+        <textarea class="form__input" name="tx_details" id="details" rows="6"></textarea>
+      </fieldset>
+      <input type="hidden" name="action" value="Agregar">
+      <input type="submit" value="Agregar" class="form__submit">
+    </form>
+  </div>
+</div>

@@ -63,7 +63,7 @@ async function setDataProduct(productId) {
     document.getElementById("minimo").value = res.inventary_min;
     document.getElementById("linkImage").value = res.link_image;
   } catch (error) {
-    console.log(erro);
+    console.log(error);
   }
 }
 

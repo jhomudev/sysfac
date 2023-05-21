@@ -5,14 +5,16 @@ require_once "MainModel.php";
 class CartModel extends MainModel
 {
 
-  protected static function addItemModel(int $product_id, string $name, float $price, int $quantity): bool
+  protected static function addItemModel(int $product_id, string $serial_number, string $name, float $price, int $quantity, string $details): bool
   {
     $item = [
       "product_id" => $product_id,
+      "serial_number" => $serial_number,
       "name" => $name,
       "quantity" => $quantity,
       "price" => $price,
       "total" => $quantity * $price,
+      "details" => $details,
     ];
     $lenght_before = count($_SESSION['cart']['items']);
     $lenght_after = array_push($_SESSION['cart']['items'], $item);
@@ -27,11 +29,11 @@ class CartModel extends MainModel
     }
   }
 
-  protected static function removeItemModel(int $product_id): bool
+  protected static function removeItemModel(string $col, mixed $val): bool
   {
     $lenght_before = count($_SESSION['cart']['items']);
-    $items_update = array_filter($_SESSION['cart']['items'], function ($item) use ($product_id) {
-      return $item['product_id'] != $product_id;
+    $items_update = array_filter($_SESSION['cart']['items'], function ($item) use ($col, $val) {
+      return $item[$col] != $val;
     });
 
     $_SESSION['cart']['items'] = $items_update;

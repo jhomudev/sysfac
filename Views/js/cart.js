@@ -34,8 +34,9 @@ async function addProduct(e) {
     };
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
+    console.log(res);
     alertFetch(res);
-    getDataCart;
+    getDataCart();
     getItemsCart();
   } catch (error) {
     console.log(error);
@@ -84,14 +85,17 @@ async function getItemsCart() {
       cartTableItems.innerHTML = "";
       res.forEach((item) => {
         cartTableItems.innerHTML += `
-        <tr>
+        <tr title="${item.details}">
           <td>${item.name + "" + res.length}</td>
-          <td>${item.quantity}</td>
+          <td>${item.serial_number ? item.serial_number : "N-A"}</td>
           <td>S/${item.price}</td>
+          <td>${item.quantity}</td>
           <td>S/${item.total}</td>
-          <td><button class="cart__table__btn" data-id="${
-            item.product_id
-          }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i></button></td>
+          <td><button class="cart__table__btn" data-col="${
+            item.serial_number ? "serial_number" : "product_id"
+          }" data-val ="${
+          item.serial_number ? item.serial_number : item.product_id
+        }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i></button></td>
         </tr>
         `;
       });
@@ -110,7 +114,9 @@ async function getItemsCart() {
 
     const removeBtns = document.querySelectorAll(".cart__table__btn");
     removeBtns.forEach((btn) => {
-      btn.addEventListener("click", () => removeItem(btn.dataset.id));
+      btn.addEventListener("click", () =>
+        removeItem(btn.dataset.col, btn.dataset.val)
+      );
     });
   } catch (error) {
     console.log(error);
@@ -118,14 +124,15 @@ async function getItemsCart() {
 }
 getItemsCart();
 
-async function removeItem(id) {
+async function removeItem(col, val) {
   try {
     const config = {
       method: "POST",
-      body: new URLSearchParams("action=removeItem&product_id=" + id),
+      body: new URLSearchParams(`action=removeItem&col=${col}&val=${val}`),
     };
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
+    console.log(res);
     alertFetch(res);
     getItemsCart();
     getDataCart();

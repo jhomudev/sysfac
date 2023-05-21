@@ -24,14 +24,7 @@ if (isset($_SESSION['token'])) {
         </div>
         <p class="product_name">' . $product->name . '</p>
         <span class="product_price">S/' . $product->price_sale . '</span>
-        <form class="product__form" method="POST">
-          <input type="hidden" name="product_id" value="' . $IP->encryption($product->product_id) . '">
-          <input type="hidden" name="name" value="' . $IP->encryption($product->name) . '">
-          <input type="hidden" name="price" value="' . $IP->encryption($product->price_sale) . '">
-          <input type="number" class="form__input__quantity" name="quantity" value="1" min="1" max="50" number required>
-          <input type="hidden" name="action" value="Agregar">
-          <button class="product__form__submit" type="submit"><i class="ph ph-shopping-cart-simple"></i></button>
-        </form>
+        <button class="product__form__submit toggleForm" type="submit" data-id="' . $product->product_id . '"><i class="ph ph-shopping-cart-simple"></i></button>
       </article>
       ';
     }
