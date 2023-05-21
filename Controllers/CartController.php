@@ -22,10 +22,11 @@ class CartController extends CartModel
     $product = $this->executeQuerySimple("SELECT * FROM products WHERE product_id=$product_id")->fetch();
     $name = $product['name'];
     $price = $product['price_sale'];
-    $add_for = MainModel::clearString($_POST['tx_add_for']);
+    $add_for = $product['sale_for'];
     $ns = MainModel::clearString($_POST['tx_ns']);
     $quantity = MainModel::clearString(intval($_POST['tx_quantity']));
     $details = MainModel::clearString($_POST['tx_details']);
+
 
     if ($add_for == ADD_FOR->quantity) {
 
@@ -57,6 +58,18 @@ class CartController extends CartModel
 
       $stm = CartModel::addItemModel(intval($product_id), "", $name, floatval($price), intval($quantity), $details);
     } else if ($add_for == ADD_FOR->serial_number) {
+      // validacion de campos ns vacio
+      if (empty($ns)) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Numero(s) no definido",
+          "text" => "Por favor. Ingrese los números de serie.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+
       $serial_numbers = explode(",", $ns);
 
       // validaion de si existe numero de serie y si es de ese producto

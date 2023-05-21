@@ -33,8 +33,6 @@ async function getProducts(words = "", column = "", value = "") {
         setDataProduct(btn.dataset.id);
         // resetear form
         formAdd.reset();
-        document.querySelector(".nsBox").classList.add("hidden");
-        document.querySelector(".quantityBox").classList.add("hidden");
       });
     });
   } catch (error) {
@@ -68,17 +66,19 @@ async function setDataProduct(productId) {
     document.getElementById("productId").value = res.product_id;
     document.getElementById("productName").value = res.name;
     document.getElementById("productPrice").value = res.price_sale;
+    document.getElementById("addFor").value =
+      res.sale_for == 1 ? "CANTIDAD" : "UNIDAD/N.S.";
+
+    if (res.sale_for == 1) {
+      document.querySelector(".quantityBox").classList.remove("hidden");
+      document.querySelector(".nsBox").classList.add("hidden");
+    } else if (res.sale_for == 2) {
+      document.querySelector(".nsBox").classList.remove("hidden");
+      document.querySelector(".quantityBox").classList.add("hidden");
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
-addFor.addEventListener("change", () => {
-  if (addFor.value == 1) {
-    document.querySelector(".quantityBox").classList.remove("hidden");
-    document.querySelector(".nsBox").classList.add("hidden");
-  } else if (addFor.value == 2) {
-    document.querySelector(".nsBox").classList.remove("hidden");
-    document.querySelector(".quantityBox").classList.add("hidden");
-  }
-});
+addFor.addEventListener("change", () => {});

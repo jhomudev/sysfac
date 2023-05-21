@@ -46,12 +46,8 @@
         <input type="number" class="form__input" id="productPrice" number disabled>
       </fieldset>
       <fieldset class="form__group">
-        <legend class="form__legend">Agregar por:</legend>
-        <select name="tx_add_for" id="addFor" class="form__input" required>
-          <option value="" selected disabled>--</option>
-          <option value="<?php echo ADD_FOR->quantity; ?>">Cantidad</option>
-          <option value="<?php echo ADD_FOR->serial_number; ?>">Número de serie</option>
-        </select>
+        <legend class="form__legend">Venta por:</legend>
+        <input type="text" name="tx_add_for" id="addFor" class="form__input" disabled>
       </fieldset>
       <fieldset class="form__group quantityBox hidden">
         <legend class="form__legend">Cantidad</legend>
