@@ -24,6 +24,10 @@ $proof_code = $IS->decryption($proof_code_enc);
 $_GET['proof_code'] = $proof_code;
 
 $sell = json_decode($IS->getSellDataController());
+if ($sell == []) {
+    echo "Comprobante $proof_code_enc inexistente.";
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -132,7 +136,6 @@ $sell = json_decode($IS->getSellDataController());
             text-align: center;
             font-size: small;
         }
-
     </style>
 </head>
 
@@ -208,7 +211,7 @@ $sell = json_decode($IS->getSellDataController());
             </tr>
         </table>
         <footer class="footer">
-            <p>Representación impresa de la proof electrónica.<?php echo date("d-m-Y") ?> Código Hash: <?php echo $proof_code_enc; ?></p>
+            <p>Representación impresa de comprobante electrónico. Fecha <?php echo date("d-m-Y") ?> Código Hash: <?php echo $proof_code_enc; ?></p>
         </footer>
     </div>
 </body>

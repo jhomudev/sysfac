@@ -42,13 +42,18 @@ class SellModel extends MainModel
     $sell->bindParam(":proof_code", $proof_code, PDO::PARAM_STR);
     $sell->execute();
 
-    $sell_arr = $sell->fetch();
+    if ($sell->rowCount() > 0) {
+      $sell_arr = $sell->fetch();
 
-    // DATOS DE LAS OPERACIONES
-    $ops = MainModel::executeQuerySimple("SELECT * FROM operations WHERE sell_code='" . $sell_arr['sell_code'] . "'");
-    $ops = $ops->fetchAll();
+      // DATOS DE LAS OPERACIONES
+      $ops = MainModel::executeQuerySimple("SELECT * FROM operations WHERE sell_code='" . $sell_arr['sell_code'] . "'");
+      $ops = $ops->fetchAll();
 
-    $sell_arr['ops'] = $ops;
+      $sell_arr['ops'] = $ops;
+    } else {
+      $sell_arr = [];
+    }
+
 
     return $sell_arr;
   }
