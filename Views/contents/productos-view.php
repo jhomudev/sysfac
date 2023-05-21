@@ -45,6 +45,7 @@
       <th>Nombre</th>
       <th>Precio venta</th>
       <th>Unidad</th>
+      <th>Venta por</th>
       <th>Categoría</th>
       <th>Activo</th>
       <th>Acciones</th>
@@ -92,11 +93,19 @@
           $IP = new CategoryController();
           $categories = $IP->getCategoriesController();
           $categories = json_decode($categories);
-    
+
           foreach ($categories as $key => $category) {
             echo '<option value="' . $category->cat_id . '">' . $category->name . '</option>';
           }
           ?>
+        </select>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Venta por: *</legend>
+        <select name="tx_sale_for" id="sale_for" class="form__input">
+          <option selected disabled>Asigne un valor</option>
+          <option value="<?php echo ADD_FOR->quantity ?>">Cantidad</option>
+          <option value="<?php echo ADD_FOR->serial_number  ?>">Unidad/Número de serie</option>
         </select>
       </fieldset>
       <fieldset class="form__group">

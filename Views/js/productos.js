@@ -88,6 +88,7 @@ async function getProducts(words = "", column = "", value = "") {
           <td>${product.name}</td>
           <td>S/ ${product.price_sale}</td>
           <td>${product.unit}</td>
+          <td>${product.sale_for == 1 ? "CANTIDAD" : "UNIDAD/N.S."}</td>
           <td>${product.category}</td>
           <td>${product.is_active ? "SI" : "NO"}</td>
           <td class="actions">

@@ -16,9 +16,9 @@ class ProductController extends ProductModel
       "column" => MainModel::clearString($_POST['column']),
       "value" => MainModel::clearString($_POST['value']),
     ];
-    $product = ProductModel::getProductsModel($filters);
+    $products = ProductModel::getProductsModel($filters);
 
-    return json_encode($product);
+    return json_encode($products);
   }
 
   // Funcion controlador para obetenr los datos de producto
@@ -57,11 +57,12 @@ class ProductController extends ProductModel
     $unit = MainModel::clearString($_POST['tx_unidad']);
     $min = MainModel::clearString($_POST['tx_minimo']);
     $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $sale_for = MainModel::clearString($_POST['tx_sale_for']);
     $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
 
     // Validacion de campos vacios
-    if (empty($price) || empty($name) || empty($unit) || empty($min) || empty($category) || !isset($is_active)) {
+    if (empty($price) || empty($name) || empty($unit) || empty($min) || empty($category) || !isset($is_active) || !isset($sale_for)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
@@ -93,6 +94,7 @@ class ProductController extends ProductModel
       "inventary_min" => $min,
       "price_sale" => $price,
       "unit" => $unit,
+      "sale_for" => $sale_for,
       "category_id" => $category,
       "is_active" => $is_active,
       "created_at" =>  date('Y-m-d H:i:s'),
@@ -128,11 +130,12 @@ class ProductController extends ProductModel
     $unit = MainModel::clearString($_POST['tx_unidad']);
     $min = MainModel::clearString($_POST['tx_minimo']);
     $link_image = MainModel::clearString($_POST['tx_linkImage']);
+    $sale_for = MainModel::clearString($_POST['tx_sale_for']);
     $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
 
     // Valididación de campos vacios
-    if (empty($name) || empty($price) || empty($unit) || empty($min) || empty($category) || !isset($is_active)) {
+    if (empty($name) || empty($price) || empty($unit) || empty($min) || empty($category) || !isset($is_active) || !isset($sale_for)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
@@ -165,6 +168,7 @@ class ProductController extends ProductModel
       "inventary_min" => $min,
       "price_sale" => $price,
       "unit" => $unit,
+      "sale_for" => $sale_for,
       "category_id" => $category,
       "is_active" => $is_active,
       "created_at" =>  date('Y-m-d H:i:s'),
