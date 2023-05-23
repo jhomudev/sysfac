@@ -156,8 +156,8 @@ if ($sell == []) {
                 <td>:&nbsp;&nbsp; <?php echo $sell->client; ?></td>
             </tr>
             <tr>
-                <td>DNI </td>
-                <td>:&nbsp;&nbsp; <?php echo $sell->dni; ?></td>
+                <td><?php echo $sell->proof_type == TYPE_PROOF->boleta ? "DNI" : "RUC"; ?> </td>
+                <td>:&nbsp;&nbsp; <?php echo $sell->proof_type == TYPE_PROOF->boleta ? $sell->dni : $sell->RUC; ?></td>
             </tr>
             <tr>
                 <td>Fecha de emisión </td>

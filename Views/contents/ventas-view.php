@@ -1,7 +1,7 @@
 <div class="flexnav">
   <div class="browser">
     <label for="inputSearch" class="browser__label">Buscar venta</label>
-    <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe término a buscar">
+    <input type="search" class="browser__input" id="inputSearch" placeholder="Por cliente, comprobante">
   </div>
   <div class="buttons">
     <a href="<?php echo SERVER_URL; ?>/new_sale" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva venta</a>
@@ -13,8 +13,8 @@
     <h2 class="filter__for" id="all">Todos</h2>
   </div>
   <div class="filter">
-    <label for="fil_almacen" class="filter__for">Usuario: </label>
-    <select name="tx_almacen" id="fil_almacen" class="filter__select">
+    <label for="fil_user" class="filter__for">Usuario: </label>
+    <select name="tx_user" id="fil_user" data-col="user_id" class="filter__select">
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/UserController.php";

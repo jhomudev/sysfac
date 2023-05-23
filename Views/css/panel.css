@@ -144,6 +144,7 @@ textarea {
   filter: brightness(90%);
 }
 .nav_item_link i {
+  position: relative;
   font-size: large;
 }
 .logout {
@@ -515,6 +516,7 @@ textarea {
   place-items: center;
   gap: 1em;
   padding: 1em;
+  background-color: #fff;
 }
 .empty__imgBox {
   width: min(100%, 15em);
@@ -611,7 +613,7 @@ textarea {
   background-color: #fff;
   overflow: auto;
 }
-.form{
+.form {
   display: flex;
   flex-direction: column;
   gap: 5px;
