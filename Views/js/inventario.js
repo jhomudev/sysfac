@@ -67,7 +67,6 @@ async function getProductsInventary(words = "", column = "", value = "") {
         <tr>
           <td>${product.product_name}</td>
           <td>${product.serial_number}</td>
-          <td>S/ ${product.price_purchase}</td>
           <td>${product.local_name}</td>
           <td>${product.state}</td>
           <td class="actions">
