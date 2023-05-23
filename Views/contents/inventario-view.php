@@ -62,7 +62,6 @@
     <thead class="table__thead">
       <th>Producto</th>
       <th>Número de serie</th>
-      <th>Precio de compra</th>
       <th>Local</th>
       <th>Estado</th>
       <th>Acciones</th>

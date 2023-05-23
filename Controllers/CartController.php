@@ -62,7 +62,7 @@ class CartController extends CartModel
       if (empty($ns)) {
         $alert = [
           "Alert" => "simple",
-          "title" => "Numero(s) no definido",
+          "title" => "Numero(s) de serie no definido",
           "text" => "Por favor. Ingrese los números de serie.",
           "icon" => "warning"
         ];
@@ -71,6 +71,9 @@ class CartController extends CartModel
       }
 
       $serial_numbers = explode(",", $ns);
+      $serial_numbers = array_map(function ($num) {
+        return trim($num);
+      }, $serial_numbers);
 
       // validaion de si existe numero de serie y si es de ese producto
       $arr_val = [];
@@ -89,6 +92,19 @@ class CartController extends CartModel
         return json_encode($alert);
         exit();
       }
+
+      // validacion si numeros de serie son iguales o repiten
+      if (count($serial_numbers) != count(array_unique($serial_numbers))) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Números de serie repetidos",
+          "text" => "Los números de serie no deben repetirse",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+
 
       foreach ($serial_numbers as $key => $ns) {
         $stm = CartModel::addItemModel(intval($product_id), $ns, $name, floatval($price), 1, $details);

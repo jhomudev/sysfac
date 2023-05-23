@@ -3,9 +3,11 @@
 if ($requestFetch) {
   require_once "./../Models/SellModel.php";
   require_once "./../Controllers/CartController.php";
+  require_once "./../Controllers/ClientController.php";
 } else {
   require_once "./Models/SellModel.php";
   require_once "./Controllers/CartController.php";
+  require_once "./Controllers/ClientController.php";
 }
 
 class SellController extends SellModel
@@ -52,6 +54,25 @@ class SellController extends SellModel
       exit();
     }
 
+    // Funcionalidaad de crear cliente si no existe
+    if (empty($client_id)) {
+      $IClient = new ClientController();
+      $res = json_decode($IClient->createClientController());
+
+      if ($res->icon == "warning" || $res->icon == "error") {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Error al registrar cliente" . $res->icon,
+          "text" => "No pudimos registrar al cliente. Es posible que los datos DNI/RUC ya estén registrados a otro cliente.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+
+      $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE dni =" . intval($_POST['tx_cliente_dni']))->fetchColumn();
+    }
+
     // Validacion de campos vacios
     if (empty($client_id) || empty($proof_type)) {
       $alert = [
@@ -65,17 +86,17 @@ class SellController extends SellModel
     }
 
     // Validacion del id cliente
-    if (!(is_numeric($client_id))) {
+    if (!(is_string($client_id))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Acción rechazada",
-        "text" => "Por favor. No modifiqué el código.",
+        "text" => "Por favor. No modifique el código.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
     }
-    
+
     // Generar codigo de comprobante
     $last_id = MainModel::executeQuerySimple("SELECT sell_id FROM sells WHERE sell_id=(SELECT MAX(sell_id) FROM sells)")->fetchColumn(); // Implementa esta función para obtener el último número de boleta
 

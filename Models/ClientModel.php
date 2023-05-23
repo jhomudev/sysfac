@@ -9,7 +9,7 @@ class ClientModel extends MainModel
   {
     if (!empty($words)) {
       $words = "%$words%";
-      $query = "SELECT * FROM persons WHERE CONCAT(names, ' ', lastnames) LIKE :words AND kind=" . PERSON_TYPE->client;
+      $query = "SELECT * FROM persons WHERE (CONCAT(names, ' ', lastnames) LIKE :words OR dni LIKE :words OR RUC LIKE :words) AND kind=" . PERSON_TYPE->client;
       $clients = MainModel::connect()->prepare($query);
       $clients->bindParam(":words", $words);
     } else {
@@ -40,20 +40,24 @@ class ClientModel extends MainModel
   // Funcion para crear usuarios 
   public static function createClientModel(array $data)
   {
+    $type_client = PERSON_TYPE->client;
+
     $statement = MainModel::connect()->prepare("INSERT INTO 
-    persons(dni,names,lastnames,address,phone,email,kind,created_at) 
-    VALUES(:dni,:names,:lastnames,:address,:phone,:email,:kind,:created_at)");
+    persons(person_id,dni,RUC, names, lastnames, address, phone, email, kind, created_at) 
+    VALUES(:person_id,:dni,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
 
-    $statement->bindParam(":dni", $data['dni']);
-    $statement->bindParam(":names", $data['names']);
-    $statement->bindParam(":lastnames", $data['lastnames']);
-    $statement->bindParam(":address", $data['address']);
-    $statement->bindParam(":phone", $data['phone']);
-    $statement->bindParam(":email", $data['email']);
-    $statement->bindParam(":kind", 1);
-    $statement->bindParam(":created_at", $data['created_at']);
-    $statement->execute();
+    $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+    $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
+    $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
+    $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
+    $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
+    $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
+    $statement->bindParam(":phone", $data['phone'], PDO::PARAM_INT);
+    $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
+    $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
+    $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
 
-    return $statement;
+
+    return $statement->execute();
   }
 }
