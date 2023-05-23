@@ -36,8 +36,8 @@ if (isset($_SESSION['token'])) {
       <td aria-colspan="7" colspan="7">
         <div class="empty">
           <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+          <p class="empty__message">No hay registros</p>
         </div>
-        <p class="empty__message">No hay registros</p>
       </td>
     </tr>
     ';
