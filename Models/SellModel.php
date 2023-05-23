@@ -6,37 +6,57 @@ class SellModel extends MainModel
 {
 
   // Funcion de obtener ventas
-  protected static function getSellsModel(array $filters = []): array
+  protected static function getSellsModel(array $filters): array
   {
-    // $words = $filters['words'];
-    // $column = $filters['column'];
-    // $value = $filters['value'];
+    $words = $filters['words'];
+    $column = $filters['column'];
+    $value = $filters['value'];
+    $date_start = $filters['date_start'];
+    $date_end = $filters['date_end'];
+    $date_start = (!empty($date_start) ? date('Y-m-d', strtotime($date_start)) : "");
+    $date_end = (!empty($date_end) ? date('Y-m-d', strtotime($date_end)) : "");
 
-    // if (empty($words) && empty($column) && empty($value)) $sells = MainModel::connect()->prepare("SELECT s.sell_id,s.person_id,s.user_id, s.discount,s.total, s.fecha FROM sells s INNER JOIN persons p ON p.person_id=s.person_id INNER JOIN users u ON u.user_id=s.user_id WHERE s.operation_type=" . OPERATION->output . " ORDER by s.created_at DESC");
-    // else {
-    //   if (!empty($words)) {
-    //     $words = "%$words%";
-    //     $sells = MainModel::connect()->prepare("SELECT p.sell_id,p.link_image,p.name, p.price_sell,p.unit,p.category_id,p.is_active,c.name AS category FROM sells p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER by p.sell_id DESC");
-    //     $sells->bindParam(":words", $words, PDO::PARAM_STR);
-    //   };
-    //   if (!empty($column) && isset($value)) {
-    //     $sells = MainModel::connect()->prepare("SELECT p.sell_id,p.link_image,p.name, p.price_sell,p.unit,p.category_id,p.is_active,c.name AS category FROM sells p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER by p.sell_id DESC");
-    //     $sells->bindParam(":value", $value, PDO::PARAM_STR);
-    //   }
-    // }
+    $operation_type = OPERATION->output;
 
-    $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+    if (empty($words) && empty($column) && empty($value) && empty($date_start) && empty($date_end)) $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
     INNER JOIN users u ON u.user_id=s.user_id 
-    WHERE s.operation_type=1 ORDER by s.sell_id DESC");
+    WHERE s.operation_type=$operation_type ORDER by s.sell_id DESC");
+    else {
+      if (!empty($words)) {
+        $words = "%$words%";
+        $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+        INNER JOIN users u ON u.user_id=s.user_id 
+        WHERE s.operation_type=$operation_type AND (CONCAT(p.names,' ',p.lastnames) LIKE :words OR s.proof_code LIKE :words) ORDER by s.sell_id DESC");
+        $sells->bindParam(":words", $words, PDO::PARAM_STR);
+      }
+
+      if (!empty($date_end) || !empty($date_start)) {
+        $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+        INNER JOIN users u ON u.user_id=s.user_id 
+        WHERE s.operation_type=$operation_type AND s.created_at BETWEEN :date_start AND :date_end ORDER by s.sell_id DESC");
+        $sells->bindParam(":date_start", $date_start, PDO::PARAM_STR);
+        $sells->bindParam(":date_end", $date_end, PDO::PARAM_STR);
+      }
+
+      if (!empty($column) && !empty($value)) {
+        $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+        INNER JOIN users u ON u.user_id=s.user_id 
+        WHERE s.operation_type=" . $operation_type . " AND u.$column=:value ORDER by s.sell_id DESC");
+        $sells->bindParam(":value", $value, PDO::PARAM_STR);
+      }
+    }
+
     $sells->execute();
 
     return $sells->fetchAll();
+
+
   }
 
   protected static function getDataSellModel(string $proof_code): array
   {
     // DATOS DEL SELL
-    $sell = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client, p.dni FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
+    $sell = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client, p.dni, p.RUC FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
     INNER JOIN users u ON u.user_id=s.user_id 
     WHERE s.proof_code=:proof_code");
     $sell->bindParam(":proof_code", $proof_code, PDO::PARAM_STR);

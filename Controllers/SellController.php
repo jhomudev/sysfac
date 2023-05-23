@@ -15,7 +15,14 @@ class SellController extends SellModel
   // Función controlador para obtener los ventas
   public function getSellsController()
   {
-    $sells = SellModel::getSellsModel();
+    $filters=[
+      'words'=>$_POST['words'],
+      'column'=>$_POST['column'],
+      'value'=>$_POST['value'],
+      'date_start'=>$_POST['date_start'],
+      'date_end'=>$_POST['date_end'],
+    ];
+    $sells = SellModel::getSellsModel($filters);
     return json_encode($sells);
   }
 
@@ -62,7 +69,7 @@ class SellController extends SellModel
       if ($res->icon == "warning" || $res->icon == "error") {
         $alert = [
           "Alert" => "simple",
-          "title" => "Error al registrar cliente" . $res->icon,
+          "title" => "Error al registrar cliente",
           "text" => "No pudimos registrar al cliente. Es posible que los datos DNI/RUC ya estén registrados a otro cliente.",
           "icon" => "warning"
         ];

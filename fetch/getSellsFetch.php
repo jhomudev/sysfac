@@ -23,7 +23,7 @@ if (isset($_SESSION['token'])) {
         <td>S/' . $sell->total_import . '</td>
         <td>S/' . $sell->discount . '</td>
         <td>S/' . $sell->total_pay . '</td>
-        <td>' . $sell->created_at . '</td>
+        <td>' . date('d-m-Y', strtotime($sell->created_at)) . '</td>
         <td class="actions">
           <a href="' . SERVER_URL . '/proof?proof_code=' . $IS->encryption($sell->proof_code) . '" target="_blank" class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-newspaper-clipping"></i></a>
         </td>
