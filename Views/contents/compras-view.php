@@ -4,21 +4,44 @@
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe término a buscar">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_yellow);">Nueva compra</button>
+    <a href="<?php echo SERVER_URL ;?>/new_purchase" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva compra</a>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
   </div>
 </div>
 <div class="filterBox">
   <div class="filter">
-    <h2 class="filter__for">Todos</h2>
+    <h2 class="filter__for" id="all">Todos</h2>
   </div>
   <div class="filter">
-    <label for="fil_almacen" class="filter__for">Proveedor: </label>
-    <select name="tx_almacen" id="fil_almacen" class="filter__select">
+    <label for="fil_proveedor" class="filter__for">Proveedor: </label>
+    <select name="tx_proveedor" id="fil_proveedor" class="filter__select">
       <option selected disabled>--</option>
-      <option value="">EPSON SERIES</option>
-      <option value="">Logitech</option>
-      <option value="">System S.A.C.</option>
+      <?php
+      require_once "./Controllers/SupplierController.php";
+      $IU = new SupplierController();
+      $users = $IU->getSuppliersController();
+      $users = json_decode($users);
+
+      foreach ($users as $key => $user) {
+        echo '<option value="' . $user->supplier_id . '">' . $user->name . '</option>';
+      }
+      ?>
+    </select>
+  </div>
+  <div class="filter">
+    <label for="fil_usuario" class="filter__for">Usuario: </label>
+    <select name="tx_usuario" id="fil_usuario" class="filter__select">
+      <option selected disabled>--</option>
+      <?php
+      require_once "./Controllers/UserController.php";
+      $IU = new UserController();
+      $users = $IU->getUsersController();
+      $users = json_decode($users);
+
+      foreach ($users as $key => $user) {
+        echo '<option value="' . $user->user_id . '">' . $user->names . ' ' . $user->lastnames . '</option>';
+      }
+      ?>
     </select>
   </div>
   <div class="filter">
@@ -32,83 +55,14 @@
     <thead class="table__thead">
       <th>Responsable</th>
       <th>Proveedor</th>
-      <th>Importe total</th>
+      <th>Importe</th>
+      <th>Descuento</th>
+      <th>Total</th>
       <th>Fecha</th>
       <th>Acciones</th>
     </thead>
     <tbody class="table__tbody">
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tulio Ormeño</td>
-        <td>System S.A.C.</td>
-        <td>S/1250</td>
-        <td>13-02-2021</td>
-        <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
-        </td>
-      </tr>
+      <!-- peticion -->
     </tbody>
   </table>
 </div>

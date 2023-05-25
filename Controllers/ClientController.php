@@ -15,7 +15,7 @@ class ClientController extends ClientModel
     return json_encode($clients);
   }
 
-  // Funcion controlador para obtener los datos de cliente
+  //? INNECESARIO CREO Funcion controlador para obtener los datos de cliente
   public function getDataClientController()
   {
     $type_proof = intval($_POST['typeProof']);
@@ -59,15 +59,19 @@ class ClientController extends ClientModel
     return json_encode($client);
   }
 
-  // Funcion controlador para crear o editar cliente
+  // Funcion controlador para crear cliente
   public function createClientController()
   {
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $link_image = MainModel::clearString($_POST['tx_linkImage']);
-    $description = MainModel::clearString($_POST['tx_descripcion']);
+    $dni = isset($_POST['tx_cliente_dni']) ? MainModel::clearString($_POST['tx_cliente_dni']) : "";
+    $RUC = isset($_POST['tx_cliente_RUC']) ? MainModel::clearString($_POST['tx_cliente_RUC']) : "";
+    $names = MainModel::clearString($_POST['tx_cliente_names']);
+    $lastnames = MainModel::clearString($_POST['tx_cliente_lastnames']);
+    $address = isset($_POST['tx_cliente_address']) ? MainModel::clearString($_POST['tx_cliente_address']) : "";
+    $phone = isset($_POST['tx_cliente_phone']) ? MainModel::clearString($_POST['tx_cliente_phone']) : "";
+    $email = isset($_POST['tx_cliente_email']) ? MainModel::clearString($_POST['tx_cliente_email']) : "";
 
     // Validacion de campos vacios
-    if (empty($name)) {
+    if (empty($names) || empty($lastnames || (empty($dni) && empty($RUC)))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
@@ -78,15 +82,15 @@ class ClientController extends ClientModel
       exit();
     }
 
-    // validación de duplicidad de nombre
-    $sql_verify = MainModel::executeQuerySimple("SELECT * FROM clients WHERE name='$name'");
+    // validación de duplicidad de dni o RUC
+    $sql_verify = MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND (dni=" . intval($dni) . " OR RUC=" . intval($RUC) . ")");
     $clients = $sql_verify->fetchAll();
     $duplicated = count($clients) > 0;
     if ($duplicated) {
       $alert = [
         "Alert" => "simple",
         "title" => "Duplicidad de datos",
-        "text" => "El nombre de cada categoría es único.",
+        "text" => "El DNI/RUC ya está registrado a otro cliente.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -94,9 +98,14 @@ class ClientController extends ClientModel
     }
 
     $data = [
-      "link_image" => $link_image,
-      "name" => $name,
-      "description" => $description,
+      "person_id" => uniqid("C-") . strtotime("now"),
+      "dni" => $dni,
+      "RUC" => $RUC,
+      "names" => $names,
+      "lastnames" => $lastnames,
+      "address" => $address,
+      "phone" => $phone,
+      "email" => $email,
       "created_at" =>  date('Y-m-d H:i:s'),
     ];
 
@@ -105,15 +114,15 @@ class ClientController extends ClientModel
     if ($stm) {
       $alert = [
         "Alert" => "alert&reload",
-        "title" => "Categoría creada",
-        "text" => "La categortía se creó exitosamente.",
+        "title" => "Cliente registrado",
+        "text" => "El cliente se registró exitosamente.",
         "icon" => "success"
       ];
     } else {
       $alert = [
         "Alert" => "simple",
         "title" => "Opps. Ocurrió un problema",
-        "text" => "La categoría no se creó.",
+        "text" => "No pudimos registrar al cliente.",
         "icon" => "error"
       ];
     }

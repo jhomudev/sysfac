@@ -12,9 +12,9 @@ class ProductController extends ProductModel
   public function getProductsController()
   {
     $filters = [
-      "words" => MainModel::clearString($_POST['words']),
-      "column" => MainModel::clearString($_POST['column']),
-      "value" => MainModel::clearString($_POST['value']),
+      "words" => isset($_POST['words']) ? MainModel::clearString($_POST['words']) : "",
+      "column" => isset($_POST['column']) ? MainModel::clearString($_POST['column']) : "",
+      "value" => isset($_POST['value:""']) ? MainModel::clearString($_POST['value']) : "",
     ];
     $products = ProductModel::getProductsModel($filters);
 

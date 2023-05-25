@@ -6,7 +6,7 @@ class ViewModel
   // Modelo para obteber las vistas
   protected static function getViewModel($view)
   {
-    $listOk = ["proof","new_sale", "inventario", "productos", "ventas", "usuarios", "compras", "locales", "proveedores", "dashboard", "categorias", "clientes"];
+    $listOk = ["proof","new_sale","new_purchase", "inventario", "productos", "ventas", "usuarios", "compras", "locales", "proveedores", "dashboard", "categorias", "clientes"];
     if (in_array($view, $listOk)) {
       if (is_file("./Views/contents/" . $view . "-view.php")) $content = $view;
       else $content = "404";
