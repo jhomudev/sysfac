@@ -15,7 +15,7 @@ class ClientController extends ClientModel
     return json_encode($clients);
   }
 
-  //? INNECESARIO CREO Funcion controlador para obtener los datos de cliente
+  // Funcion controlador para obtener los datos de cliente
   public function getDataClientController()
   {
     $type_proof = intval($_POST['typeProof']);

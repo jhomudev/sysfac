@@ -60,6 +60,7 @@ class SellController extends SellModel
       return json_encode($alert);
       exit();
     }
+    
     // validacion campos vacios
     if (empty($_POST['tx_proof_type']) || empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
       $alert = [
@@ -71,7 +72,7 @@ class SellController extends SellModel
       return json_encode($alert);
       exit();
     }
-    // !SEGUIMOS EN EL ERROR YA DE CLIENTE. EN DB SE INSERTA CERO SI DNI O RUC ESTA VACIO
+
     // Funcionalidaad de crear cliente si no existe
     if (empty($client_id)) {
       if ($proof_type == TYPE_PROOF->boleta && empty($_POST['tx_client_dni'])) {
