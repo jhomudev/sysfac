@@ -62,13 +62,13 @@ class ClientController extends ClientModel
   // Funcion controlador para crear cliente
   public function createClientController()
   {
-    $dni = isset($_POST['tx_cliente_dni']) ? MainModel::clearString($_POST['tx_cliente_dni']) : "";
-    $RUC = isset($_POST['tx_cliente_RUC']) ? MainModel::clearString($_POST['tx_cliente_RUC']) : "";
-    $names = MainModel::clearString($_POST['tx_cliente_names']);
-    $lastnames = MainModel::clearString($_POST['tx_cliente_lastnames']);
-    $address = isset($_POST['tx_cliente_address']) ? MainModel::clearString($_POST['tx_cliente_address']) : "";
-    $phone = isset($_POST['tx_cliente_phone']) ? MainModel::clearString($_POST['tx_cliente_phone']) : "";
-    $email = isset($_POST['tx_cliente_email']) ? MainModel::clearString($_POST['tx_cliente_email']) : "";
+    $dni = isset($_POST['tx_client_dni']) && !empty($_POST['tx_client_dni']) ? MainModel::clearString($_POST['tx_client_dni']) : "";
+    $RUC = isset($_POST['tx_client_RUC']) && !empty($_POST['tx_client_RUC']) ? MainModel::clearString($_POST['tx_client_RUC']) : "";
+    $names = MainModel::clearString($_POST['tx_client_names']);
+    $lastnames = MainModel::clearString($_POST['tx_client_lastnames']);
+    $address = isset($_POST['tx_client_address']) ? MainModel::clearString($_POST['tx_client_address']) : "";
+    $phone = isset($_POST['tx_client_phone']) ? MainModel::clearString($_POST['tx_client_phone']) : "";
+    $email = isset($_POST['tx_client_email']) ? MainModel::clearString($_POST['tx_client_email']) : "";
 
     // Validacion de campos vacios
     if (empty($names) || empty($lastnames || (empty($dni) && empty($RUC)))) {
@@ -83,8 +83,19 @@ class ClientController extends ClientModel
     }
 
     // validación de duplicidad de dni o RUC
-    $sql_verify = MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND (dni=" . intval($dni) . " OR RUC=" . intval($RUC) . ")");
-    $clients = $sql_verify->fetchAll();
+    if (!empty($dni) && !empty($RUC)) {
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND (dni=$dni OR RUC=$RUC)");
+      $clients = $sql_verify->fetchAll();
+    }
+    if (!empty($dni) && empty($RUC)) {
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND dni=$dni");
+      $clients = $sql_verify->fetchAll();
+    }
+    if (empty($dni) && !empty($RUC)) {
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND RUC=$RUC");
+      $clients = $sql_verify->fetchAll();
+    }
+
     $duplicated = count($clients) > 0;
     if ($duplicated) {
       $alert = [

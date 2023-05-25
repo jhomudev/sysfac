@@ -110,19 +110,19 @@ if ($vista == "proof") {
                   <input type="hidden" name="tx_client_id" id="clientId">
                   <fieldset class="form__group">
                     <legend class="form__legend">DNI</legend>
-                    <input type="text" name="tx_cliente_dni" id="clientDNI" class="form__input" minlength="8" maxlength="8" number>
+                    <input type="text" name="tx_client_dni" id="clientDNI" class="form__input" minlength="8" maxlength="8" number>
                   </fieldset>
                   <fieldset class="form__group">
                     <legend class="form__legend">RUC</legend>
-                    <input type="text" name="tx_cliente_RUC" id="clientRUC" class="form__input" minlength="11" maxlength="11" number>
+                    <input type="text" name="tx_client_RUC" id="clientRUC" class="form__input" minlength="11" maxlength="11" number>
                   </fieldset>
                   <fieldset class="form__group">
                     <legend class="form__legend">Nombres</legend>
-                    <input type="text" name="tx_cliente_names" id="clientNames" class="form__input" mayus>
+                    <input type="text" name="tx_client_names" id="clientNames" class="form__input" mayus>
                   </fieldset>
                   <fieldset class="form__group">
                     <legend class="form__legend">Apellidos</legend>
-                    <input type="text" name="tx_cliente_lastnames" id="clientLastnames" class="form__input" mayus>
+                    <input type="text" name="tx_client_lastnames" id="clientLastnames" class="form__input" mayus>
                   </fieldset>
                 </div>
               </div>

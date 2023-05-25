@@ -15,12 +15,12 @@ class SellController extends SellModel
   // Función controlador para obtener los ventas
   public function getSellsController()
   {
-    $filters=[
-      'words'=>$_POST['words'],
-      'column'=>$_POST['column'],
-      'value'=>$_POST['value'],
-      'date_start'=>$_POST['date_start'],
-      'date_end'=>$_POST['date_end'],
+    $filters = [
+      'words' => $_POST['words'],
+      'column' => $_POST['column'],
+      'value' => $_POST['value'],
+      'date_start' => $_POST['date_start'],
+      'date_end' => $_POST['date_end'],
     ];
     $sells = SellModel::getSellsModel($filters);
     return json_encode($sells);
@@ -60,9 +60,41 @@ class SellController extends SellModel
       return json_encode($alert);
       exit();
     }
-
+    // validacion campos vacios
+    if (empty($_POST['tx_proof_type']) || empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Campos vacios",
+        "text" => "Complete los datos del cliente.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+    // !SEGUIMOS EN EL ERROR YA DE CLIENTE. EN DB SE INSERTA CERO SI DNI O RUC ESTA VACIO
     // Funcionalidaad de crear cliente si no existe
     if (empty($client_id)) {
+      if ($proof_type == TYPE_PROOF->boleta && empty($_POST['tx_client_dni'])) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Campos vacios",
+          "text" => "Usted generará una boleta de venta, escriba el DNI del cliente.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+      if ($proof_type == TYPE_PROOF->factura && empty($_POST['tx_client_RUC'])) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Campos vacios",
+          "text" => "Usted generará una factura, escriba el RUC del cliente.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+
       $IClient = new ClientController();
       $res = json_decode($IClient->createClientController());
 
@@ -77,7 +109,11 @@ class SellController extends SellModel
         exit();
       }
 
-      $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE dni =" . intval($_POST['tx_cliente_dni']))->fetchColumn();
+      if ($proof_type == TYPE_PROOF->boleta) {
+        $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE dni =" . intval($_POST['tx_client_dni']))->fetchColumn();
+      } else if ($proof_type == TYPE_PROOF->factura) {
+        $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE RUC =" . intval($_POST['tx_client_RUC']))->fetchColumn();
+      }
     }
 
     // Validacion de campos vacios

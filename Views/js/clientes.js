@@ -15,12 +15,12 @@ async function getClients(words = "") {
       res.forEach((client) => {
         tbody.innerHTML += `
         <tr>
-          <td>${client.dni}</td>
-          <td>${(client.RUC)?client.RUC:'N.A.'}</td>
+          <td>${client.dni ? client.dni : "--"}</td>
+          <td>${client.RUC ? client.RUC : "--"}</td>
           <td>${client.names} ${client.lastnames}</td>
-          <td>${client.phone}</td>
-          <td>${client.email}</td>
-          <td>${client.address}</td>
+          <td>${client.phone ? client.phone : "--"}</td>
+          <td>${client.email ? client.email : "--"}</td>
+          <td>${client.address ? client.address : "--"}</td>
         </tr>
         `;
       });

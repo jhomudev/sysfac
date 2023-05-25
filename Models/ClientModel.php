@@ -42,20 +42,55 @@ class ClientModel extends MainModel
   {
     $type_client = PERSON_TYPE->client;
 
-    $statement = MainModel::connect()->prepare("INSERT INTO 
-    persons(person_id,dni,RUC, names, lastnames, address, phone, email, kind, created_at) 
-    VALUES(:person_id,:dni,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+    if (!empty($data['RUC']) && !empty($data['dni'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      persons(person_id,dni,RUC, names, lastnames, address, phone, email, kind, created_at) 
+      VALUES(:person_id,:dni,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
 
-    $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
-    $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
-    $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
-    $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
-    $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
-    $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
-    $statement->bindParam(":phone", $data['phone'], PDO::PARAM_INT);
-    $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
-    $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
-    $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
+      $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
+      $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
+      $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
+      $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
+      $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
+      $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
+      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
+      $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+    }
+
+    if (empty($data['RUC'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      persons(person_id,dni, names, lastnames, address, phone, email, kind, created_at) 
+      VALUES(:person_id,:dni, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+
+      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
+      $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
+      $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
+      $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
+      $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
+      $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
+      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
+      $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+    }
+
+    if (empty($data['dni'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      persons(person_id,RUC, names, lastnames, address, phone, email, kind, created_at) 
+      VALUES(:person_id,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+
+      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
+      $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
+      $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
+      $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
+      $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
+      $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
+      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
+      $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+    }
+
 
 
     return $statement->execute();
