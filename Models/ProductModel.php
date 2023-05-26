@@ -31,11 +31,12 @@ class ProductModel extends MainModel
   }
 
   // Funcion de obtener productos
-  protected static function getDataProductModel(int $product_id): array
+  protected static function getDataProductModel(mixed $product_id_or_name): array
   {
-    $query = "SELECT * FROM products WHERE product_id=:product_id";
+    $query = "SELECT * FROM products WHERE product_id=:product_id OR name=:name";
     $product = MainModel::connect()->prepare($query);
-    $product->bindParam(":product_id", $product_id);
+    $product->bindParam(":product_id", $product_id_or_name);
+    $product->bindParam(":name", $product_id_or_name);
 
     $product->execute();
 
