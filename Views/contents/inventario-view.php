@@ -79,7 +79,7 @@
       <div class="form__imgBox">
         <img src="https://cdn-icons-png.flaticon.com/512/7078/7078310.png" class="form__img" alt="producto">
       </div>
-      <input type="hidden" id="productId" name="tx_product_id">
+      <input type="hidden" id="productIdName" name="tx_product_id">
       <fieldset class="form__group">
         <legend class="form__legend">Nombre*</legend>
         <input type="text" class="form__input" id="nombre" name="tx_nombre">

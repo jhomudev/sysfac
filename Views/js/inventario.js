@@ -24,7 +24,7 @@ function habilityDOM() {
       toggleShowElement(modalForm);
       document.querySelector(".form__title").textContent = "Agregar producto";
       document.querySelector(".form__submit").value = "Agregar";
-      document.getElementById("productId").value = "";
+      document.getElementById("productIdName").value = "";
       formCreate.reset();
     });
   });
@@ -60,8 +60,8 @@ async function getProductsInventary(words = "", column = "", value = "") {
     );
     const res = await req.json();
     rowsCount.innerHTML = res.length;
+    tbody.innerHTML = "";
     if (res.length > 0) {
-      tbody.innerHTML = "";
       res.forEach((product) => {
         tbody.innerHTML += `
         <tr>

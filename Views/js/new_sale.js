@@ -55,15 +55,15 @@ filterSelect.forEach((filter) => {
 });
 
 // peticion getdataproduct
-async function setDataProduct(productId) {
+async function setDataProduct(productIdName) {
   try {
     const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
       method: "POST",
-      body: new URLSearchParams(`productId=${productId}`),
+      body: new URLSearchParams(`productIdName=${productIdName}`),
     });
     const res = await req.json();
 
-    document.getElementById("productId").value = res.product_id;
+    document.getElementById("productIdName").value = res.product_id;
     document.getElementById("productName").value = res.name;
     document.getElementById("productPrice").value = res.price_sale;
     document.getElementById("addFor").value =

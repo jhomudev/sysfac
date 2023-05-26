@@ -16,8 +16,9 @@ class SupplierModel extends MainModel
   // Funcion de obtener datos de un proveedor
   protected static function getDataSupplierModel(int $supplier_id): array
   {
-    $supplier = MainModel::connect()->prepare("SELECT * FROM suppliers WHERE supplier_id = :supplier_id");
+    $supplier = MainModel::connect()->prepare("SELECT * FROM suppliers WHERE supplier_id = :supplier_id OR RUC=:RUC");
     $supplier->bindParam("supplier_id", $supplier_id);
+    $supplier->bindParam("RUC", $supplier_id);
     $supplier->execute();
 
     return $supplier->fetch();

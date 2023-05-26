@@ -25,7 +25,7 @@ function habilityDOM() {
       toggleShowElement(modalForm);
       document.querySelector(".form__title").textContent = "Agregar producto";
       document.querySelector(".form__submit").value = "Agregar";
-      document.getElementById("productId").value = "";
+      document.getElementById("productIdName").value = "";
       formCreate.reset();
     });
   });
@@ -46,17 +46,17 @@ function habilityDOM() {
 }
 
 // Peticion para llenar campos de formulario para edición
-async function setDataProduct(productId) {
+async function setDataProduct(productIdName) {
   try {
     const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
       method: "POST",
-      body: new URLSearchParams(`productId=${productId}`),
+      body: new URLSearchParams(`productIdName=${productIdName}`),
     });
     const res = await req.json();
 
     document.querySelector(".form__title").textContent = "Modificar usuario";
     document.querySelector(".form__submit").value = "Modificar";
-    document.getElementById("productId").value = res.product_id;
+    document.getElementById("productIdName").value = res.product_id;
     document.getElementById("nombre").value = res.name;
     document.getElementById("precio").value = res.price_sale;
     document.getElementById("unidad").value = res.unit;
@@ -79,6 +79,7 @@ async function getProducts(words = "", column = "", value = "") {
       body: formData,
     });
     const res = await req.json();
+    console.log(res);
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((product) => {
@@ -114,7 +115,7 @@ async function getProducts(words = "", column = "", value = "") {
     } else {
       tbody.innerHTML = `
       <tr>
-        <td aria-colspan="7" colspan="7">
+        <td aria-colspan="8" colspan="8">
           <div class="empty">
             <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
             <p class="empty__message">No hay registros</p>

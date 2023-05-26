@@ -12,7 +12,7 @@ toggleForm.forEach((btn) => {
     toggleShowElement(modalForm);
     document.querySelector(".form__title").textContent = "Agregar usuario";
     document.querySelector(".form__submit").value = "Agregar";
-    document.getElementById("supplierId").value = "";
+    document.getElementById("supplierIdRUC").value = "";
     formCreate.reset();
   });
 });
@@ -28,17 +28,17 @@ btnsEdit.forEach((btn) => {
 });
 
 // Peticion para llenar campos de formulario para edición
-async function setDataSupplier(supplierId) {
+async function setDataSupplier(supplierIdRUC) {
   try {
     const req = await fetch(`${serverURL}/fetch/getDataSupplierFetch.php`, {
       method: "POST",
-      body: new URLSearchParams(`supplierId=${supplierId}`),
+      body: new URLSearchParams(`supplierIdRUC=${supplierIdRUC}`),
     });
     const res = await req.json();
 
     document.querySelector(".form__title").textContent = "Modificar proveedor";
     document.querySelector(".form__submit").value = "Modificar";
-    document.getElementById("supplierId").value = res.supplier_id;
+    document.getElementById("supplierIdRUC").value = res.supplier_id;
     document.getElementById("ruc").value = res.RUC;
     document.getElementById("nombre").value = res.name;
     document.getElementById("direccion").value = res.address;

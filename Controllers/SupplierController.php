@@ -18,7 +18,7 @@ class SupplierController extends SupplierModel
   // Funcion controlador para obetenr los datos de un proveedor
   public function getDataSupplierController()
   {
-    if (empty($_POST['supplierId'])) {
+    if (empty($_POST['supplierIdRUC'])) {
       $alert = [
         "Alert" => "simple",
         "title" => "Opps...",
@@ -29,7 +29,7 @@ class SupplierController extends SupplierModel
       exit();
     }
 
-    $supplier_id = intval($_POST['supplierId']);
+    $supplier_id = intval($_POST['supplierIdRUC']);
     $supplier = SupplierModel::getDataSupplierModel($supplier_id);
 
     return json_encode($supplier);

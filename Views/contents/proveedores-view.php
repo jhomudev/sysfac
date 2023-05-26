@@ -62,7 +62,7 @@
     <form method="POST" action="<?php echo SERVER_URL; ?>/fetch/formSupplierfetch.php" class="form formCreate formFetch">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar proveedor</h1>
-      <input type="hidden" id="supplierId" name="tx_supplier_id">
+      <input type="hidden" id="supplierIdRUC" name="tx_supplier_id">
       <fieldset class="form__group">
         <legend class="form__legend">RUC</legend>
         <input type="text" class="form__input" id="ruc" name="tx_ruc" maxlength="11" minlength="11" number>

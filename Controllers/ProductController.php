@@ -14,7 +14,7 @@ class ProductController extends ProductModel
     $filters = [
       "words" => isset($_POST['words']) ? MainModel::clearString($_POST['words']) : "",
       "column" => isset($_POST['column']) ? MainModel::clearString($_POST['column']) : "",
-      "value" => isset($_POST['value:""']) ? MainModel::clearString($_POST['value']) : "",
+      "value" => isset($_POST['value']) ? MainModel::clearString($_POST['value']) : "",
     ];
     $products = ProductModel::getProductsModel($filters);
 
@@ -24,8 +24,8 @@ class ProductController extends ProductModel
   // Funcion controlador para obetenr los datos de producto
   public function getDataProductController()
   {
-    $product_id = intval($_POST['productId']);
-    $product = ProductModel::getDataProductModel($product_id);
+    $product_id_name = $_POST['productIdName'];
+    $product = ProductModel::getDataProductModel($product_id_name);
     return json_encode($product);
   }
 
