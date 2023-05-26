@@ -37,7 +37,7 @@ class ClientModel extends MainModel
     return $client->fetch();
   }
 
-  // Funcion para crear usuarios 
+  // Funcion para crear cliente 
   public static function createClientModel(array $data)
   {
     $type_client = PERSON_TYPE->client;
