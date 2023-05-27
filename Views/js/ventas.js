@@ -25,7 +25,6 @@ async function getSells(
       body: formData,
     });
     const res = await req.text();
-    console.log(res);
     tbody.innerHTML = res;
   } catch (error) {
     console.log(error);

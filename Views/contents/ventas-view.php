@@ -26,9 +26,6 @@
         echo '<option value="' . $user->user_id . '">' . $user->names . ' ' . $user->lastnames . '</option>';
       }
       ?>
-      <option value="">Tulio Ormeño</option>
-      <option value="">Isaias Morlaes</option>
-      <option value="">Lucía Navarro</option>
     </select>
   </div>
   <div class="filter">
