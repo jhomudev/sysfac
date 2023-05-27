@@ -138,7 +138,7 @@ class CartController extends CartModel
 
   public function removeItemController()
   {
-    $val = intval(MainModel::clearString($_POST['val']));
+    $val = MainModel::clearString($_POST['val']);
     $col = MainModel::clearString($_POST['col']);
 
     $stm = CartModel::removeItemModel($col, $val);

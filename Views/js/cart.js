@@ -1,7 +1,7 @@
 // Funcion showModal cart
 const cartModal = document.querySelector(".cart__modal");
 const cart = document.getElementById("cart");
-// const cartTitle = document.querySelector(".cart__title");
+const cartTableItems = document.getElementById("cartTableItems");
 const toggleCartModal = document.querySelectorAll(".toggleShowCart");
 const typeProof = document.getElementById("typeProof");
 const cartCount = document.querySelectorAll(".cart_icon_count");
@@ -74,7 +74,6 @@ getDataCart();
 
 async function getItemsCart() {
   try {
-    const cartTableItems = document.getElementById("cartTableItems");
     const config = {
       method: "POST",
       body: new URLSearchParams("action=getCart"),
@@ -86,7 +85,7 @@ async function getItemsCart() {
       res.forEach((item) => {
         cartTableItems.innerHTML += `
         <tr title="${item.details}">
-          <td>${item.name + "" + res.length}</td>
+          <td>${item.name}</td>
           <td>${item.serial_number ? item.serial_number : "N-A"}</td>
           <td>S/${item.price}</td>
           <td>${item.quantity}</td>

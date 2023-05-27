@@ -26,7 +26,7 @@ function alertFetch(alert = {}) {
 }
 
 // Funcio enviar formulario
-function sendFormFetch(e) {
+function sendFormFetch(e, exec = () => {}) {
   e.preventDefault();
   const data = new FormData(e.target);
   const method = e.target.getAttribute("method");
@@ -52,6 +52,7 @@ function sendFormFetch(e) {
         const req = await fetch(action, config);
         const res = await req.json();
         console.log(res);
+        exec();
         alertFetch(res);
       }
     } catch (error) {
