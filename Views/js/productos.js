@@ -102,12 +102,6 @@ async function getProducts(words = "", column = "", value = "") {
               }" name="tx_product_id">
               <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
             </form>
-            <form action="${serverURL}/fetch/.php" method="POST" class="formFetch formDelete">
-              <input type="hidden" value="${
-                product.product_id
-              }" name="tx_product_id">
-              <button class="actions__btn" style="--cl:var(--c_green);" title="Añadir a venta"><i class="ph ph-shopping-cart"></i></button>
-            </form>
           </td>
         </tr>
         `;

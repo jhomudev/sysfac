@@ -1,12 +1,28 @@
+<div class="block__head">
+  <h1 class="purchase__title">Nueva compra</h1>
+  <nav class="nav__views">
+    <ul class="nav__views__ul">
+      <li class="nav__views__li">
+        <a href="<?php echo SERVER_URL; ?>/dashboard" class="nav__views__link">Home</a>
+      </li>
+      <li>
+        <a href="<?php echo SERVER_URL; ?>/compras" class="nav__views__link">Compras</a>
+      </li>
+      <li>
+        <a href="" class="nav__views__link">Nueva compra</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <div class="purchase__box">
-  <div class="purchase__top">
+  <!-- <div class="purchase__top">
     <h1 class="purchase__top__text"><i class="ph ph-cardholder"></i>&nbsp; Nueva compra</h1>
     <a href="<?php echo SERVER_URL; ?>/compras" class="purchase__top__text"><i class="ph ph-clock-counter-clockwise"></i>&nbsp; Volver</a>
-  </div>
+  </div> -->
   <div class="purchase__bottom">
     <div class="purchase__entries">
       <div class="supplier__data__box box__entries">
-        <h1 class="purchase__title"><i class="ph ph-user-circle-gear"></i> Datos del Proveedor</h1>
+        <h1 class="purchase__subtitle"><i class="ph ph-user-circle-gear"></i> Datos del Proveedor</h1>
         <fieldset class="form__group">
           <legend class="form__label">RUC*</legend>
           <input type="text" class="form__input" id="supplierRUC" list="listSuppliers" minlength="11" maxlength="11" number placeholder="Buscar por RUC">
@@ -29,7 +45,7 @@
         </fieldset>
       </div>
       <div class="product__data__box box__entries">
-        <h1 class="purchase__title">Productos</h1>
+        <h1 class="purchase__subtitle">Productos</h1>
         <form action="" method="POST" class="purchase__products__form">
           <input type="hidden" name="tx_product_id" id="productId">
           <input type="hidden" name="action" value="Agregar">

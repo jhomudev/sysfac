@@ -1,3 +1,19 @@
+<div class="block__head">
+  <h1 class="purchase__title">Nueva venta</h1>
+  <nav class="nav__views">
+    <ul class="nav__views__ul">
+      <li class="nav__views__li">
+        <a href="<?php echo SERVER_URL; ?>/dashboard" class="nav__views__link">Home</a>
+      </li>
+      <li>
+        <a href="<?php echo SERVER_URL; ?>/ventas" class="nav__views__link">Ventas</a>
+      </li>
+      <li>
+        <a href="" class="nav__views__link">Nueva venta</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <div class="flexnav">
   <div class="browser">
     <label for="inputSearch" class="browser__label">Buscar producto</label>

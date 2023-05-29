@@ -7,7 +7,7 @@ textarea {
   height: 100vh;
   background-color: var(--c_dark);
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 .menuBar {
   width: 18em;
@@ -476,7 +476,6 @@ textarea {
 }
 .table__tbody td {
   padding: 10px;
-  /* white-space: nowrap; */
   height: 4em;
 }
 .table__tbody img {
@@ -804,7 +803,6 @@ textarea {
 .cart__subtitle {
   font-size: small;
   font-weight: 600;
-  /* margin-bottom: 5px; */
 }
 .client__search {
   width: 100%;
@@ -849,7 +847,7 @@ textarea {
   border-radius: 4px;
   overflow: auto;
 }
-.purchase__top {
+/* .purchase__top {
   position: sticky;
   top: 0;
   left: 0;
@@ -868,14 +866,17 @@ textarea {
 }
 .purchase__top__text i {
   font-size: large;
-}
+} */
 .purchase__entries {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 7px 1em;
+  padding: 1em;
 }
-.purchase__title {
+.purchase__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   width: 100%;
   font-size: medium;
   color: var(--c_lightPurple);
@@ -927,10 +928,18 @@ textarea {
   gap: 10px;
 }
 /* vista purchase */
+.block__head{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom:10px ;
+}
 .purchase__title {
-  font-size: large;
+  font-size: x-large;
   font-weight: 400;
-  color: var(--c_lightPurple);
+  color: white;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--c_lightPurple);
 }
 .purchase__data {
   display: flex;
@@ -942,6 +951,28 @@ textarea {
 }
 .purchase__data .form__input{
   color: white;
+}
+/* nav_views */
+.nav__views{
+  display: block;
+}
+.nav__views__ul{
+  display: flex;
+  align-items: center;
+}
+.nav__views__ul li:not(:last-child)::after {
+  content: "/";
+  margin: 0 5px;
+  color: var(--c_lightPurple);
+}
+.nav__views__link{
+  font-size: small;
+  color: var(--c_lightPurple);
+  text-decoration: none;
+  padding: 0 5px;
+}
+.nav__views__link:hover{
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 948px) {
