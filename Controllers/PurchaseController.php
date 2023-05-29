@@ -92,7 +92,7 @@ class PurchaseController extends PurchaseModel
     $stm = PurchaseModel::generatePurchaseModel($data);
 
     if ($stm) {
-      // ?FUNCION PARA INSERTAR A TABLA PRODUCTS_ALL
+      // FUNCION PARA INSERTAR A TABLA PRODUCTS_ALL
       foreach ($purchase_items as $item) {
         $product_id = $item->product_id;
         $serial_number = $item->serial_number;
@@ -108,19 +108,46 @@ class PurchaseController extends PurchaseModel
       }
 
       if ($insert->errorCode() === '00000' && $insert->rowCount() > 0) {
-        // limpiar el carrito
-        $ICP->clearController();
+        // Actualizar precio de venta de los productos
+
+        // Obtencion del precio x product_id, se obtiene un array con la data
+        $arr_product_price = [];
+        $existingIds = [];
+
+        foreach ($purchase_items as $item) {
+          $product_id = $item->product_id;
+          $price_sale = $item->price_sale;
+
+          if (!in_array($product_id, $existingIds)) {
+            $existingIds[] = $product_id;
+            $arr_product_price[] = [
+              "product_id" => $product_id,
+              "price_sale" => $price_sale
+            ];
+          }
+        }
+        $alert = $arr_product_price;
+        // Actualizando precios de los productos de la compra
+        foreach ($arr_product_price as $product) {
+          $product_id = $product['product_id'];
+          $price_sale = $product['price_sale'];
+
+          MainModel::executeQuerySimple("UPDATE products SET price_sale=$price_sale WHERE product_id=$product_id");
+        }
+
         $alert = [
           "Alert" => "simple",
           "title" => "Compra/abastecimiento realizado",
           "text" => "El abastecimiento se registró exitosamente.",
           "icon" => "success"
         ];
+        // limpiar el carrito
+        $ICP->clearController();
       } else {
         $alert = [
           "Alert" => "simple",
-          "title" => "No se realizo, insertarion no",
-          "text" => "El ---.",
+          "title" => "Productos no registrados",
+          "text" => "Los nuevos productos no se pudieron registrar.",
           "icon" => "warning"
         ];
       }
