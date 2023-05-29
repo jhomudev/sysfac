@@ -63,10 +63,10 @@ class SellModel extends MainModel
     $sell->execute();
 
     if ($sell->rowCount() > 0) {
-      $sell_arr = $sell->fetch();
+      $sell_arr['data'] = $sell->fetch();
 
       // DATOS DE LAS OPERACIONES
-      $ops = MainModel::executeQuerySimple("SELECT * FROM operations WHERE sell_code='" . $sell_arr['sell_code'] . "'");
+      $ops = MainModel::executeQuerySimple("SELECT * FROM operations WHERE sell_code='" . $sell_arr['data']['sell_code'] . "'");
       $ops = $ops->fetchAll();
 
       $sell_arr['ops'] = $ops;

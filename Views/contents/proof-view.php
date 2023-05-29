@@ -29,6 +29,9 @@ if ($sell == []) {
     exit();
 }
 
+$sell_data=$sell->data;
+$ops=$sell->ops;
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,7 +41,7 @@ if ($sell == []) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="<?php echo SERVER_URL; ?>/Views/assets/iconLogo.png" type="image/x-icon">
-    <title>Sysfac_<?php echo $sell->proof_code; ?></title>
+    <title>Sysfac_<?php echo $sell_data->proof_code; ?></title>
     <style>
         @import url(http://localhost/sysfac/Views/css/main.css);
 
@@ -147,21 +150,21 @@ if ($sell == []) {
         </div>
         <div class="proof">
             <p style="color:red;">R.U.C. 20608004590 </p>
-            <p><?php echo ($sell->proof_type == TYPE_PROOF->boleta) ? "BOLETA" : "FACTURA" ?> DE VENTA </p>
-            <strong style="color:blue;"><?php echo $sell->proof_code; ?></strong>
+            <p><?php echo ($sell_data->proof_type == TYPE_PROOF->boleta) ? "BOLETA" : "FACTURA" ?> DE VENTA </p>
+            <strong style="color:blue;"><?php echo $sell_data->proof_code; ?></strong>
         </div>
         <table class="data__sell">
             <tr>
                 <td>Cliente </td>
-                <td>:&nbsp;&nbsp; <?php echo $sell->client; ?></td>
+                <td>:&nbsp;&nbsp; <?php echo $sell_data->client; ?></td>
             </tr>
             <tr>
-                <td><?php echo $sell->proof_type == TYPE_PROOF->boleta ? "DNI" : "RUC"; ?> </td>
-                <td>:&nbsp;&nbsp; <?php echo $sell->proof_type == TYPE_PROOF->boleta ? $sell->dni : $sell->RUC; ?></td>
+                <td><?php echo $sell_data->proof_type == TYPE_PROOF->boleta ? "DNI" : "RUC"; ?> </td>
+                <td>:&nbsp;&nbsp; <?php echo $sell_data->proof_type == TYPE_PROOF->boleta ? $sell_data->dni : $sell_data->RUC; ?></td>
             </tr>
             <tr>
                 <td>Fecha de emisión </td>
-                <td>:&nbsp;&nbsp; <?php echo date("d-m-Y", strtotime($sell->created_at)); ?></td>
+                <td>:&nbsp;&nbsp; <?php echo date("d-m-Y", strtotime($sell_data->created_at)); ?></td>
             </tr>
         </table>
         <table class="table__sell__items">
@@ -176,7 +179,7 @@ if ($sell == []) {
             </thead>
             <tbody>
                 <?php
-                foreach ($sell->ops as $key => $op) {
+                foreach ($ops as $key => $op) {
                     $op = json_decode(json_encode($op));
                     $ns = ($op->serial_number) ? " / N.S." . $op->serial_number : "";
                     echo '
@@ -196,19 +199,19 @@ if ($sell == []) {
         <table class="table__pay">
             <tr>
                 <th>Subtotal</th>
-                <td> S/ <?php echo $sell->total_import; ?></td>
+                <td> S/ <?php echo $sell_data->total_import; ?></td>
             </tr>
             <tr>
                 <th>IGV 18%</th>
-                <td> S/ <?php echo $sell->total_import * 0.18; ?></td>
+                <td> S/ <?php echo $sell_data->total_import * 0.18; ?></td>
             </tr>
             <tr>
                 <th>Descuento</th>
-                <td> S/ <?php echo $sell->discount; ?></td>
+                <td> S/ <?php echo $sell_data->discount; ?></td>
             </tr>
             <tr>
                 <th>Importe total</th>
-                <td> S/ <?php echo $sell->total_pay; ?></td>
+                <td> S/ <?php echo $sell_data->total_pay; ?></td>
             </tr>
         </table>
         <footer class="footer">
