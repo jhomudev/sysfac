@@ -477,7 +477,7 @@ textarea {
 .table__tbody td {
   padding: 10px;
   /* white-space: nowrap; */
-  height: 6em;
+  height: 4em;
 }
 .table__tbody img {
   width: 80px;
@@ -917,7 +917,7 @@ textarea {
   justify-content: center;
   align-items: center;
 }
-.purchase__entries .form__submit i{
+.purchase__entries .form__submit i {
   font-size: large;
 }
 .purchase__products__form {
@@ -925,6 +925,23 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+/* vista purchase */
+.purchase__title {
+  font-size: large;
+  font-weight: 400;
+  color: var(--c_lightPurple);
+}
+.purchase__data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.purchase__data .form__group {
+  flex: 1 1 500px;
+}
+.purchase__data .form__input{
+  color: white;
 }
 
 @media screen and (max-width: 948px) {

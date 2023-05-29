@@ -23,10 +23,10 @@ if (isset($_SESSION['token'])) {
         <td>S/' . $purchase->total_pay . '</td>
         <td>' . date("d-m-Y", strtotime($purchase->created_at)) . '</td>
         <td class="actions">
-          <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
+        <a href="' . SERVER_URL . '/purchase?purchase_id=' . $IP->encryption($purchase->sell_code) . '" class="actions__btn" style="--cl:var(--c_green);"><i class="ph ph-note"></i> Ver detalles</a>
         </td>
-      </tr>
-      ';
+        </tr>
+        ';
     }
   } else {
     $res .= '

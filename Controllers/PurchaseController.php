@@ -27,7 +27,7 @@ class PurchaseController extends PurchaseModel
   // Función controlador para obtener datos de una compra
   public function getDataPurchaseController()
   {
-    $purchase = PurchaseModel::getDataPurchaseModel($_GET['purchase_code']);
+    $purchase = PurchaseModel::getDataPurchaseModel($_GET['purchase_id']);
 
     return json_encode($purchase);
   }
@@ -81,7 +81,7 @@ class PurchaseController extends PurchaseModel
     }
 
     $data = [
-      "purchase_code" => "C-" . $user_id . uniqid(),
+      "purchase_code" => "P-" . $user_id . uniqid(),
       "user_id" => $user_id,
       "supplier_id" => $supplier_id,
       "total" => $purchase_total,

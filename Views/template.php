@@ -44,16 +44,12 @@ if ($vista == "proof") {
     }
   ?>
     <div class="container_all">
-      <?php include_once "./views/inc/menuBar.php";
-      // require "./Controllers/CartController.php";
-      // $ICart = new CartController();
-      // print_r($ICart->getDataCartController());
-      ?>
+      <?php include_once "./views/inc/menuBar.php"; ?>
       <div class="col_2">
         <?php include_once "./views/inc/header.php"; ?>
         <main class="view">
           <?php
-          // Condicionales para las viostas dependiendo del tipo de usuario
+          // Condicionales para las vistas dependiendo del tipo de usuario
           if (($_SESSION['type'] == USER_TYPE->vendedor) && ($vista == "ventas" || $vista == "clientes" || $vista == "dashboard")) include_once  "./Views/contents/" . $vista . "-view.php";
           else if ($_SESSION['type'] == USER_TYPE->superadmin || $_SESSION['type'] == USER_TYPE->admin) include_once  "./Views/contents/" . $vista . "-view.php";
           else echo "No tiene acceso a este módulo";
@@ -61,7 +57,6 @@ if ($vista == "proof") {
         </main>
       </div>
       <div class="cart__modal">
-        <!-- <h2 class="cart__title">Carrito de venta</h2> -->
         <div class="cart" id="cart">
           <div class="cart__tableBox">
             <table class="cart__table">
@@ -151,8 +146,10 @@ if ($vista == "proof") {
     <script src="<?php echo SERVER_URL; ?>/Views/js/main.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/alerts.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/cart.js"></script>
-    <script src="<?php echo SERVER_URL; ?>/Views/js/<?php echo $vista; ?>.js"></script>
+
   <?php
+    if ($vista != "purchase") echo '<script src="' . SERVER_URL . '/Views/js/' . $vista . '.js"></script>';
+
     include "./Views/inc/logout.php";
     include "./Views/inc/scriptMenuBar.php";
   } ?>

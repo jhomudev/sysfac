@@ -21,7 +21,6 @@ supplierRUC.addEventListener("input", () => {
   getDataSupplier(supplierRUC.value);
 });
 
-
 // Funcionalidad traer datos del producto
 productName.addEventListener("input", () => {
   getDataProduct(productName.value);
@@ -205,6 +204,6 @@ formAdd.addEventListener("submit", (e) => addProduct(e));
 
 formsFetch.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e, getDataList);
+    sendFormFetch(e, (window.location.href = serverURL + "/compras"));
   });
 });

@@ -11,16 +11,16 @@ class PurchaseModel extends MainModel
     $start_date = $filters['start_date'];
     $end_date = $filters['end_date'];
 
-    $query = "SELECT s.sell_id, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.operation_type=" . OPERATION->input;
+    $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.operation_type=" . OPERATION->input;
     $purchases = MainModel::connect()->prepare($query);
 
     if (!empty($column) && !empty($value)) {
-      $query = "SELECT s.sell_id, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.$column=:value AND s.operation_type=" . OPERATION->input;
+      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.$column=:value AND s.operation_type=" . OPERATION->input;
       $purchases = MainModel::connect()->prepare($query);
       $purchases->bindParam(":value", $value);
     }
     if (!empty($start_date) && !empty($end_date)) {
-      $query = "SELECT s.sell_id, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id  WHERE (s.created_at BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)) AND s.operation_type=" . OPERATION->input;
+      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id  WHERE (s.created_at BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)) AND s.operation_type=" . OPERATION->input;
       $purchases = MainModel::connect()->prepare($query);
       $purchases->bindParam(":start_date", $start_date);
       $purchases->bindParam(":end_date", $end_date);
@@ -32,29 +32,37 @@ class PurchaseModel extends MainModel
   }
 
   // Funcion de obtener datos de una compra
-  protected static function getDataPurchaseModel(string $purchase_id)
+  protected static function getDataPurchaseModel(string $purchase_code)
   {
     // Obteniendo ls datos de la compra compra
-    $query_pur = "SELECT * FROM sells WHERE sell_id=:purchase_id";
+    $query_pur = "SELECT s.total_pay AS total, s.created_at, s.additional_info, CONCAT(u.names,' ',u.lastnames) AS user , sup.name AS supplier 
+    FROM sells s INNER JOIN suppliers sup ON s.supplier_id=sup.supplier_id 
+    INNER JOIN users u ON u.user_id=s.user_id 
+    WHERE sell_code=:purchase_code";
     $purchase = MainModel::connect()->prepare($query_pur);
-    $purchase->bindParam(":purchase_id", $purchase_id);
+    $purchase->bindParam(":purchase_code", $purchase_code);
 
     $purchase->execute();
 
-    // Obteniendo las operaciones concernientes a la compra
-    $query_op = "SELECT o.op_id,o.quantity,p.name FROM operations o 
-    INNER JOIN sells s ON o.sell_id = s.sell_id
-    INNER JOIN products p ON o.product_id = p.product_id
-    WHERE o.sell_id=:purchase_id";
-    $operations = MainModel::connect()->prepare($query_op);
-    $operations->bindParam(":purchase_id", $purchase_id);
 
-    $operations->execute();
+    if ($purchase->rowCount() > 0) {
+      $data['data'] = $purchase->fetch();
 
-    $data = [
-      "purchase" => $purchase->fetch(),
-      "operations" => $operations->fetchAll(),
-    ];
+      // DATOS DE LAS OPERACIONES
+      $query_op = "SELECT o.op_id, o.serial_number, o.price, o.import, o.quantity,p.name AS product FROM operations o 
+      INNER JOIN sells s ON o.sell_code = s.sell_code
+      INNER JOIN products p ON o.product_id = p.product_id
+      WHERE o.sell_code=:purchase_code";
+      $operations = MainModel::connect()->prepare($query_op);
+      $operations->bindParam(":purchase_code", $purchase_code);
+
+      $operations->execute();
+      $operations = $operations->fetchAll();
+
+      $data['operations'] = $operations;
+    } else {
+      $data = [];
+    }
 
     return $data;
   }
