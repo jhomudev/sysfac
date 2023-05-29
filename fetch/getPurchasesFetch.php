@@ -20,10 +20,8 @@ if (isset($_SESSION['token'])) {
       <tr>
         <td>' . $purchase->user . '</td>
         <td>' . $purchase->supplier . '</td>
-        <td>S/' . $purchase->total_import . '</td>
-        <td>S/' . $purchase->discount . '</td>
         <td>S/' . $purchase->total_pay . '</td>
-        <td>' . date("d-m-Y", strtotime($purchase->created_at)) . '/td>
+        <td>' . date("d-m-Y", strtotime($purchase->created_at)) . '</td>
         <td class="actions">
           <button class="actions__btn" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i> Ver detalles</button>
         </td>

@@ -9,7 +9,9 @@ session_start();
 
 if (isset($_SESSION['token'])) {
   require_once "../Controllers/CartPurchaseController.php";
+  require_once "../Controllers/PurchaseController.php";
   $ICart = new CartPurchaseController();
+  $IP = new PurchaseController();
 
   if (isset($_POST["action"])) {
 
@@ -25,6 +27,9 @@ if (isset($_SESSION['token'])) {
         break;
       case 'clear':
         echo $ICart->clearController();
+        break;
+      case 'do':
+        echo $IP->generatePurchaseController();
         break;
     }
   } else {

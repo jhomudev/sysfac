@@ -14,7 +14,7 @@
   </div>
   <div class="filter">
     <label for="fil_proveedor" class="filter__for">Proveedor: </label>
-    <select name="tx_proveedor" id="fil_proveedor" class="filter__select">
+    <select name="tx_proveedor" id="fil_proveedor" data-col="supplier_id" class="filter__select">
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/SupplierController.php";
@@ -30,7 +30,7 @@
   </div>
   <div class="filter">
     <label for="fil_usuario" class="filter__for">Usuario: </label>
-    <select name="tx_usuario" id="fil_usuario" class="filter__select">
+    <select name="tx_usuario" id="fil_usuario" data-col="user_id" class="filter__select">
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/UserController.php";
@@ -55,8 +55,6 @@
     <thead class="table__thead">
       <th>Responsable</th>
       <th>Proveedor</th>
-      <th>Importe</th>
-      <th>Descuento</th>
       <th>Total</th>
       <th>Fecha</th>
       <th>Acciones</th>

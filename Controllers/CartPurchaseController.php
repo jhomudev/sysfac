@@ -81,18 +81,36 @@ class CartPurchaseController extends CartPurchaseModel
         exit();
       }
 
+      // validacion si numeros de serie son iguales o repiten en el input
       $serial_numbers = explode(",", $ns);
       $serial_numbers = array_map(function ($num) {
         return trim($num);
       }, $serial_numbers);
 
-
-      // validacion si numeros de serie son iguales o repiten en el input
       if (count($serial_numbers) != count(array_unique($serial_numbers))) {
         $alert = [
           "Alert" => "simple",
           "title" => "Números de serie repetidos",
           "text" => "Los números de serie no deben repetirse",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+
+      // validacion si numeros de seria ya existen en la tabla products_all
+      $count_exist = 0;
+
+      foreach ($serial_numbers as $ns) {
+        $products_all = MainModel::executeQuerySimple("SELECT * FROM products_all WHERE serial_number='$ns'");
+        if (count($products_all->fetchAll()) > 0) $count_exist++;
+      }
+
+      if ($count_exist > 0) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Números de serie existente",
+          "text" => "Uno o más de los numeros de serie que ingresó ya esta registrado a otro producto existente.",
           "icon" => "warning"
         ];
         return json_encode($alert);
@@ -112,7 +130,7 @@ class CartPurchaseController extends CartPurchaseModel
         $alert = [
           "Alert" => "simple",
           "title" => "Números de serie ya registrados",
-          "text" => "Uno o más de los numeros de serie que ingreso ya está registrado.",
+          "text" => "Uno o más de los numeros de serie que ingreso ya estan en la lista.",
           "icon" => "warning"
         ];
         return json_encode($alert);

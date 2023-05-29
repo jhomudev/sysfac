@@ -28,40 +28,6 @@
           <input type="text" class="form__input" id="nameSupplier" disabled>
         </fieldset>
       </div>
-      <div class="person__supplier__data__box box__entries">
-        <h1 class="purchase__title">Responsable</h1>
-        <fieldset class="form__group">
-          <legend class="form__label">DNI*</legend>
-          <input type="text" class="form__input" id="personDNI" list="listPersons" placeholder="Buscar por DNI" minlength="8" maxlength="8" number>
-          <datalist id="listPersons">
-            <option value="00">Nuevo</option>
-            <?php
-            $suppliers = MainModel::executeQuerySimple("SELECT person_id, dni, CONCAT(names,' ',lastnames) AS fullname FROM persons WHERE kind=" . PERSON_TYPE->supplier);
-            $suppliers = json_decode(json_encode($suppliers->fetchAll()));
-
-            foreach ($suppliers as $key => $supplier) {
-              echo '<option value="' . $supplier->dni . '">' . $supplier->fullname . '</option>';
-            }
-            ?>
-          </datalist>
-        </fieldset>
-        <fieldset class="form__group">
-          <legend class="form__label">Nombres*</legend>
-          <input type="text" class="form__input" id="namePerson">
-        </fieldset>
-        <fieldset class="form__group">
-          <legend class="form__label">Apellidos*</legend>
-          <input type="text" class="form__input" id="lastnamesPerson">
-        </fieldset>
-        <fieldset class="form__group">
-          <legend class="form__label">Teléfono</legend>
-          <input type="text" class="form__input" id="phonePerson" number>
-        </fieldset>
-        <fieldset class="form__group">
-          <legend class="form__label">Correo</legend>
-          <input type="email" class="form__input" id="emailPerson">
-        </fieldset>
-      </div>
       <div class="product__data__box box__entries">
         <h1 class="purchase__title">Productos</h1>
         <form action="" method="POST" class="purchase__products__form">
@@ -105,6 +71,10 @@
           </fieldset>
           <input type="submit" value="Agregar a compra" class="form__submit">
         </form>
+        <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POST" class="formFetch">
+          <input type="hidden" name="action" value="clear">
+          <button type="submit" class="purchase__btn__do form__submit" style="background:red;"><i class="ph ph-broom"></i> Limpiar lista de compra</button>
+        </form>
       </div>
       <div class="purchase__tableBox tableBox">
         <table class="purchase__table table">
@@ -126,17 +96,16 @@
         </table>
       </div>
       <div class="purchase__total__pay">TOTAL: <span id="total"></span></div>
-      <div class="purchase__btns__do">
-        <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POSt" class="formFetch">
-          <input type="hidden" name="action" value="clear">
-          <button type="submit" class="purchase__btn__do form__submit" style="background:red;"><i class="ph ph-broom"></i> Limpiar lista de compra</button>
-        </form>
-        <form action="" class="form">
-          <input type="hidden" name="tx_person_id" id="personId">
-          <input type="hidden" name="tx_supplier_id" id="supplierIdRUC">
-          <button type="submit" data-action="do" class="purchase__btn__do form__submit" style="background:var(--c_yellow);"><i class="ph ph-archive-tray"></i> Realizar compra</button>
-        </form>
-      </div>
+      <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POST" class="formFetch">
+        <input type="hidden" name="action" value="do">
+        <input type="hidden" name="tx_supplier_id" id="supplierIdRUC">
+        <fieldset class="form__group">
+          <legend class="form__label">Información adicional</legend>
+          <textarea name="tx_add_info" class="form__input" placeholder="Puede añadir información adicional, como los datos del reponsable de parte del proveedor"></textarea>
+        </fieldset>
+        <br>
+        <button type="submit" class="purchase__btn__do form__submit" style="background:var(--c_yellow);"><i class="ph ph-archive-tray"></i> Realizar compra</button>
+      </form>
     </div>
   </div>
 </div>

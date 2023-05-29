@@ -2,8 +2,10 @@
 
 if ($requestFetch) {
   require_once "./../Models/PurchaseModel.php";
+  require_once "./../Controllers/CartPurchaseController.php";
 } else {
   require_once "./Models/PurchaseModel.php";
+  require_once "./Controllers/CartPurchaseController.php";
 }
 
 class PurchaseController extends PurchaseModel
@@ -14,8 +16,8 @@ class PurchaseController extends PurchaseModel
     $filters = [
       "column" => $_POST['column'],
       "value" => $_POST['value'],
-      "start_date" => "",
-      "end_date" => "",
+      "start_date" => $_POST['date_start'],
+      "end_date" => $_POST['date_end'],
     ];
 
     $purchases = PurchaseModel::getPurchasesModel($filters);
@@ -25,32 +27,29 @@ class PurchaseController extends PurchaseModel
   // Función controlador para obtener datos de una compra
   public function getDataPurchaseController()
   {
-
-    $purchase = PurchaseModel::getDataPurchaseModel($_GET['proof_code']);
+    $purchase = PurchaseModel::getDataPurchaseModel($_GET['purchase_code']);
 
     return json_encode($purchase);
   }
 
-  // Funcion controlador para crear o editar compra
+  // Funcion controlador para crear una compra
   public function generatePurchaseController()
   {
-    $ICart = new CartController();
-    $cart_data = json_decode($ICart->getDataCartController());
+    $ICP = new CartPurchaseController();
+    $purchase_data = json_decode($ICP->getDataCartPurchaseController());
 
-    $client_id = $this->decryption($_POST['tx_client_id']);
+    $supplier_id = $_POST['tx_supplier_id'];
+    $additional_info = $_POST['tx_add_info'];
     $user_id = $_SESSION['user_id'];
-    $proof_type = (array_key_exists('tx_proof_type', $_POST)) ? intval($_POST['tx_proof_type']) : "";
-    $discount = $cart_data->discount;
-    $total_import = $cart_data->total_import;
-    $total_pay = $cart_data->total_pay;
+    $purchase_items = json_decode($ICP->getItemsController());
+    $purchase_total = $purchase_data->total;
 
-    // Validacion de carrito vacio
-    $items = json_decode($ICart->getItemsController(), true);
-    if (count($items) < 1) {
+    // Validacion de carrito/lista vacio
+    if (count($purchase_items) < 1) {
       $alert = [
         "Alert" => "simple",
-        "title" => "Carrito vacio",
-        "text" => "No se puede generar la compra porque no hay ningún producto en el carrito.",
+        "title" => "Lista de compra vacía",
+        "text" => "No se puede generar la compra porque no hay ningún producto en la lista.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -58,19 +57,19 @@ class PurchaseController extends PurchaseModel
     }
 
     // Validacion de campos vacios
-    if (empty($client_id) || empty($proof_type)) {
+    if (empty($supplier_id)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
-        "text" => "Por favor. Complete los datos del cliente y seleccione el tipo de comprobante .",
+        "text" => "Por favor. Complete los datos del proveedor.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
     }
 
-    // Validacion del id cliente
-    if (!(is_numeric($client_id))) {
+    // Validacion del id cliente y supplier_id
+    if (!(is_numeric($supplier_id))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Acción rechazada",
@@ -81,45 +80,55 @@ class PurchaseController extends PurchaseModel
       exit();
     }
 
-    // Generar codigo de comprobante
-    $last_id = MainModel::executeQuerySimple("SELECT purchase_id FROM purchases WHERE purchase_id=(SELECT MAX(purchase_id) FROM purchases)")->fetchColumn(); // Implementa esta función para obtener el último número de boleta
-
-    // Genera el siguiente número correlativo incrementando en 1 al último número de boleta
-    if ($last_id) $new_number = $last_id + 1;
-    else $new_number = 1;
-
-    // Construye el código de boleta
-    if ($proof_type == TYPE_PROOF->boleta) $letter = "B";
-    else if ($proof_type == TYPE_PROOF->factura) $letter = "F";
-    $proof_code = $letter . date("Y") . "-" . str_pad($new_number, 8, '0', STR_PAD_LEFT); // 'B' representa el prefijo y se completa con ceros a la izquierda si es necesario
-
     $data = [
-      "purchase_code" => "S-" . $user_id . uniqid(),
-      "proof_code" => $proof_code,
-      "client_id" => $client_id,
+      "purchase_code" => "C-" . $user_id . uniqid(),
       "user_id" => $user_id,
-      "discount" => $discount,
-      "proof_type" => $proof_type,
-      "total_import" => $total_import,
-      "total_pay" => $total_pay,
+      "supplier_id" => $supplier_id,
+      "total" => $purchase_total,
+      "additional_info" => $additional_info,
       "created_at" =>  date('Y-m-d H:i:s'),
     ];
 
-    $stm = " PurchaseModel::generatePurchaseModel($data)";
+    $stm = PurchaseModel::generatePurchaseModel($data);
 
     if ($stm) {
-      $ICart->clearController();
-      $alert = [
-        "Alert" => "alert&reload",
-        "title" => "Venta realizada",
-        "text" => "La compra se registró exitosamente.",
-        "icon" => "success"
-      ];
+      // ?FUNCION PARA INSERTAR A TABLA PRODUCTS_ALL
+      foreach ($purchase_items as $item) {
+        $product_id = $item->product_id;
+        $serial_number = $item->serial_number;
+        $quantity = $item->quantity;
+
+        for ($i = 0; $i < $quantity; $i++) {
+          if (empty($serial_number)) {
+            $insert = MainModel::executeQuerySimple("INSERT INTO products_all (product_id,state) VALUES ($product_id," . STATE_IN->stock . ")");
+          } else {
+            $insert = MainModel::executeQuerySimple("INSERT INTO products_all (product_id,serial_number,state) VALUES ($product_id,'$serial_number'," . STATE_IN->stock . ")");
+          }
+        }
+      }
+
+      if ($insert->errorCode() === '00000' && $insert->rowCount() > 0) {
+        // limpiar el carrito
+        $ICP->clearController();
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Compra/abastecimiento realizado",
+          "text" => "El abastecimiento se registró exitosamente.",
+          "icon" => "success"
+        ];
+      } else {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "No se realizo, insertarion no",
+          "text" => "El ---.",
+          "icon" => "warning"
+        ];
+      }
     } else {
       $alert = [
         "Alert" => "simple",
         "title" => "Opps. Ocurrió un problema",
-        "text" => "La compra no se registró. Intente de nuevo.",
+        "text" => "El abastecimiento no se registró. Intente de nuevo.",
         "icon" => "error"
       ];
     }
