@@ -33,7 +33,7 @@ class SellModel extends MainModel
       if (!empty($date_end) || !empty($date_start)) {
         $sells = MainModel::connect()->prepare("SELECT s.sell_code, s.proof_code,s.proof_type,s.discount,s.total_import,s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, CONCAT(p.names,' ',p.lastnames) AS client FROM sells s INNER JOIN persons p ON s.person_id = p.person_id 
         INNER JOIN users u ON u.user_id=s.user_id 
-        WHERE s.operation_type=$operation_type AND s.created_at BETWEEN :date_start AND :date_end ORDER by s.sell_id DESC");
+        WHERE s.operation_type=$operation_type AND s.created_at BETWEEN :date_start AND DATE_ADD(:date_end, INTERVAL 1 DAY) ORDER by s.sell_id DESC");
         $sells->bindParam(":date_start", $date_start, PDO::PARAM_STR);
         $sells->bindParam(":date_end", $date_end, PDO::PARAM_STR);
       }
