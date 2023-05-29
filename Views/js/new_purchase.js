@@ -1,7 +1,6 @@
 // Definicion de elementos
 const TableItems = document.getElementById("TableItems");
 const supplierRUC = document.getElementById("supplierRUC");
-const personDNI = document.getElementById("personDNI");
 const productName = document.getElementById("productName");
 const productNS = document.getElementById("productNS");
 const productQuantity = document.getElementById("productQuantity");
@@ -10,7 +9,7 @@ const productPrice = document.getElementById("productPrice");
 const productPriceSale = document.getElementById("productPriceSale");
 const formAdd = document.querySelector(".purchase__products__form");
 
-const formFetch = document.querySelector(".formFetch");
+const formsFetch = document.querySelectorAll(".formFetch");
 
 // datalists
 const listProducts = document.getElementById("listProducts");
@@ -22,10 +21,6 @@ supplierRUC.addEventListener("input", () => {
   getDataSupplier(supplierRUC.value);
 });
 
-// Funcionalidad traer datos de la person responsable
-personDNI.addEventListener("input", () => {
-  getDataPerson(personDNI.value);
-});
 
 // Funcionalidad traer datos del producto
 productName.addEventListener("input", () => {
@@ -48,27 +43,6 @@ async function getDataSupplier(supplierRUC) {
   } catch (error) {
     console.log("No encontrado");
     document.getElementById("supplierIdRUC").value = "";
-  }
-}
-async function getDataPerson(personDNI) {
-  try {
-    const req = await fetch(`${serverURL}/fetch/getDataPersonFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams("person_dni=" + personDNI),
-    });
-    const res = await req.json();
-    document.getElementById("personId").value = res.person_id
-      ? res.person_id
-      : "";
-    document.getElementById("namePerson").value = res.names ? res.names : "";
-    document.getElementById("lastnamesPerson").value = res.lastnames
-      ? res.lastnames
-      : "";
-    document.getElementById("phonePerson").value = res.phone ? res.phone : "";
-    document.getElementById("phonePerson").value = res.email ? res.email : "";
-  } catch (error) {
-    console.log(error);
-    document.getElementById("personId").value = "";
   }
 }
 
@@ -229,6 +203,8 @@ productQuantity.addEventListener("input", () => {
 
 formAdd.addEventListener("submit", (e) => addProduct(e));
 
-formFetch.addEventListener("submit", (e) => {
-  sendFormFetch(e, getDataList);
+formsFetch.forEach((form) => {
+  form.addEventListener("submit", (e) => {
+    sendFormFetch(e, getDataList);
+  });
 });
