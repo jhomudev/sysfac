@@ -18,7 +18,20 @@ mayus.forEach((input) => {
 //funcion toggle para mostrar el userBar
 const btnUserbar = document.getElementById("btnUserbar");
 const userBar = document.querySelector(".user__details");
+const btnNotibar = document.getElementById("btnNotibar");
+const notiBar = document.querySelector(".notifications__details");
 
+// !no funciona
+// document.addEventListener("click", function (event) {
+//   if (notiBar.classList.contains("show") && !event.target.closest(".notifications__details")) {
+//     notiBar.classList.remove("show");
+//     console.log("first");
+//   } else if (event.target.closest(".notifications__details")) {
+//     notiBar.classList.add("show");
+//   }
+// });
+
+btnNotibar.addEventListener("click", () => toggleShowElement(notiBar));
 btnUserbar.addEventListener("click", () => toggleShowElement(userBar));
 
 // función toggle para mostrar barra de menu responsive
