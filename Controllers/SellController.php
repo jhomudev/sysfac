@@ -49,7 +49,7 @@ class SellController extends SellModel
     $total_pay = $cart_data->total_pay;
 
     // Validacion de carrito vacio
-    $items = json_decode($ICart->getItemsController(), true);
+    $items = json_decode($ICart->getItemsController());
     if (count($items) < 1) {
       $alert = [
         "Alert" => "simple",
@@ -60,7 +60,7 @@ class SellController extends SellModel
       return json_encode($alert);
       exit();
     }
-    
+
     // validacion campos vacios
     if (empty($_POST['tx_proof_type']) || empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
       $alert = [
@@ -168,13 +168,22 @@ class SellController extends SellModel
     $stm = SellModel::generateSellModel($data);
 
     if ($stm) {
-      $ICart->clearController();
+      // Funcion actualizar estado a vendido de los productos vendidos
+      foreach ($items as $item) {
+        if (empty($item->serial_number)) {
+          MainModel::executeQuerySimple("UPDATE products_all SET state=" . STATE_IN->sold . " WHERE product_id=" . $item->product_id . " LIMIT " . $item->quantity);
+        } else {
+          MainModel::executeQuerySimple("UPDATE products_all SET state=" . STATE_IN->sold . " WHERE serial_number='$item->serial_number'");
+        }
+      }
+
       $alert = [
         "Alert" => "alert&reload",
         "title" => "Venta realizada",
         "text" => "La venta se registró exitosamente.",
         "icon" => "success"
       ];
+      $ICart->clearController();
     } else {
       $alert = [
         "Alert" => "simple",

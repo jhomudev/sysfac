@@ -15,10 +15,6 @@
   </nav>
 </div>
 <div class="purchase__box">
-  <!-- <div class="purchase__top">
-    <h1 class="purchase__top__text"><i class="ph ph-cardholder"></i>&nbsp; Nueva compra</h1>
-    <a href="<?php echo SERVER_URL; ?>/compras" class="purchase__top__text"><i class="ph ph-clock-counter-clockwise"></i>&nbsp; Volver</a>
-  </div> -->
   <div class="purchase__bottom">
     <div class="purchase__entries">
       <div class="supplier__data__box box__entries">

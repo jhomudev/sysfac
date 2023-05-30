@@ -29,7 +29,6 @@ class CartController extends CartModel
 
 
     if ($add_for == ADD_FOR->quantity) {
-
       $ok_q =  is_numeric($quantity) && !empty($quantity) && $quantity > 0;
       if (!$ok_q) {
         $alert = [
@@ -43,7 +42,7 @@ class CartController extends CartModel
       }
 
       // validicaion de que producto ya sta ahi
-      foreach ($_SESSION['cart']['items'] as $key => $item) {
+      foreach ($_SESSION['cart']['items'] as $item) {
         if ($item['product_id'] == $product_id) {
           $alert = [
             "Alert" => "simple",
@@ -68,6 +67,20 @@ class CartController extends CartModel
         ];
         return json_encode($alert);
         exit();
+      }
+
+      // validacion de que producto numero de serie ya sta en carrito
+      foreach ($_SESSION['cart']['items'] as $item) {
+        if ($item['serial_number'] == $ns) {
+          $alert = [
+            "Alert" => "simple",
+            "title" => "Ya en carrito",
+            "text" => "El número de serie que ingresó ya esta en el carrito.",
+            "icon" => "warning"
+          ];
+          return json_encode($alert);
+          exit();
+        }
       }
 
       $serial_numbers = explode(",", $ns);
