@@ -5,10 +5,10 @@
       <li class="nav__views__li">
         <a href="<?php echo SERVER_URL; ?>/dashboard" class="nav__views__link">Home</a>
       </li>
-      <li>
+      <li class="nav__views__li">
         <a href="<?php echo SERVER_URL; ?>/compras" class="nav__views__link">Compras</a>
       </li>
-      <li>
+      <li class="nav__views__li">
         <a href="" class="nav__views__link">Nueva compra</a>
       </li>
     </ul>

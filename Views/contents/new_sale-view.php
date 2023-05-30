@@ -1,3 +1,5 @@
+<h1 class="purchase__title">Mostrar stock en los productos aqui, y permitir agrgar a carrito x cantiodad dependiendo de stock</h1>
+<!--! FALTA COSAS X CORREGIR/AGREGAR | -->
 <div class="block__head">
   <h1 class="purchase__title">Nueva venta</h1>
   <nav class="nav__views">
@@ -5,10 +7,10 @@
       <li class="nav__views__li">
         <a href="<?php echo SERVER_URL; ?>/dashboard" class="nav__views__link">Home</a>
       </li>
-      <li>
+      <li class="nav__views__li">
         <a href="<?php echo SERVER_URL; ?>/ventas" class="nav__views__link">Ventas</a>
       </li>
-      <li>
+      <li class="nav__views__li">
         <a href="" class="nav__views__link">Nueva venta</a>
       </li>
     </ul>

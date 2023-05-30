@@ -939,6 +939,7 @@ textarea {
 .nav__views__ul{
   display: flex;
   align-items: center;
+  list-style: none;
 }
 .nav__views__ul li:not(:last-child)::after {
   content: "/";
