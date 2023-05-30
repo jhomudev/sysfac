@@ -11,16 +11,16 @@ class PurchaseModel extends MainModel
     $start_date = $filters['start_date'];
     $end_date = $filters['end_date'];
 
-    $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.operation_type=" . OPERATION->input;
+    $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.operation_type=" . OPERATION->input . " ORDER BY s.sell_id DESC";
     $purchases = MainModel::connect()->prepare($query);
 
     if (!empty($column) && !empty($value)) {
-      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.$column=:value AND s.operation_type=" . OPERATION->input;
+      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id WHERE s.$column=:value AND s.operation_type=" . OPERATION->input." ORDER BY s.sell_id DESC";
       $purchases = MainModel::connect()->prepare($query);
       $purchases->bindParam(":value", $value);
     }
     if (!empty($start_date) && !empty($end_date)) {
-      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id  WHERE (s.created_at BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)) AND s.operation_type=" . OPERATION->input;
+      $query = "SELECT s.sell_id, s.sell_code, s.discount, s.total_import, s.total_pay, s.created_at, CONCAT(u.names,' ',u.lastnames) AS user, sup.name AS supplier FROM sells s INNER JOIN users u ON u.user_id=s.user_id INNER JOIN suppliers sup ON sup.supplier_id=s.supplier_id  WHERE (s.created_at BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)) AND s.operation_type=" . OPERATION->input." ORDER BY s.sell_id DESC";
       $purchases = MainModel::connect()->prepare($query);
       $purchases->bindParam(":start_date", $start_date);
       $purchases->bindParam(":end_date", $end_date);

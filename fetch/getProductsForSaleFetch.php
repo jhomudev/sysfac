@@ -15,18 +15,29 @@ if (isset($_SESSION['token'])) {
 
   $data = "";
 
+  // funcion para obtener la cantidad de filas de un producto en products_all
+  function getQ($product_id)
+  {
+    $q = MainModel::executeQuerySimple("SELECT COUNT(product_id) AS dispo FROM products_all WHERE product_id=$product_id AND state=" . STATE_IN->stock);
+    return $q->fetchColumn();
+  }
+
   if ($products) {
     foreach ($products as $key => $product) {
-      $data .= '
-      <article class="product">
-        <div class="product__imgBox">
-          <img src="https://cdn-icons-png.flaticon.com/512/10810/10810368.png" loading="lazy" alt="product box" class="product__img">
-        </div>
-        <p class="product_name">' . $product->name . '</p>
-        <span class="product_price">S/' . $product->price_sale . '</span>
-        <button class="product__form__submit toggleForm" type="submit" data-id="' . $product->product_id . '"><i class="ph ph-shopping-cart-simple"></i></button>
-      </article>
-      ';
+      // filtro para mostrar solo los productos con estado activo
+      if ($product->is_active == STATE->active) {
+        $data .= '
+          <article class="product">
+            <div class="product__imgBox">
+              <img src="https://cdn-icons-png.flaticon.com/512/10810/10810368.png" loading="lazy" alt="product box" class="product__img">
+            </div>
+            <p class="product_name">' . $product->name . '</p>
+            <span class="product_price">S/' . $product->price_sale . '</span>
+            <p class ="product__available">' . getQ($product->product_id) . ' disponibles</p>
+            <button class="product__form__submit toggleForm" type="submit" data-id="' . $product->product_id . '"><i class="ph ph-shopping-cart-simple"></i></button>
+          </article>
+        ';
+      }
     }
   } else {
     $data .= '

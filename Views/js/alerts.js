@@ -52,8 +52,8 @@ function sendFormFetch(e, exec = () => {}) {
         const req = await fetch(action, config);
         const res = await req.json();
         console.log(res);
-        exec();
         alertFetch(res);
+        exec();
       }
     } catch (error) {
       console.log(error);

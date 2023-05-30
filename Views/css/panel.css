@@ -426,6 +426,12 @@ textarea {
   font-size: large;
   color: var(--c_orange);
 }
+.product__available{
+  text-align: center;
+  font-size: small;
+  font-weight: 600;
+  color: var(--c_lightPurple);
+}
 .product__form__submit {
   width: 100%;
   padding: 3px 10px;

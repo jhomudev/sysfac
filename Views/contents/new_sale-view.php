@@ -1,5 +1,3 @@
-<h1 class="purchase__title">Mostrar stock en los productos aqui, y permitir agrgar a carrito x cantiodad dependiendo de stock</h1>
-<!--! FALTA COSAS X CORREGIR/AGREGAR | -->
 <div class="block__head">
   <h1 class="purchase__title">Nueva venta</h1>
   <nav class="nav__views">
