@@ -41,12 +41,13 @@
 <div class="tableBox">
   <table class="table">
     <thead class="table__thead">
-      <th>Imagen</th>
       <th>Nombre</th>
       <th>Precio venta</th>
       <th>Unidad</th>
       <th>Venta por</th>
       <th>Categoría</th>
+      <th>Stock mínimo</th>
+      <th>Stock actual</th>
       <th>Activo</th>
       <th>Acciones</th>
     </thead>

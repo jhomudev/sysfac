@@ -18,6 +18,12 @@ class ProductController extends ProductModel
     ];
     $products = ProductModel::getProductsModel($filters);
 
+    foreach ($products as $key => $product) {
+      $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=" . $products[$key]['product_id'] . " AND pa.state=" . STATE_IN->stock)->fetchColumn();
+
+      $products[$key]['stock'] = $stock;
+    }
+
     return json_encode($products);
   }
 

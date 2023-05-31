@@ -12,22 +12,24 @@ class ProductModel extends MainModel
     $column = $filters['column'];
     $value = $filters['value'];
 
-    if (empty($words) && empty($column) && empty($value)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
+    if (empty($words) && empty($column) && empty($value)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
     else {
       if (!empty($words)) {
         $words = "%$words%";
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
+        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
         $products->bindParam(":words", $words, PDO::PARAM_STR);
       };
       if (!empty($column) && isset($value)) {
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER BY p.product_id DESC");
+        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER BY p.product_id DESC");
         $products->bindParam(":value", $value, PDO::PARAM_STR);
       }
     }
 
     $products->execute();
 
-    return $products->fetchAll();
+    $products = $products->fetchAll();
+
+    return $products;
   }
 
   // Funcion de obtener productos
