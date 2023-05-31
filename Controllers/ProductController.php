@@ -50,6 +50,10 @@ class ProductController extends ProductModel
       if ($products_all[$key]['state'] == STATE_IN->stock) $products_all[$key]['state'] = 'En stock';
       if ($products_all[$key]['state'] == STATE_IN->damaged) $products_all[$key]['state'] = 'Dañado';
       if ($products_all[$key]['state'] == STATE_IN->sold) $products_all[$key]['state'] = 'Vendido';
+
+      if (!empty($products_all[$key]['local_id'])) {
+        $products_all[$key]['local_name'] = MainModel::executeQuerySimple("SELECT name FROM locations WHERE local_id=" . $products_all[$key]['local_id'])->fetchColumn();
+      }
     }
 
     return json_encode($products_all);

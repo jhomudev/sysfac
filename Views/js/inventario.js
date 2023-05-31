@@ -59,6 +59,7 @@ async function getProductsInventary(words = "", column = "", value = "") {
       }
     );
     const res = await req.json();
+    console.log(res);
     rowsCount.innerHTML = res.length;
     tbody.innerHTML = "";
     if (res.length > 0) {
@@ -66,8 +67,8 @@ async function getProductsInventary(words = "", column = "", value = "") {
         tbody.innerHTML += `
         <tr>
           <td>${product.product_name}</td>
-          <td>${product.serial_number}</td>
-          <td>${product.local_name}</td>
+          <td>${product.serial_number?product.serial_number:"N.A."}</td>
+          <td>${product.local_name?product.local_name:"No asignado"}</td>
           <td>${product.state}</td>
           <td class="actions">
             <form action="${serverURL}/fetch/.php" method="POST" class="formFetch formDelete">
