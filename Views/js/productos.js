@@ -79,18 +79,20 @@ async function getProducts(words = "", column = "", value = "") {
       body: formData,
     });
     const res = await req.json();
-    console.log(res);
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((product) => {
         tbody.innerHTML += `
-        <tr>
-          <td><img src="${product.link_image}" alt="${product.name}"></td>
+        <tr style="background:${
+          product.stock <= product.inventary_min ? "#F0D0D6" : ""
+        };">
           <td>${product.name}</td>
           <td>S/ ${product.price_sale}</td>
           <td>${product.unit}</td>
           <td>${product.sale_for == 1 ? "CANTIDAD" : "UNIDAD/N.S."}</td>
           <td>${product.category}</td>
+          <td>${product.inventary_min}</td>
+          <td>${product.stock}</td>
           <td>${product.is_active ? "SI" : "NO"}</td>
           <td class="actions">
             <button data-key="${
