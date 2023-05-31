@@ -11,7 +11,7 @@
         <div class="notifications__box">
           <?php
           // Notificación de carrito de compra
-          if (count($_SESSION['cart']['items']) > 0) {
+          if (isset($_SESSION['cart']) && count($_SESSION['cart']['items']) > 0) {
             echo '
                 <a href="' . SERVER_URL . '/new_sale" class="notification">
                   <h2 class="notification__title">Venta inconclusa</h2>
@@ -21,7 +21,7 @@
           }
 
           // Notificación de carrito de compra
-          if (count($_SESSION['cart_purchase']['items']) > 0) {
+          if (isset($_SESSION['cart_purchase']) && count($_SESSION['cart_purchase']['items']) > 0) {
             echo '
                 <a href="' . SERVER_URL . '/new_purchase" class="notification">
                   <h2 class="notification__title">Compra inconclusa</h2>
@@ -67,9 +67,9 @@
   <div class="notifications__box">
     <?php
     // Notificación de carrito de compra
-    if (count($_SESSION['cart']['items']) > 0) {
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']['items']) > 0) {
       echo '
-          <a href="' . SERVER_URL . '" class="notification">
+          <a href="' . SERVER_URL . '/new_sale" class="notification">
             <h2 class="notification__title">Venta inconclusa</h2>
             <p class="notification__p">Hay productos en el carrito de venta, realize la venta o limpie el carrito.</p>
           </a>
@@ -77,9 +77,9 @@
     }
 
     // Notificación de carrito de compra
-    if (count($_SESSION['cart_purchase']['items']) > 0) {
+    if (isset($_SESSION['cart_purchase']) && count($_SESSION['cart_purchase']['items']) > 0) {
       echo '
-          <a href="' . SERVER_URL . '" class="notification">
+          <a href="' . SERVER_URL . '/new_purchase" class="notification">
             <h2 class="notification__title">Compra inconclusa</h2>
             <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
           </a>
@@ -94,13 +94,14 @@
       $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=$product->product_id AND pa.state=" . STATE_IN->stock)->fetchColumn();
       if ($stock <= $product->inventary_min) {
         echo '
-          <a href="' . SERVER_URL . '" class="notification">
+          <a href="' . SERVER_URL . '/productos" class="notification">
             <h2 class="notification__title">Stock por agotarse</h2>
             <p class="notification__p">El producto <strong>' . $product->name . '</strong> está en su mínimo de inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
           </a>
         ';
       }
     }
+
     ?>
   </div>
 </div>

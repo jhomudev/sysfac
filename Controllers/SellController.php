@@ -171,7 +171,7 @@ class SellController extends SellModel
       // Funcion actualizar estado a vendido de los productos vendidos
       foreach ($items as $item) {
         if (empty($item->serial_number)) {
-          MainModel::executeQuerySimple("UPDATE products_all SET state=" . STATE_IN->sold . " WHERE product_id=" . $item->product_id . " LIMIT " . $item->quantity);
+          MainModel::executeQuerySimple("UPDATE products_all SET state=" . STATE_IN->sold . " WHERE product_id=" . $item->product_id . " AND state=" . STATE_IN->stock . " LIMIT " . $item->quantity);
         } else {
           MainModel::executeQuerySimple("UPDATE products_all SET state=" . STATE_IN->sold . " WHERE serial_number='$item->serial_number'");
         }
