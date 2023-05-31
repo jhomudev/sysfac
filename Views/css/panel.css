@@ -202,20 +202,20 @@ textarea {
   right: 0;
   top: 100%;
   z-index: 10;
-  width: 20em;
+  width: 30em;
   min-height: 0;
   max-height: 0;
   background-color: var(--c_dark);
   overflow: auto;
   border-radius: 3px;
   opacity: 0;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
 }
 .notifications__details.show {
   opacity: 1;
   border: 1px solid var(--c_lightPurple);
   min-height: 10em;
-  min-height: 30em;
+  max-height: 30em;
 }
 .notifications__details__title {
   background-color: var(--c_dark);
@@ -225,12 +225,37 @@ textarea {
   z-index: 10;
   font-size: medium;
   font-weight: 600;
-  margin: 5px 10px;
-  padding: 5px 0;
+  padding: 10px 1em;
   border-bottom: 1px solid var(--c_lightPurple);
+  color: var(--c_lightPurple);
+}
+.notifications__details__responsive__close {
+  position: relative;
+  margin-left: 1em;
+  margin-top: 1em;
+  color: var(--c_lightPurple);
+}
+.notifications__details__responsive__close i:hover {
+  background: var(--c_dark);
+  filter: brightness(120%);
+}
+.notifications__details__responsive {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  z-index: 100;
+  width: min(100%, 20em);
+  height: 100vh;
+  overflow: auto;
+  background: var(--c_dark);
+  transition: all 0.5s ease-in-out;
+}
+.notifications__details__responsive.show {
+  right: 0;
 }
 .notification {
-  padding: 5px 10px;
+  padding: 10px 1em;
   background-color: var(--c_dark);
   display: flex;
   flex-direction: column;
@@ -238,7 +263,7 @@ textarea {
   color: var(--c_lightPurple);
 }
 .notification:hover {
-  filter: brightness(110%);
+  filter: brightness(150%);
 }
 .notification__title {
   font-size: small;
@@ -248,11 +273,11 @@ textarea {
   font-size: small;
   font-weight: 300;
   /* estilos para limitar lineas de texto */
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2; /* aquí se especifica el número de líneas */
+  -webkit-line-clamp: 2;  */ /* aquí se especifica el número de líneas */
 }
 .header__icon {
   position: relative;
@@ -262,7 +287,7 @@ textarea {
 .header__icon:hover {
   color: var(--c_sky);
 }
-.cart_icon_count {
+.countBox {
   position: absolute;
   bottom: 60%;
   left: 60%;
@@ -523,7 +548,7 @@ textarea {
 .table__thead {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 5;
   background-color: #f7f7f7;
   color: var(--c_dark);
   font-size: small;
@@ -1048,6 +1073,9 @@ textarea {
   }
   .menuBar__responsive {
     display: flex;
+  }
+  .notifications__details__responsive {
+    display: block;
   }
   .view {
     padding: 10px;

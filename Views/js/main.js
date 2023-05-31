@@ -18,8 +18,14 @@ mayus.forEach((input) => {
 //funcion toggle para mostrar el userBar
 const btnUserbar = document.getElementById("btnUserbar");
 const userBar = document.querySelector(".user__details");
-const btnNotibar = document.getElementById("btnNotibar");
+const toggleShowNotibar = document.querySelectorAll(".toggleShowNotibar");
 const notiBar = document.querySelector(".notifications__details");
+const notiBarRes = document.querySelector(
+  ".notifications__details__responsive"
+);
+const btncloseNotiBarRes = document.querySelector(
+  ".notifications__details__responsive__close"
+);
 
 // !no funciona
 // document.addEventListener("click", function (event) {
@@ -30,9 +36,33 @@ const notiBar = document.querySelector(".notifications__details");
 //     notiBar.classList.add("show");
 //   }
 // });
+toggleShowNotibar.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    toggleShowElement(notiBar);
+    toggleShowElement(notiBarRes);
+    toggleShowElement(menuBarResponsive);
+  });
+});
 
-btnNotibar.addEventListener("click", () => toggleShowElement(notiBar));
+btncloseNotiBarRes.addEventListener("click", () =>
+  toggleShowElement(notiBarRes)
+);
+
 btnUserbar.addEventListener("click", () => toggleShowElement(userBar));
+
+// Funcionalidad mostrar cantidad de notificaciones
+const notifications = document.querySelectorAll(".notification");
+const notiCounts = document.querySelectorAll(".noti_icon_count");
+
+notiCounts.forEach((notiCount) => {
+  if (notifications.length > 0) {
+    notiCount.style.visibility = "visible";
+    notiCount.innerHTML = notifications.length / 2;
+  } else {
+    document.querySelector(".notifications__box").innerHTML =
+      '<div class="empty">No hay notificaciones</div>';
+  }
+});
 
 // función toggle para mostrar barra de menu responsive
 const menuBarResponsive = document.getElementById("menuBarResponsive");

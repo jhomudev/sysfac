@@ -72,8 +72,12 @@
   <nav class="nav">
     <ul>
       <li>
-        <div class="cart_icon toggleShowCart nav_item_link "><i class="ph ph-shopping-cart"><span class="cart_icon_count"></span></i><span>Carrito</span></div>
+        <div class="cart_icon toggleShowNotibar nav_item_link"><i class="ph ph-bell-simple"><span class="noti_icon_count countBox"></span></i><span>Notificaciones</span></div>
       </li>
+      <li>
+        <div class="cart_icon toggleShowCart nav_item_link"><i class="ph ph-shopping-cart"><span class="cart_icon_count countBox"></span></i><span>Carrito</span></div>
+      </li>
+      <div class="logout" style="margin:0; padding:0;"></div>
       <li>
         <a href="<?php echo SERVER_URL; ?>/dashboard" data-view="dashboard" class="res__nav__link nav_item_link"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
       </li>
