@@ -24,16 +24,6 @@
   letter-spacing: 0.8px;
   text-decoration: none;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  appearance: none;
-  font-weight: normal;
-  font-size: medium;
-}
 .hidden{
   display: none;
 }

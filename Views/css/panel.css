@@ -361,6 +361,8 @@ textarea {
 }
 .titleView {
   color: var(--c_lightPurple);
+  font-size: large;
+  font-weight: 400;
 }
 .browser {
   flex: 1 1 300px;
