@@ -16,11 +16,11 @@ class SellController extends SellModel
   public function getSellsController()
   {
     $filters = [
-      'words' => $_POST['words'],
-      'column' => $_POST['column'],
-      'value' => $_POST['value'],
-      'date_start' => $_POST['date_start'],
-      'date_end' => $_POST['date_end'],
+      'words' => isset($_POST['words']) ? $_POST['words'] : "",
+      'column' =>isset($_POST['column']) ? $_POST['column']:"",
+      'value' => isset($_POST['value']) ?$_POST['value']:"",
+      'date_start' => isset($_POST['date_start']) ?$_POST['date_start']:"",
+      'date_end' => isset($_POST['date_end']) ?$_POST['date_end']:"",
     ];
     $sells = SellModel::getSellsModel($filters);
     return json_encode($sells);

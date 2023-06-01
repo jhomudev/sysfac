@@ -14,10 +14,10 @@ class PurchaseController extends PurchaseModel
   public function getPurchasesController()
   {
     $filters = [
-      "column" => $_POST['column'],
-      "value" => $_POST['value'],
-      "start_date" => $_POST['date_start'],
-      "end_date" => $_POST['date_end'],
+      "column" => isset($_POST['column']) ? $_POST['column'] : "",
+      "value" => isset($_POST['value']) ? $_POST['value'] : "",
+      "date_start" => isset($_POST['date_start']) ? $_POST['date_start'] : "",
+      "date_end" => isset($_POST['date_end']) ? $_POST['date_end'] : "",
     ];
 
     $purchases = PurchaseModel::getPurchasesModel($filters);
