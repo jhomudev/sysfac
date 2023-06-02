@@ -13,10 +13,15 @@
           // Notificación de carrito de compra
           if (isset($_SESSION['cart']) && count($_SESSION['cart']['items']) > 0) {
             echo '
-                <a href="' . SERVER_URL . '/new_sale" class="notification">
+              <a class="notification toggleShowCart">
+                <div class="notification__imgBox">
+                  <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5408/5408490.png" alt="venta">
+                </div>
+                <div class="notification__text">
                   <h2 class="notification__title">Venta inconclusa</h2>
                   <p class="notification__p">Hay productos en el carrito de venta, realize la venta o limpie el carrito.</p>
-                </a>
+                </div>
+              </a>
               ';
           }
 
@@ -24,8 +29,13 @@
           if (isset($_SESSION['cart_purchase']) && count($_SESSION['cart_purchase']['items']) > 0) {
             echo '
                 <a href="' . SERVER_URL . '/new_purchase" class="notification">
-                  <h2 class="notification__title">Compra inconclusa</h2>
-                  <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
+                  <div class="notification__imgBox">
+                    <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/3847/3847867.png" alt="proveedor">
+                  </div>
+                  <div class="notification__text">
+                    <h2 class="notification__title">Compra inconclusa</h2>
+                    <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
+                  </div>
                 </a>
               ';
           }
@@ -38,10 +48,15 @@
             $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=$product->product_id AND pa.state=" . STATE_IN->stock)->fetchColumn();
             if ($stock <= $product->inventary_min) {
               echo '
-                <a href="' . SERVER_URL . '/productos" class="notification">
+              <a href="' . SERVER_URL . '/productos" class="notification">
+                <div class="notification__imgBox">
+                  <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
+                </div>
+                <div class="notification__text">
                   <h2 class="notification__title">Stock por agotarse</h2>
                   <p class="notification__p">El producto <strong>' . $product->name . '</strong> está en su mínimo de inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
-                </a>
+                </div>
+              </a>
               ';
             }
           }
@@ -69,10 +84,15 @@
     // Notificación de carrito de compra
     if (isset($_SESSION['cart']) && count($_SESSION['cart']['items']) > 0) {
       echo '
-          <a href="' . SERVER_URL . '/new_sale" class="notification">
+        <a class="notification toggleShowCart">
+          <div class="notification__imgBox">
+            <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5408/5408490.png" alt="venta">
+          </div>
+          <div class="notification__text">
             <h2 class="notification__title">Venta inconclusa</h2>
             <p class="notification__p">Hay productos en el carrito de venta, realize la venta o limpie el carrito.</p>
-          </a>
+          </div>
+        </a>
         ';
     }
 
@@ -80,8 +100,13 @@
     if (isset($_SESSION['cart_purchase']) && count($_SESSION['cart_purchase']['items']) > 0) {
       echo '
           <a href="' . SERVER_URL . '/new_purchase" class="notification">
-            <h2 class="notification__title">Compra inconclusa</h2>
-            <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
+            <div class="notification__imgBox">
+              <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/3847/3847867.png" alt="proveedor">
+            </div>
+            <div class="notification__text">
+              <h2 class="notification__title">Compra inconclusa</h2>
+              <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
+            </div>
           </a>
         ';
     }
@@ -94,14 +119,18 @@
       $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=$product->product_id AND pa.state=" . STATE_IN->stock)->fetchColumn();
       if ($stock <= $product->inventary_min) {
         echo '
-          <a href="' . SERVER_URL . '/productos" class="notification">
+        <a href="' . SERVER_URL . '/productos" class="notification">
+          <div class="notification__imgBox">
+            <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
+          </div>
+          <div class="notification__text">
             <h2 class="notification__title">Stock por agotarse</h2>
             <p class="notification__p">El producto <strong>' . $product->name . '</strong> está en su mínimo de inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
-          </a>
+          </div>
+        </a>
         ';
       }
     }
-
     ?>
   </div>
 </div>
