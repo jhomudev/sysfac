@@ -51,7 +51,7 @@ function sendFormFetch(e, exec = () => {}) {
       if (result.isConfirmed) {
         const req = await fetch(action, config);
         const res = await req.json();
-        console.log(res);
+
         alertFetch(res);
         exec();
       }

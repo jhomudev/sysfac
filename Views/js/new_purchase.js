@@ -52,7 +52,6 @@ async function getDataProduct(productIdName) {
       body: new URLSearchParams("productIdName=" + productIdName),
     });
     const res = await req.json();
-    console.log(res);
 
     document.getElementById("productId").value = res.product_id
       ? res.product_id
@@ -79,7 +78,7 @@ async function getDataList() {
     };
     const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     const items = res.items;
     const total = res.total;
 
@@ -139,7 +138,7 @@ async function addProduct(e) {
     };
     const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     alertFetch(res);
     if (res.icon == "success") {
       getDataList();
@@ -158,7 +157,7 @@ async function removeItem(col, val) {
     };
     const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     alertFetch(res);
     getDataList();
   } catch (error) {
@@ -174,7 +173,7 @@ async function clearDataList() {
     };
     const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     alertFetch(res);
     getDataList();
   } catch (error) {

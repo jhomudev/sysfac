@@ -34,7 +34,7 @@ async function addProduct(e) {
     };
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     alertFetch(res);
     getDataCart();
     getItemsCart();
@@ -131,7 +131,7 @@ async function removeItem(col, val) {
     };
     const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
     const res = await req.json();
-    console.log(res);
+
     alertFetch(res);
     getItemsCart();
     getDataCart();
