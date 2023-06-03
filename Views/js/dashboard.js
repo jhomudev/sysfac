@@ -1,22 +1,3 @@
-const MONTHS = Object.freeze([
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-]);
-
-const DATA = Object.freeze({
-  SALES: 1,
-  PURCHASES: 2,
-});
 // FUNCIONES PARA TRAER LOS DATOS DE LOS GRAFICOS
 async function getDataGraphicSales(data, year = "", month = "") {
   try {
@@ -31,7 +12,7 @@ async function getDataGraphicSales(data, year = "", month = "") {
   }
 }
 
-// Funcion para los graficos
+// Funcion para traer los graficos
 async function getGraphicSales() {
   const data = await getDataGraphicSales("graphicSales");
   const chrt = document.getElementById("graphicSales").getContext("2d");
@@ -77,7 +58,6 @@ getGraphicSales();
 
 async function getGraphicStates() {
   const data = await getDataGraphicSales("graphicStates");
-
   const chrt = document.getElementById("graphicStates").getContext("2d");
   new Chart(chrt, {
     type: "pie",
@@ -111,8 +91,6 @@ getGraphicStates();
 
 async function getGraphicBestSelling() {
   const data = await getDataGraphicSales("graphicBestSelling");
-  console.log(data);
-
   const chrt = document.getElementById("graphicBestSelling").getContext("2d");
   new Chart(chrt, {
     type: "bar",
