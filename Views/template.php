@@ -22,6 +22,8 @@ if ($vista == "proof") {
   <?php
   if ($vista === "login") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/login.css">';
   else if ($vista !== "login" || $vista !== "404") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/panel.css">';
+
+  if ($vista == "dashboard") echo '<link rel="stylesheet" href="' . SERVER_URL . '/Views/css/dashboard.css">';
   ?>
   <?php  ?>
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
@@ -147,6 +149,11 @@ if ($vista == "proof") {
     <script src="<?php echo SERVER_URL; ?>/Views/js/main.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/alerts.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/cart.js"></script>
+    <!-- Script charjs -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
   <?php
     if ($vista != "purchase") echo '<script src="' . SERVER_URL . '/Views/js/' . $vista . '.js"></script>';

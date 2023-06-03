@@ -1,0 +1,188 @@
+@import url(http://localhost/sysfac/Views/css/main.css);
+.dashboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.grid {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-areas:
+    "sell sell sell movs__box"
+    "states bestSells bestSells bestSells";
+  gap: 1em;
+  padding-bottom: 1em;
+}
+.ent__box {
+  width: 100%;
+  /* height: min-content; */
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  grid-area: ent;
+}
+.sales__box {
+  grid-area: sell;
+}
+.states {
+  grid-area: states;
+}
+.bestSells {
+  grid-area: bestSells;
+}
+.movs__box {
+  width: 400px;
+  grid-area: movs__box;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.movs__ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  list-style: none;
+  margin-top: 10px;
+}
+.movs__link {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  text-decoration: none;
+  border: 1px solid var(--cl);
+  border-radius: 10px;
+  padding: 10px;
+  transition: all 0.5s ease-in-out;
+}
+.movs__link:hover {
+  transform: translate(3px, -3px);
+}
+.movs__item__icon {
+  font-size: x-large;
+  font-weight: 600;
+  color: var(--cl);
+}
+.movs__item__username {
+  font-family: var(--f_comfortaa);
+  font-size: x-small;
+  color: white;
+}
+.movs__item__p {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  text-align: justify;
+  color: var(--c_lightPurple);
+}
+.box__dash {
+  background-color: var(--c_semidark);
+  padding: 1.5em;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ent {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 2em;
+  transition: all 0.3s ease-in;
+}
+.ent:hover {
+  transform: scale(1.04);
+  flex: 1.1;
+}
+.ent__link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.ent__box__icon {
+  font-size: xx-large;
+  color: var(--cl);
+}
+.ent__quantity {
+  font-size: xx-large;
+  color: white;
+}
+.ent__name {
+  font-size: small;
+  color: var(--c_lightPurple);
+}
+.graphic {
+  margin: auto;
+  width: 100% !important;
+  height: 100% !important;
+}
+.graphic__title {
+  font-size: medium;
+  font-weight: 400;
+  color: white;
+}
+.graphic__descri {
+  font-size: small;
+  font-weight: 200;
+  color: var(--c_lightPurple);
+}
+
+@media screen and (max-width: 1500px) {
+  .grid {
+    grid-template-areas:
+      "sell sell sell sell"
+      "states states movs__box movs__box"
+      "bestSells bestSells bestSells bestSells";
+  }
+  .states {
+    min-width: 320px;
+  }
+  .graphic#graphicStates {
+    width: 410px !important;
+    height: 410px !important;
+  }
+  .movs__box {
+    width: 100%;
+    height: 550px;
+  }
+  .movs {
+    overflow-y: auto;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .grid {
+    grid-template-areas:
+      "sell sell sell sell"
+      "bestSells bestSells bestSells bestSells"
+      "states states states states"
+      "movs__box movs__box movs__box movs__box";
+  }
+  .graphic#graphicStates {
+    width: 500px !important;
+    height: 500px !important;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .flex__box {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .graphic#graphicStates{
+    width: 340px !important;
+    height: 340px !important;
+  }
+}

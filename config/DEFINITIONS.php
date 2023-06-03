@@ -69,3 +69,5 @@ define("ADD_FOR", $add_for);
 
 // IGV
 define("IGV", 18);
+
+const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
