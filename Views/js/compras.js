@@ -33,7 +33,6 @@ async function getPurchases(
 
 getPurchases();
 
-inputSearch.addEventListener("input", () => getPurchases(inputSearch.value));
 allBtn.addEventListener("click", () => {
   getPurchases();
   filterSelect.forEach((filter) => {

@@ -1,10 +1,7 @@
 <div class="flexnav">
-  <div class="browser">
-    <label for="inputSearch" class="browser__label">Buscar compra</label>
-    <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe término a buscar">
-  </div>
+  <h1 class="titleView">Gestión de compras</h1>
   <div class="buttons">
-    <a href="<?php echo SERVER_URL ;?>/new_purchase" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva compra</a>
+    <a href="<?php echo SERVER_URL; ?>/new_purchase" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva compra</a>
     <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
   </div>
 </div>
