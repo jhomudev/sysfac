@@ -32,7 +32,7 @@ class LoginController extends LoginModel
 
     $data_login = [
       "username" => $username,
-      "password" => $password,
+      "password" => $this->encryption($password),
     ];
 
     $data_user = LoginModel::LoginModel($data_login);

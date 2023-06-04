@@ -83,8 +83,8 @@
         <input type="text" class="form__input" id="username" name="tx_username" required>
       </fieldset>
       <fieldset class="form__group">
-        <legend class="form__legend">Contraseña</legend>
-        <input type="text" class="form__input" id="password" name="tx_password" required>
+        <legend class="form__legend" id="label__password">Contraseña</legend>
+        <input type="password" class="form__input" id="password" name="tx_password" required>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Correo</legend>
@@ -132,10 +132,6 @@
         <tr>
           <th>Nombre de usuario</th>
           <td id="userUsername"></td>
-        </tr>
-        <tr>
-          <th>Contraseña</th>
-          <td id="userPassword"></td>
         </tr>
         <tr>
           <th>Correo</th>
