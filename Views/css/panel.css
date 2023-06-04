@@ -229,6 +229,11 @@ textarea {
   border-bottom: 1px solid var(--c_lightPurple);
   color: var(--c_lightPurple);
 }
+.notifications__box{
+  height: 100%;
+  display:grid;
+  place-items: center;
+}
 .notifications__details__responsive__close {
   position: relative;
   margin-left: 1em;
@@ -554,6 +559,7 @@ textarea {
   display: flex;
   width: 100%;
   height: auto;
+  max-height: 800px;
   overflow: auto;
   border-radius: 5px;
   border: 1px solid var(--c_lightPurple);

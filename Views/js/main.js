@@ -52,6 +52,7 @@ btnUserbar.addEventListener("click", () => toggleShowElement(userBar));
 
 // Funcionalidad mostrar cantidad de notificaciones
 const notifications = document.querySelectorAll(".notification");
+const notificationsBox = document.querySelectorAll(".notifications__box");
 const notiCounts = document.querySelectorAll(".noti_icon_count");
 
 notiCounts.forEach((notiCount) => {
@@ -59,8 +60,14 @@ notiCounts.forEach((notiCount) => {
     notiCount.style.visibility = "visible";
     notiCount.innerHTML = notifications.length / 2;
   } else {
-    document.querySelector(".notifications__box").innerHTML =
-      '<div class="empty">No hay notificaciones</div>';
+    notificationsBox.forEach((box) => {
+      box.innerHTML = `
+      <div class="empty" style="background:transparent">
+        <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+        <p class="empty__message">No hay notificaciones</p>
+      </div>
+      `;
+    });
   }
 });
 
