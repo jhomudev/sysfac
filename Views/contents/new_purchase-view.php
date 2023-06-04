@@ -17,29 +17,6 @@
 <div class="purchase__box">
   <div class="purchase__bottom">
     <div class="purchase__entries">
-      <div class="supplier__data__box box__entries">
-        <h1 class="purchase__subtitle"><i class="ph ph-user-circle-gear"></i> Datos del Proveedor</h1>
-        <fieldset class="form__group">
-          <legend class="form__label">RUC*</legend>
-          <input type="text" class="form__input" id="supplierRUC" list="listSuppliers" minlength="11" maxlength="11" number placeholder="Buscar por RUC">
-          <datalist id="listSuppliers">
-            <?php
-            require_once "./Controllers/SupplierController.php";
-            $IS = new SupplierController();
-
-            $suppliers = json_decode($IS->getSuppliersController());
-
-            foreach ($suppliers as $key => $supplier) {
-              echo '<option value="' . $supplier->RUC . '">' . $supplier->name . '</option>';
-            }
-            ?>
-          </datalist>
-        </fieldset>
-        <fieldset class="form__group">
-          <legend class="form__label">Nombre*</legend>
-          <input type="text" class="form__input" id="nameSupplier" disabled>
-        </fieldset>
-      </div>
       <div class="product__data__box box__entries">
         <h1 class="purchase__subtitle">Productos</h1>
         <form action="" method="POST" class="purchase__products__form">
@@ -111,8 +88,32 @@
       <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POST" class="formFetch">
         <input type="hidden" name="action" value="do">
         <input type="hidden" name="tx_supplier_id" id="supplierIdRUC">
+        <div class="supplier__data__box box__entries">
+          <h1 class="purchase__subtitle"><i class="ph ph-user-circle-gear"></i> Datos del Proveedor</h1>
+          <fieldset class="form__group">
+            <legend class="form__label">RUC*</legend>
+            <input type="text" class="form__input" id="supplierRUC" list="listSuppliers" minlength="11" maxlength="11" number placeholder="Buscar por RUC">
+            <datalist id="listSuppliers">
+              <?php
+              require_once "./Controllers/SupplierController.php";
+              $IS = new SupplierController();
+
+              $suppliers = json_decode($IS->getSuppliersController());
+
+              foreach ($suppliers as $key => $supplier) {
+                echo '<option value="' . $supplier->RUC . '">' . $supplier->name . '</option>';
+              }
+              ?>
+            </datalist>
+          </fieldset>
+          <fieldset class="form__group">
+            <legend class="form__label">Nombre*</legend>
+            <input type="text" class="form__input" id="nameSupplier" disabled>
+          </fieldset>
+        </div>
+        <br>
         <fieldset class="form__group">
-          <legend class="form__label">Información adicional</legend>
+          <legend class="form__label">Detalles adicionales de la compra</legend>
           <textarea name="tx_add_info" class="form__input" placeholder="Puede añadir información adicional, como los datos del reponsable de parte del proveedor"></textarea>
         </fieldset>
         <br>

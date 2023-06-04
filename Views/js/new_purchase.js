@@ -203,6 +203,6 @@ formAdd.addEventListener("submit", (e) => addProduct(e));
 
 formsFetch.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e, () => (window.location.href = serverURL + "/compras"));
+    sendFormFetch(e);
   });
 });

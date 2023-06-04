@@ -136,7 +136,7 @@ class PurchaseController extends PurchaseModel
         }
 
         $alert = [
-          "Alert" => "simple",
+          "Alert" => "alert&reload",
           "title" => "Compra/abastecimiento realizado",
           "text" => "El abastecimiento se registró exitosamente.",
           "icon" => "success"

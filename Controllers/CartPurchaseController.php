@@ -99,18 +99,18 @@ class CartPurchaseController extends CartPurchaseModel
       }
 
       // validacion si numeros de seria ya existen en la tabla products_all
-      $count_exist = 0;
+      $ns_repeat = [];
 
       foreach ($serial_numbers as $ns) {
         $products_all = MainModel::executeQuerySimple("SELECT * FROM products_all WHERE serial_number='$ns'");
-        if (count($products_all->fetchAll()) > 0) $count_exist++;
+        if (count($products_all->fetchAll()) > 0) array_push($ns_repeat, $ns);
       }
 
-      if ($count_exist > 0) {
+      if (count($ns_repeat) > 0) {
         $alert = [
           "Alert" => "simple",
-          "title" => "Números de serie existente",
-          "text" => "Uno o más de los numeros de serie que ingresó ya esta registrado a otro producto existente.",
+          "title" => "Números de serie existente ya en el sistema",
+          "text" => "Uno o más de los numeros de serie que ingresó ya esta registrado a otro producto existente. N.S. que repiten :" . implode(' ', $ns_repeat),
           "icon" => "warning"
         ];
         return json_encode($alert);
@@ -129,8 +129,8 @@ class CartPurchaseController extends CartPurchaseModel
       if (count($ns_repeat) > 0) {
         $alert = [
           "Alert" => "simple",
-          "title" => "Números de serie ya registrados",
-          "text" => "Uno o más de los numeros de serie que ingreso ya estan en la lista.",
+          "title" => "Números de serie ya registrados en la lista",
+          "text" => "N.S. que repiten :".implode(' ', $ns_repeat),
           "icon" => "warning"
         ];
         return json_encode($alert);
