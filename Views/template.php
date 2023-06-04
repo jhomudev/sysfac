@@ -53,9 +53,12 @@ if ($vista == "proof") {
         <main class="view">
           <?php
           // Condicionales para las vistas dependiendo del tipo de usuario
-          if (($_SESSION['type'] == USER_TYPE->vendedor) && ($vista == "ventas" || $vista == "clientes" || $vista == "dashboard")) include_once  "./Views/contents/" . $vista . "-view.php";
-          else if ($_SESSION['type'] == USER_TYPE->superadmin || $_SESSION['type'] == USER_TYPE->admin) include_once  "./Views/contents/" . $vista . "-view.php";
-          else echo "No tiene acceso a este módulo";
+          $access_views_vendedor = ["ventas", "new_sale", "clientes", "dashboard"];
+
+          if ($_SESSION['type'] == USER_TYPE->vendedor) {
+            if (in_array($vista, $access_views_vendedor)) include_once  "./Views/contents/" . $vista . "-view.php";
+            else echo "No tiene acceso a este módulo";
+          } else include_once  "./Views/contents/" . $vista . "-view.php";
           ?>
         </main>
       </div>
@@ -150,8 +153,6 @@ if ($vista == "proof") {
     <script src="<?php echo SERVER_URL; ?>/Views/js/alerts.js"></script>
     <script src="<?php echo SERVER_URL; ?>/Views/js/cart.js"></script>
     <!-- Script charjs -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script> -->
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
