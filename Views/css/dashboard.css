@@ -35,6 +35,10 @@
 .bestSells {
   grid-area: bestSells;
 }
+.movs {
+  overflow-y: auto;
+  max-height: 540px;
+}
 .movs__box {
   width: 400px;
   grid-area: movs__box;
@@ -156,9 +160,6 @@
     width: 100%;
     height: 550px;
   }
-  .movs {
-    overflow-y: auto;
-  }
 }
 @media screen and (max-width: 1100px) {
   .grid {
@@ -181,7 +182,7 @@
 }
 
 @media screen and (max-width: 540px) {
-  .graphic#graphicStates{
+  .graphic#graphicStates {
     width: 340px !important;
     height: 340px !important;
   }
