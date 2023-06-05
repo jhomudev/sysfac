@@ -13,11 +13,12 @@
   $categorys = json_decode($categorys);
   if (count($categorys) > 0) {
     foreach ($categorys as $key => $category) {
+      $img=!empty($category->link_image) ? $category->link_image : "https://img.freepik.com/vector-premium/dispositivos-digitales-realistas-isometria-conjunto-ilustraciones-isometricas_480270-71.jpg";
       echo
       '
       <article class="category" data-key="' . $category->cat_id . '" title="' . $category->description . '">
         <div class="category__imgBox">
-          <img src="' . $category->link_image . '" alt="' . $category->name . '" class="category__img">
+          <img src="' . $img . '" alt="' . $category->name . '" class="category__img">
         </div>
         <h1 class="category__name">' . $category->name . '</h1>
       </article>
@@ -59,7 +60,7 @@
     </form>
     <form action="<?php echo SERVER_URL; ?>/fetch/deleteCategoryFetch.php" method="POST" class="form formFetch">
       <input type="hidden" id="categoryIdDel" name="tx_category_idDel">
-      <input type="submit" value="Eliminar" class="form__submit" style="background:red;color:#fff">
+      <input type="submit" value="Eliminar" class="form__submit" style="background:red;color:#fff; margin-top:10px;">
     </form>
   </div>
 </div>
