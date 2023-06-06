@@ -9,15 +9,6 @@ $user_type = json_decode(json_encode($user_type));
 
 define('USER_TYPE', $user_type);
 
-// Tipos de persona en la DB
-$person_type = [
-  "client" => 1,
-  "supplier" => 0,
-];
-$person_type = json_decode(json_encode($person_type));
-
-define('PERSON_TYPE', $person_type);
-
 // Tipos de locales/locations
 $locations = [
   "store" => 1,
