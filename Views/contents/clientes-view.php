@@ -31,11 +31,11 @@
       <input type="hidden" class="form__input" id="userId" name="tx_client_id">
       <fieldset class="form__group">
         <legend class="form__legend">DNI</legend>
-        <input type="text" class="form__input" id="dni" name="tx_client_dni" maxlength="8" minlength="8" number required>
+        <input type="text" class="form__input" id="dni" name="tx_client_dni" maxlength="8" minlength="8" number>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">RUC</legend>
-        <input type="text" class="form__input" id="RUC" name="tx_client_RUC" maxlength="11" minlength="11" number required>
+        <input type="text" class="form__input" id="RUC" name="tx_client_RUC" maxlength="11" minlength="11" number>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Nombres</legend>

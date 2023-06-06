@@ -37,7 +37,7 @@ async function getClients(words = "") {
           <td>${client.address ? client.address : "--"}</td>
           <td class="actions">
             <button data-key="${
-              client.person_id
+              client.client_id
             }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
           </td>
         </tr>
@@ -46,7 +46,7 @@ async function getClients(words = "") {
     } else {
       tbody.innerHTML = `
       <tr>
-        <td aria-colspan="6" colspan="6">
+        <td aria-colspan="7" colspan="7">
           <div class="empty">
             <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
             <p class="empty__message">No hay registros</p>
@@ -83,7 +83,7 @@ async function setDataClient(clientId) {
     });
     const res = await req.json();
 
-    document.getElementById("userId").value = res.person_id;
+    document.getElementById("userId").value = res.client_id;
     document.getElementById("dni").value = res.dni;
     document.getElementById("RUC").value = res.RUC;
     document.getElementById("nombres").value = res.names;

@@ -210,7 +210,7 @@ async function getDataClient(e) {
       document.getElementById("clientLastnames").value = "";
     }
     if (!res.Alert && typeof res === "object") {
-      document.getElementById("clientId").value = res.person_id;
+      document.getElementById("clientId").value = res.client_id;
       document.getElementById("clientDNI").value = res.dni;
       document.getElementById("clientRUC").value = res.RUC;
       document.getElementById("clientNames").value = res.names;

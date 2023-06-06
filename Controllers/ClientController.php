@@ -14,7 +14,7 @@ class ClientController extends ClientModel
     $clients = ClientModel::getClientsModel($_POST['words']);
 
     foreach ($clients as $key => $client) {
-      $clients[$key]['person_id'] = $this->encryption($clients[$key]['person_id']);
+      $clients[$key]['client_id'] = $this->encryption($clients[$key]['client_id']);
     }
 
     return json_encode($clients);
@@ -81,7 +81,7 @@ class ClientController extends ClientModel
       return json_encode($alert);
       exit();
     }
-    $client['person_id'] = ClientModel::encryption($client['person_id']);
+    $client['client_id'] = ClientModel::encryption($client['client_id']);
     return json_encode($client);
   }
 
@@ -110,15 +110,15 @@ class ClientController extends ClientModel
 
     // validación de duplicidad de dni o RUC
     if (!empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND (dni=$dni OR RUC=$RUC)");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE (dni=$dni OR RUC=$RUC)");
       $clients = $sql_verify->fetchAll();
     }
     if (!empty($dni) && empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND dni=$dni");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE dni=$dni");
       $clients = $sql_verify->fetchAll();
     }
     if (empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client . " AND RUC=$RUC");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE RUC=$RUC");
       $clients = $sql_verify->fetchAll();
     }
 
@@ -135,7 +135,7 @@ class ClientController extends ClientModel
     }
 
     $data = [
-      "person_id" => uniqid("C-") . strtotime("now"),
+      "client_id" => uniqid("C-") . strtotime("now"),
       "dni" => $dni,
       "RUC" => $RUC,
       "names" => $names,
@@ -171,7 +171,7 @@ class ClientController extends ClientModel
   // Funcion controlador para editar cliente
   public function editClientController()
   {
-    $person_id = isset($_POST['tx_client_id']) && !empty($_POST['tx_client_id']) ? MainModel::clearString($_POST['tx_client_id']) : "";
+    $client_id = isset($_POST['tx_client_id']) && !empty($_POST['tx_client_id']) ? MainModel::clearString($_POST['tx_client_id']) : "";
     $dni = isset($_POST['tx_client_dni']) && !empty($_POST['tx_client_dni']) ? MainModel::clearString($_POST['tx_client_dni']) : "";
     $RUC = isset($_POST['tx_client_RUC']) && !empty($_POST['tx_client_RUC']) ? MainModel::clearString($_POST['tx_client_RUC']) : "";
     $names = MainModel::clearString($_POST['tx_client_names']);
@@ -181,7 +181,7 @@ class ClientController extends ClientModel
     $email = isset($_POST['tx_client_email']) ? MainModel::clearString($_POST['tx_client_email']) : "";
 
     // Validacion de campos vacios
-    if (empty($person_id) || empty($names) || empty($lastnames) || (empty($dni) && empty($RUC))) {
+    if (empty($client_id) || empty($names) || empty($lastnames) || (empty($dni) && empty($RUC))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
@@ -192,19 +192,19 @@ class ClientController extends ClientModel
       exit();
     }
 
-    $person_id = $this->decryption($person_id);
+    $client_id = $this->decryption($client_id);
 
     // validación de duplicidad de dni o RUC
     if (!empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE person_id<>'$person_id' AND kind=" . PERSON_TYPE->client . " AND (dni=$dni OR RUC=$RUC)");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND (dni=$dni OR RUC=$RUC)");
       $clients = $sql_verify->fetchAll();
     }
     if (!empty($dni) && empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE person_id<>'$person_id' AND kind=" . PERSON_TYPE->client . " AND dni=$dni");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND dni=$dni");
       $clients = $sql_verify->fetchAll();
     }
     if (empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM persons WHERE person_id<>'$person_id' AND kind=" . PERSON_TYPE->client . " AND RUC=$RUC");
+      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND RUC=$RUC");
       $clients = $sql_verify->fetchAll();
     }
 
@@ -221,7 +221,7 @@ class ClientController extends ClientModel
     }
 
     $new_data = [
-      "person_id" => $person_id,
+      "client_id" => $client_id,
       "dni" => $dni,
       "RUC" => $RUC,
       "names" => $names,

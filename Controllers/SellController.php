@@ -111,9 +111,9 @@ class SellController extends SellModel
       }
 
       if ($proof_type == TYPE_PROOF->boleta) {
-        $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE dni =" . intval($_POST['tx_client_dni']))->fetchColumn();
+        $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE dni =" . intval($_POST['tx_client_dni']))->fetchColumn();
       } else if ($proof_type == TYPE_PROOF->factura) {
-        $client_id = MainModel::executeQuerySimple("SELECT person_id FROM persons WHERE RUC =" . intval($_POST['tx_client_RUC']))->fetchColumn();
+        $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE RUC =" . intval($_POST['tx_client_RUC']))->fetchColumn();
       }
     }
 

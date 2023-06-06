@@ -9,11 +9,11 @@ class ClientModel extends MainModel
   {
     if (!empty($words)) {
       $words = "%$words%";
-      $query = "SELECT * FROM persons WHERE (CONCAT(names, ' ', lastnames) LIKE :words OR dni LIKE :words OR RUC LIKE :words) AND kind=" . PERSON_TYPE->client;
+      $query = "SELECT * FROM clients WHERE (CONCAT(names, ' ', lastnames) LIKE :words OR dni LIKE :words OR RUC LIKE :words)";
       $clients = MainModel::connect()->prepare($query);
       $clients->bindParam(":words", $words);
     } else {
-      $query = "SELECT * FROM persons WHERE kind=" . PERSON_TYPE->client;
+      $query = "SELECT * FROM clients";
       $clients = MainModel::connect()->prepare($query);
     }
 
@@ -25,14 +25,14 @@ class ClientModel extends MainModel
   // Funcion de obtener datos de un cliente mediamte su dni o RUC
   protected static function getDataClientModel(array $data): mixed
   {
-    if (isset($data['client_id']) && !empty($data['client_id'])) $column = "person_id";
+    if (isset($data['client_id']) && !empty($data['client_id'])) $column = "client_id";
     else {
       $column = ($data['typeProof'] == TYPE_PROOF->boleta) ? "dni" : (($data['typeProof'] == TYPE_PROOF->factura) ? "RUC" : "");
     }
 
     $id_dni_ruc = $data['id_dni_ruc'];
 
-    $client = MainModel::connect()->prepare("SELECT * FROM persons WHERE $column=:id_dni_ruc");
+    $client = MainModel::connect()->prepare("SELECT * FROM clients WHERE $column=:id_dni_ruc");
     $client->bindParam(":id_dni_ruc", $id_dni_ruc);
 
 
@@ -44,14 +44,12 @@ class ClientModel extends MainModel
   // Funcion para crear cliente 
   public static function createClientModel(array $data)
   {
-    $type_client = PERSON_TYPE->client;
-
     if (!empty($data['RUC']) && !empty($data['dni'])) {
       $statement = MainModel::connect()->prepare("INSERT INTO 
-      persons(person_id,dni,RUC, names, lastnames, address, phone, email, kind, created_at) 
-      VALUES(:person_id,:dni,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+      clients(client_id,dni,RUC, names, lastnames, address, phone, email, created_at) 
+      VALUES(:client_id,:dni,:RUC, :names, :lastnames, :address, :phone, :email, :created_at)");
 
-      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $data['client_id'], PDO::PARAM_STR);
       $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
       $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
       $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
@@ -59,39 +57,36 @@ class ClientModel extends MainModel
       $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
       $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
       $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
-      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
       $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
     }
 
     if (empty($data['RUC'])) {
       $statement = MainModel::connect()->prepare("INSERT INTO 
-      persons(person_id,dni, names, lastnames, address, phone, email, kind, created_at) 
-      VALUES(:person_id,:dni, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+      clients(client_id,dni, names, lastnames, address, phone, email, created_at) 
+      VALUES(:client_id,:dni, :names, :lastnames, :address, :phone, :email, :created_at)");
 
-      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $data['client_id'], PDO::PARAM_STR);
       $statement->bindParam(":dni", $data['dni'], PDO::PARAM_INT);
       $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
       $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
       $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
       $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
       $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
-      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
       $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
     }
 
     if (empty($data['dni'])) {
       $statement = MainModel::connect()->prepare("INSERT INTO 
-      persons(person_id,RUC, names, lastnames, address, phone, email, kind, created_at) 
-      VALUES(:person_id,:RUC, :names, :lastnames, :address, :phone, :email, :kind, :created_at)");
+      clients(client_id,RUC, names, lastnames, address, phone, email, created_at) 
+      VALUES(:client_id,:RUC, :names, :lastnames, :address, :phone, :email, :created_at)");
 
-      $statement->bindParam(":person_id", $data['person_id'], PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $data['client_id'], PDO::PARAM_STR);
       $statement->bindParam(":RUC", $data['RUC'], PDO::PARAM_INT);
       $statement->bindParam(":names", $data['names'], PDO::PARAM_STR);
       $statement->bindParam(":lastnames", $data['lastnames'], PDO::PARAM_STR);
       $statement->bindParam(":address", $data['address'], PDO::PARAM_STR);
       $statement->bindParam(":phone", $data['phone'], PDO::PARAM_STR);
       $statement->bindParam(":email", $data['email'], PDO::PARAM_STR);
-      $statement->bindParam(":kind", $type_client, PDO::PARAM_BOOL);
       $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
     }
 
@@ -103,12 +98,12 @@ class ClientModel extends MainModel
   // Funcion para editar cliente 
   public static function editClientModel(array $new_data)
   {
-    $client_id = $new_data['person_id'];
+    $client_id = $new_data['client_id'];
 
     if (!empty($new_data['RUC']) && !empty($new_data['dni'])) {
-      $statement = MainModel::connect()->prepare("UPDATE persons SET dni = :dni , RUC = :RUC , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE person_id=:person_id");
+      $statement = MainModel::connect()->prepare("UPDATE clients SET dni = :dni , RUC = :RUC , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE client_id=:client_id");
 
-      $statement->bindParam(":person_id", $client_id, PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $client_id, PDO::PARAM_STR);
       $statement->bindParam(":dni", $new_data['dni'], PDO::PARAM_INT);
       $statement->bindParam(":RUC", $new_data['RUC'], PDO::PARAM_INT);
       $statement->bindParam(":names", $new_data['names'], PDO::PARAM_STR);
@@ -119,9 +114,9 @@ class ClientModel extends MainModel
     }
 
     if (empty($new_data['RUC'])) {
-      $statement = MainModel::connect()->prepare("UPDATE persons SET dni = :dni , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE person_id=:person_id");
+      $statement = MainModel::connect()->prepare("UPDATE clients SET dni = :dni , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE client_id=:client_id");
 
-      $statement->bindParam(":person_id", $client_id, PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $client_id, PDO::PARAM_STR);
       $statement->bindParam(":dni", $new_data['dni'], PDO::PARAM_INT);
       $statement->bindParam(":names", $new_data['names'], PDO::PARAM_STR);
       $statement->bindParam(":lastnames", $new_data['lastnames'], PDO::PARAM_STR);
@@ -131,9 +126,9 @@ class ClientModel extends MainModel
     }
 
     if (empty($new_data['dni'])) {
-      $statement = MainModel::connect()->prepare("UPDATE persons SET RUC = :RUC , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE person_id=:person_id");
+      $statement = MainModel::connect()->prepare("UPDATE clients SET RUC = :RUC , names = :names, lastnames = :lastnames, address = :address, phone = :phone, email = :email WHERE client_id=:client_id");
 
-      $statement->bindParam(":person_id", $client_id, PDO::PARAM_STR);
+      $statement->bindParam(":client_id", $client_id, PDO::PARAM_STR);
       $statement->bindParam(":RUC", $new_data['RUC'], PDO::PARAM_INT);
       $statement->bindParam(":names", $new_data['names'], PDO::PARAM_STR);
       $statement->bindParam(":lastnames", $new_data['lastnames'], PDO::PARAM_STR);
