@@ -138,8 +138,15 @@ if ($vista == "proof") {
                   </select>
                 </fieldset>
                 <fieldset class="form__group">
-                  <legend class="form__legend">DESCUENTO S/</legend>
-                  <input type="number" name="tx_cliente_discount" id="discountvalue" class="form__input" placeholder="Descuento a aplicar" decimal>
+                  <legend class="form__legend">DESCUENTO</legend>
+                  <select name="tx_discount_type" id="typeDiscount" class="form__input">
+                    <option selected disabled>Tipo de descuento</option>
+                    <option value="<?php echo DISCOUNT->percentage; ?>">Porcentual</option>
+                    <option value="<?php echo DISCOUNT->absolute; ?>">Valor absoluto</option>
+                  </select>
+                  <br>
+                  <br>
+                  <input type="number" name="tx_cliente_discount" id="discountValue" class="form__input" placeholder="Descuento a aplicar" decimal>
                 </fieldset>
                 <button class="form__submit" id="btnApplyDiscount" style="background:var(--c_sky);">Aplicar descuento</button>
               </div>

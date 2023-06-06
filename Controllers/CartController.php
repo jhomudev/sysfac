@@ -177,8 +177,6 @@ class CartController extends CartModel
 
   public function applyDiscountController()
   {
-    $discount = ($_POST['discount'] != "") ? floatval($_POST['discount']) : "";
-
     // Validacion de carrito vacio
     $items = json_decode($this->getItemsController(), true);
     if (count($items) < 1) {
@@ -192,9 +190,20 @@ class CartController extends CartModel
       exit();
     }
 
+    // validacion de tipo descuento
+    if (empty($_POST['type']) || ($_POST['type'] != DISCOUNT->percentage && $_POST['type'] != DISCOUNT->absolute)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Elija el tipo de descuento",
+        "text" => "Es necesario que seleccione el tipo de descuento a aplicar.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
 
     // validacion de descuento
-    if ($discount == "" || is_string($discount)) {
+    if ($_POST['discount']  == "" || !is_numeric($_POST['discount'])) {
       $alert = [
         "Alert" => "simple",
         "title" => "Descuento no definido",
@@ -203,6 +212,14 @@ class CartController extends CartModel
       ];
       return json_encode($alert);
       exit();
+    }
+
+    $discount = floatval($_POST['discount']);
+
+    if (isset($_POST['type']) && !empty($_POST['type']) && $_POST['type'] == DISCOUNT->percentage) {
+      $total = $this->getTotalImportController();
+      $discount = ($discount / 100) * $total;
+      $discount = round($discount, 2);
     }
 
     $stm = CartModel::applyDiscountModel($discount);

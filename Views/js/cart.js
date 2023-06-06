@@ -4,11 +4,12 @@ const cart = document.getElementById("cart");
 const cartTableItems = document.getElementById("cartTableItems");
 const toggleCartModal = document.querySelectorAll(".toggleShowCart");
 const typeProof = document.getElementById("typeProof");
+const typeDiscount = document.getElementById("typeDiscount");
 const cartCount = document.querySelectorAll(".cart_icon_count");
 const totalPay = document.getElementById("totalPay");
 const totalImport = document.getElementById("totalImport");
 const discount = document.getElementById("discount");
-const discountvalue = document.getElementById("discountvalue");
+const discountValue = document.getElementById("discountValue");
 const btnApplyDiscount = document.getElementById("btnApplyDiscount");
 const btnClientSearch = document.getElementById("btnClientSearch");
 const formSell = document.getElementById("formSell");
@@ -140,30 +141,26 @@ async function removeItem(col, val) {
   }
 }
 
-async function applyDiscount(e, discount) {
+async function applyDiscount(e, type, discount) {
   try {
     e.preventDefault();
 
     const config = {
       method: "POST",
-      body: new URLSearchParams("discount=" + discount),
+      body: new URLSearchParams(`type=${type}&discount=${discount}`),
     };
     const req = await fetch(
       `${serverURL}/fetch/applyDiscountFetch.php`,
       config
     );
     const res = await req.json();
+    console.log(res);
     alertFetch(res);
     getItemsCart();
   } catch (error) {
     console.log(error);
   }
 }
-
-btnApplyDiscount.addEventListener("click", (e) => {
-  applyDiscount(e, discountvalue.value);
-  discountvalue.value = "";
-});
 
 // Poner placeholder de acuerdo al dato x el q buscar cliente
 typeProof.addEventListener("change", () => {
@@ -172,6 +169,23 @@ typeProof.addEventListener("change", () => {
   else if (typeProof.value == 2) doc = "RUC";
 
   dni_ruc.placeholder = "Escriba el " + doc;
+});
+
+// Poner placeholder de acuerdo al dato x el q aplicar descuento
+typeDiscount.addEventListener("change", () => {
+  let placeholder = "";
+  if (typeDiscount.value == 1) placeholder = "Descuento en %";
+  else if (typeDiscount.value == 2) placeholder = "Descuento en soles";
+
+  discountValue.placeholder = placeholder;
+  discountValue.value = "";
+});
+
+// aplicar descuento
+btnApplyDiscount.addEventListener("click", (e) => {
+  applyDiscount(e, typeDiscount.value, discountValue.value);
+  console.log(typeDiscount.value, discountValue.value);
+  discountValue.value = "";
 });
 
 // funcion getDataclient
@@ -186,7 +200,7 @@ async function getDataClient(e) {
       ),
     });
     const res = await req.json();
-    
+
     if (res.Alert) {
       alertFetch(res);
       document.getElementById("clientId").value = "";

@@ -66,6 +66,13 @@ $add_for = [
 ];
 $add_for = json_decode(json_encode($add_for));
 define("ADD_FOR", $add_for);
+// addfor
+$discount_for = [
+  "percentage" => 1,
+  "absolute" => 2,
+];
+$discount_for = json_decode(json_encode($discount_for));
+define("DISCOUNT", $discount_for);
 
 // IGV
 define("IGV", 18);
