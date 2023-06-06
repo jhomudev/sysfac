@@ -182,10 +182,11 @@ async function getDataClient(e) {
     const req = await fetch(`${serverURL}/fetch/getDataClientFetch.php`, {
       method: "POST",
       body: new URLSearchParams(
-        `typeProof=${typeProof.value}&dni_ruc=${dni_ruc.value}`
+        `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
       ),
     });
     const res = await req.json();
+    
     if (res.Alert) {
       alertFetch(res);
       document.getElementById("clientId").value = "";

@@ -1,6 +1,20 @@
 // Obtencion de elementos
 const tbody = document.querySelector(".table__tbody");
 const inputSearch = document.getElementById("inputSearch");
+const modalForm = document.getElementById("modalForm");
+const formsFetch = document.querySelectorAll(".formFetch");
+const btnToggleForm = document.querySelectorAll(".toggleForm");
+
+btnToggleForm.forEach((btn) => {
+  btn.addEventListener("click", () => toggleShowElement(modalForm));
+});
+
+// Funcionalidad de envio de forms con fetch
+formsFetch.forEach((form) => {
+  form.addEventListener("submit", (e) => {
+    sendFormFetch(e);
+  });
+});
 
 // Funcion obtener clientes
 async function getClients(words = "") {
@@ -21,6 +35,11 @@ async function getClients(words = "") {
           <td>${client.phone ? client.phone : "--"}</td>
           <td>${client.email ? client.email : "--"}</td>
           <td>${client.address ? client.address : "--"}</td>
+          <td class="actions">
+            <button data-key="${
+              client.person_id
+            }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+          </td>
         </tr>
         `;
       });
@@ -36,6 +55,16 @@ async function getClients(words = "") {
       </tr>
     `;
     }
+
+    // habilitar btns
+    const btnsEdit = document.querySelectorAll(".btn__edit");
+
+    btnsEdit.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        toggleShowElement(modalForm);
+        setDataClient(this.dataset.key);
+      });
+    });
   } catch (error) {
     console.log(error);
   }
@@ -44,3 +73,25 @@ async function getClients(words = "") {
 getClients();
 
 inputSearch.addEventListener("input", () => getClients(inputSearch.value));
+
+// Peticion para llenar campos de formulario para edición de cliente
+async function setDataClient(clientId) {
+  try {
+    const req = await fetch(`${serverURL}/fetch/getDataClientFetch.php`, {
+      method: "POST",
+      body: new URLSearchParams(`client_id=${clientId}`),
+    });
+    const res = await req.json();
+
+    document.getElementById("userId").value = res.person_id;
+    document.getElementById("dni").value = res.dni;
+    document.getElementById("RUC").value = res.RUC;
+    document.getElementById("nombres").value = res.names;
+    document.getElementById("apellidos").value = res.lastnames;
+    document.getElementById("phone").value = res.phone;
+    document.getElementById("address").value = res.address;
+    document.getElementById("correo").value = res.email;
+  } catch (error) {
+    console.log(error);
+  }
+}
