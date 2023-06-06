@@ -43,24 +43,31 @@ $ops = $sell->ops;
     <link rel="shortcut icon" href="<?php echo SERVER_URL; ?>/Views/assets/iconLogo.png" type="image/x-icon">
     <title>Sysfac_<?php echo $sell_data->proof_code; ?></title>
     <style>
-        @import url(http://localhost/sysfac/Views/css/main.css);
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
         .hoja {
             position: relative;
             width: 660px;
             height: 1000px;
-            padding: 3em;
+            padding: 1em;
             margin: auto;
         }
-
-        .company {
+        .top{
             width: 100%;
-            height: auto;
+        }
+        .company {
+            margin-top: 5em;
+            display: inline-block;
         }
 
         .company__img {
-            width: 270px;
-            height: 240px;
+            width: 400px;
+            height: 150px;
         }
 
         .company__name {
@@ -68,16 +75,13 @@ $ops = $sell->ops;
         }
 
         .proof {
-            position: absolute;
-            outline: 2px solid #0f0f0f;
-            right: 0;
-            top: 40px;
-            margin: 70px;
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
+            position: relative;
+            top:-2em;
+            left: 1em;
             text-align: center;
-            padding: 30px 60px;
+            display: inline-block;
+            outline: 2px solid #0f0f0f;
+            padding: 1em 2em;
             border-radius: 10px;
             -webkit-border-radius: 10px;
             -moz-border-radius: 10px;
@@ -86,7 +90,6 @@ $ops = $sell->ops;
         }
 
         table.data__sell {
-            margin: 20px 0;
             font-size: small;
         }
 
@@ -144,14 +147,16 @@ $ops = $sell->ops;
 
 <body>
     <div class="hoja">
-        <div class="company">
-            <img src="<?php echo SERVER_URL; ?>/Views/assets/logoMax.png" class="company__img" alt="logo Sysfac">
-            <h1 class="company__name">SYSTEC CORP PERÚ S.A.C.</h1>
-        </div>
-        <div class="proof">
-            <p style="color:red;">R.U.C. 20608004590 </p>
-            <p><?php echo ($sell_data->proof_type == TYPE_PROOF->boleta) ? "BOLETA" : "FACTURA" ?> DE VENTA </p>
-            <strong style="color:blue;"><?php echo $sell_data->proof_code; ?></strong>
+        <div class="top">
+            <div class="company">
+                <img src="<?php echo SERVER_URL; ?>/Views/assets/logo_proof.png" class="company__img" alt="logo Sysfac">
+                <!-- <h1 class="company__name">SYSTEC CORP PERÚ S.A.C.</h1> -->
+            </div>
+            <div class="proof">
+                <p style="color:red;">R.U.C. 20608004590 </p>
+                <p><?php echo ($sell_data->proof_type == TYPE_PROOF->boleta) ? "BOLETA" : "FACTURA" ?> DE VENTA </p>
+                <strong style="color:blue;"><?php echo $sell_data->proof_code; ?></strong>
+            </div>
         </div>
         <table class="data__sell">
             <tr>
