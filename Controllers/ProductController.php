@@ -39,9 +39,9 @@ class ProductController extends ProductModel
   public function getProductsInventaryController()
   {
     $filters = [
-      "words" => MainModel::clearString($_POST['words']),
-      "column" => MainModel::clearString($_POST['column']),
-      "value" => MainModel::clearString($_POST['value']),
+      "words" => isset($_POST['words']) && !empty($_POST['words']) ? MainModel::clearString($_POST['words']) : "",
+      "column" => isset($_POST['column']) && !empty($_POST['column']) ? MainModel::clearString($_POST['column']) : "",
+      "value" => isset($_POST['value']) && !empty($_POST['value']) ? MainModel::clearString($_POST['value']) : "",
     ];
 
     $products_all = ProductModel::getProductsInventaryModel($filters);

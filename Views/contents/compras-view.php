@@ -2,7 +2,7 @@
   <h1 class="titleView">Gestión de compras</h1>
   <div class="buttons">
     <a href="<?php echo SERVER_URL; ?>/new_purchase" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva compra</a>
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/compras.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="filterBox">

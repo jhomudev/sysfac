@@ -20,7 +20,7 @@
     <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del producto o serie">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/inventario.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="filterBox">

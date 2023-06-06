@@ -2,7 +2,7 @@
   <h1 class="titleView">Gestión de proveedores</h1>
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo proveedor</button>
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/proveedores.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="tableBox">

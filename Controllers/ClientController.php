@@ -11,7 +11,8 @@ class ClientController extends ClientModel
   // Función controlador para obtener los clientes
   public function getClientsController()
   {
-    $clients = ClientModel::getClientsModel($_POST['words']);
+    $words = isset($_POST['words']) && !empty($_POST['words']) ? $_POST['words'] : "";
+    $clients = ClientModel::getClientsModel($words);
 
     foreach ($clients as $key => $client) {
       $clients[$key]['client_id'] = $this->encryption($clients[$key]['client_id']);

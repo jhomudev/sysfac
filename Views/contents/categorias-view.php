@@ -2,7 +2,7 @@
   <h1 class="titleView">Gestión de categorías de productos</h1>
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo categoría</button>
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/categorias.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="categorysBox">
@@ -13,7 +13,7 @@
   $categorys = json_decode($categorys);
   if (count($categorys) > 0) {
     foreach ($categorys as $key => $category) {
-      $img=!empty($category->link_image) ? $category->link_image : "https://img.freepik.com/vector-premium/dispositivos-digitales-realistas-isometria-conjunto-ilustraciones-isometricas_480270-71.jpg";
+      $img = !empty($category->link_image) ? $category->link_image : "https://img.freepik.com/vector-premium/dispositivos-digitales-realistas-isometria-conjunto-ilustraciones-isometricas_480270-71.jpg";
       echo
       '
       <article class="category" data-key="' . $category->cat_id . '" title="' . $category->description . '">

@@ -5,7 +5,7 @@
   </div>
   <div class="buttons">
     <a href="<?php echo SERVER_URL; ?>/new_sale" class="buttons_btn" style="--cl:var(--c_yellow);">Nueva venta</a>
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/ventas.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="filterBox">

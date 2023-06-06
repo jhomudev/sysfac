@@ -4,7 +4,7 @@
     <input type="search" class="browser__input" name="tx_words" id="inputSearch" placeholder="Escribe el nombre del cliente">
   </div>
   <div class="buttons">
-    <button class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</button>
+    <a href="<?php echo SERVER_URL; ?>/reports/clientes.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
 <div class="tableBox">
