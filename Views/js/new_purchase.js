@@ -11,11 +11,6 @@ const formAdd = document.querySelector(".purchase__products__form");
 
 const formsFetch = document.querySelectorAll(".formFetch");
 
-// datalists
-const listProducts = document.getElementById("listProducts");
-const listPersons = document.getElementById("listPersons");
-const listSuppliers = document.getElementById("listPersons");
-
 // Funcionalidad traer datos de proveedor
 supplierRUC.addEventListener("input", () => {
   getDataSupplier(supplierRUC.value);

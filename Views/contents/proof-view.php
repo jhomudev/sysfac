@@ -29,8 +29,8 @@ if ($sell == []) {
     exit();
 }
 
-$sell_data=$sell->data;
-$ops=$sell->ops;
+$sell_data = $sell->data;
+$ops = $sell->ops;
 
 ?>
 <!DOCTYPE html>
@@ -182,10 +182,11 @@ $ops=$sell->ops;
                 foreach ($ops as $key => $op) {
                     $op = json_decode(json_encode($op));
                     $ns = ($op->serial_number) ? " / N.S." . $op->serial_number : "";
+                    $details = ($op->details) ? " / " . $op->details  : "";
                     echo '
                         <tr>
                             <td>' . sprintf("%02d", $key + 1) . '</td>
-                            <td style="text-align:left;">' . MainModel::executeQuerySimple("SELECT name FROM products WHERE product_id=" . $op->product_id)->fetchColumn() . $ns . '</td>
+                            <td style="text-align:left;">' . MainModel::executeQuerySimple("SELECT name FROM products WHERE product_id=" . $op->product_id)->fetchColumn() . $ns . $details . '</td>
                             <td>' . $op->quantity . '</td>
                             <td>S/' . $op->price . '</td>
                             <td>S/' . $op->import . '</td>

@@ -75,7 +75,7 @@
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Detalles</legend>
-        <textarea class="form__input" name="tx_details" id="details" rows="6"></textarea>
+        <textarea class="form__input" name="tx_details" id="details" rows="6" mayus></textarea>
       </fieldset>
       <input type="hidden" name="action" value="Agregar">
       <input type="submit" value="Agregar" class="form__submit">
