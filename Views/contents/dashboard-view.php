@@ -18,8 +18,8 @@ $filters = [
 <section class="dashboard">
   <div class="ent__box">
     <article class="ent box__dash" style="--cl:var(--c_sky);">
+      <a href="<?php echo SERVER_URL; ?>/productos" class="ent__link"></a>
       <div class="ent__box__info">
-        <a href="<?php echo SERVER_URL; ?>/productos" class="ent__link"></a>
         <span class="ent__box__icon">
           <i class="ph ph-dropbox-logo"></i>
         </span>
@@ -31,8 +31,8 @@ $filters = [
       <svg class="ent__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,288L30,277.3C60,267,120,245,180,229.3C240,213,300,203,360,208C420,213,480,235,540,208C600,181,660,107,720,106.7C780,107,840,181,900,181.3C960,181,1020,107,1080,69.3C1140,32,1200,32,1260,32C1320,32,1380,32,1410,32L1440,32L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>
     </article>
     <article class="ent box__dash" style="--cl:var(--c_yellow);">
+      <a href="<?php echo SERVER_URL; ?>/usuarios" class="ent__link"></a>
       <div class="ent__box__info">
-        <a href="<?php echo SERVER_URL; ?>/usuarios" class="ent__link"></a>
         <span class="ent__box__icon">
           <i class="ph ph-user-gear"></i>
         </span>
@@ -44,8 +44,8 @@ $filters = [
       <svg class="ent__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,288L30,277.3C60,267,120,245,180,229.3C240,213,300,203,360,208C420,213,480,235,540,208C600,181,660,107,720,106.7C780,107,840,181,900,181.3C960,181,1020,107,1080,69.3C1140,32,1200,32,1260,32C1320,32,1380,32,1410,32L1440,32L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>
     </article>
     <article class="ent box__dash" style="--cl:var(--c_orange);">
+      <a href="<?php echo SERVER_URL; ?>/ventas" class="ent__link"></a>
       <div class="ent__box__info">
-        <a href="<?php echo SERVER_URL; ?>/ventas" class="ent__link"></a>
         <span class="ent__box__icon">
           <i class="ph ph-ticket"></i>
         </span>
@@ -57,8 +57,8 @@ $filters = [
       <svg class="ent__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,288L30,277.3C60,267,120,245,180,229.3C240,213,300,203,360,208C420,213,480,235,540,208C600,181,660,107,720,106.7C780,107,840,181,900,181.3C960,181,1020,107,1080,69.3C1140,32,1200,32,1260,32C1320,32,1380,32,1410,32L1440,32L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>
     </article>
     <article class="ent box__dash" style="--cl:var(--c_green)">
+      <a href="<?php echo SERVER_URL; ?>/compras" class="ent__link"></a>
       <div class="ent__box__info">
-        <a href="<?php echo SERVER_URL; ?>/compras" class="ent__link"></a>
         <span class="ent__box__icon">
           <i class="ph ph-shopping-cart"></i>
         </span>
