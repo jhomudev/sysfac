@@ -98,17 +98,16 @@ async function getGraphicBestSelling() {
       labels: data.quality,
       datasets: [
         {
-          label: false,
+          label: "Productos",
           data: data.quantity,
           backgroundColor: [
             "coral",
             "aqua",
-            "pink",
-            "lightgreen",
-            "lightblue",
-            "crimson",
+            "#f6c445",
+            "#9ac1f0",
+            "#e45f2b",
+            "#a0e548",
           ],
-          borderColor: ["black"],
           borderWidth: 1,
           pointRadius: 4,
         },
@@ -123,9 +122,7 @@ async function getGraphicBestSelling() {
       },
       responsive: true,
       plugins: {
-        legend: {
-          position: "right",
-        },
+        legend:false,
         title: {
           display: true,
           text: "Productos más vendidos",
