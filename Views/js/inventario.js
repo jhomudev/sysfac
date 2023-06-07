@@ -61,9 +61,9 @@ async function getProductsInventary(words = "", column = "", value = "") {
     const res = await req.json();
 
     rowsCount.innerHTML = res.length;
-    tbody.innerHTML = "";
     if (res.length > 0) {
-      res.forEach((product) => {
+      tbody.innerHTML = "";
+      res.forEach((product, id) => {
         tbody.innerHTML += `
         <tr>
           <td>${product.product_name}</td>
