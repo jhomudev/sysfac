@@ -57,9 +57,11 @@ $ops = $sell->ops;
             padding: 1em;
             margin: auto;
         }
-        .top{
+
+        .top {
             width: 100%;
         }
+
         .company {
             margin-top: 5em;
             display: inline-block;
@@ -76,7 +78,7 @@ $ops = $sell->ops;
 
         .proof {
             position: relative;
-            top:-2em;
+            top: -2em;
             left: 1em;
             text-align: center;
             display: inline-block;
@@ -91,6 +93,7 @@ $ops = $sell->ops;
 
         table.data__sell {
             font-size: small;
+            margin-bottom: 2em;
         }
 
         table.table__sell__items {
@@ -209,7 +212,7 @@ $ops = $sell->ops;
             </tr>
             <tr>
                 <th>IGV 18%</th>
-                <td> S/ <?php echo $sell_data->total_import * 0.18; ?></td>
+                <td> S/ <?php echo number_format(($sell_data->total_import * 0.18), 2); ?></td>
             </tr>
             <tr>
                 <th>Descuento</th>
