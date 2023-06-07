@@ -18,13 +18,9 @@
 }
 .ent__box {
   width: 100%;
-  /* height: min-content; */
-  /* display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); */
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  grid-area: ent;
 }
 .sales__box {
   grid-area: sell;
@@ -95,17 +91,26 @@
 .ent {
   position: relative;
   flex: 1;
+  min-width: 150px;
+  display:grid;
+  place-items: center;
+  transition: all 0.3s ease-in;
+  overflow: hidden;
+  padding: 2em;
+}
+.ent:hover {
+  transform: scale(1.04);
+  flex: 1.1;
+}
+.ent__box__info{
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 2em;
-  transition: all 0.3s ease-in;
-}
-.ent:hover {
-  transform: scale(1.04);
-  flex: 1.1;
+  margin-left: -10px;
 }
 .ent__link {
   position: absolute;
@@ -125,6 +130,15 @@
 .ent__name {
   font-size: small;
   color: var(--c_lightPurple);
+}
+.ent__svg{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: rotateZ(-10deg) translate(10%,37%);
+}
+.ent__svg path{
+  fill: var(--cl);
 }
 .graphic {
   margin: auto;

@@ -48,17 +48,17 @@ class DataGraphicModel extends MainModel
     return [$p_stock, $p_damaged, $p_sold];
   }
 
-  // !FALATA ESSTO Funcion de obtener data de productos mas vendidos
+  // Funcion de obtener data de productos mas vendidos
   protected static function getProductsBestModel(string $year, string $month): array
   {
-    $data = MainModel::executeQuerySimple("SELECT (SELECT COUNT(*) FROM operations WHERE product_id=o.product_id) AS quantity, MAX(p.name) AS product FROM operations o INNER JOIN sells s ON s.sell_code=o.sell_code
+    $data = MainModel::executeQuerySimple("SELECT (SELECT COUNT(*) FROM operations op INNER JOIN sells s ON s.sell_code=op.sell_code WHERE op.product_id=o.product_id) AS quantity, MAX(p.name) AS product FROM operations o INNER JOIN sells s ON s.sell_code=o.sell_code
     INNER JOIN products p ON p.product_id=o.product_id
-    WHERE s.operation_type=" . OPERATION->output . " AND YEAR(s.created_at)=$year GROUP BY o.product_id LIMIT 6");
+    WHERE s.operation_type=" . OPERATION->output . " AND YEAR(s.created_at)=$year GROUP BY o.product_id ORDER BY quantity LIMIT 6");
 
     if (!empty($year) && !empty($month)) {
-      $data = MainModel::executeQuerySimple("SELECT (SELECT COUNT(*) FROM operations WHERE product_id=o.product_id) AS quantity, MAX(p.name) AS product FROM operations o INNER JOIN sells s ON s.sell_code=o.sell_code
+      $data = MainModel::executeQuerySimple("SELECT (SELECT COUNT(*) FROM operations op INNER JOIN sells s ON s.sell_code=op.sell_code WHERE op.product_id=o.product_id) AS quantity, MAX(p.name) AS product FROM operations o INNER JOIN sells s ON s.sell_code=o.sell_code
       INNER JOIN products p ON p.product_id=o.product_id
-      WHERE s.operation_type=" . OPERATION->output . " AND YEAR(s.created_at)=$year AND MONTH(s.created_at)=$month GROUP BY o.product_id LIMIT 6");
+      WHERE s.operation_type=" . OPERATION->output . " AND YEAR(s.created_at)=$year AND MONTH(s.created_at)=$month GROUP BY o.product_id ORDER BY quantity LIMIT 6");
     }
 
     $data = $data->fetchAll();
