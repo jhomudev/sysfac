@@ -210,6 +210,22 @@ class ProductController extends ProductModel
   {
     $product_id = $_POST['tx_product_id'];
 
+    // Validacion de que el producto no tenga ventas registradas
+    $ops = MainModel::executeQuerySimple("SELECT op.product_id FROM operations op INNER JOIN products p ON p.product_id=op.product_id WHERE op.product_id=$product_id");
+    $ops = $ops->fetchAll();
+
+    if (count($ops) > 0) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Acción rechazada",
+        "text" => "No puede eliminar el producto, ya que este ya tiene venta y/o compras registradas.",
+        "icon" => "error"
+      ];
+
+      return json_encode($alert);
+      exit();
+    }
+
     $stm = ProductModel::deleteProductModel($product_id);
 
     if ($stm) {

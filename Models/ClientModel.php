@@ -9,11 +9,11 @@ class ClientModel extends MainModel
   {
     if (!empty($words)) {
       $words = "%$words%";
-      $query = "SELECT * FROM clients WHERE (CONCAT(names, ' ', lastnames) LIKE :words OR dni LIKE :words OR RUC LIKE :words)";
+      $query = "SELECT * FROM clients WHERE (CONCAT(names, ' ', lastnames) LIKE :words OR dni LIKE :words OR RUC LIKE :words) ORDER BY created_at DESC";
       $clients = MainModel::connect()->prepare($query);
       $clients->bindParam(":words", $words);
     } else {
-      $query = "SELECT * FROM clients";
+      $query = "SELECT * FROM clients ORDER BY created_at DESC";
       $clients = MainModel::connect()->prepare($query);
     }
 
