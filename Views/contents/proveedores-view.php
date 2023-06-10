@@ -30,7 +30,7 @@
             <td>' . $supplier->name  . '</td>
             <td>' . $supplier->address . '</td>
             <td>' . $supplier->phone . '</td>
-            <td>' . date("d-m-Y", strtotime($supplier->created_at)) . '</td>
+            <td class="nowrap">' . date("d-m-Y", strtotime($supplier->created_at)) . '</td>
             <td class="actions">
               <button data-key="' . $supplier->supplier_id . '" class="actions__btn btn_edit toggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
               <form action="' . SERVER_URL . '/fetch/deleteSupplierFetch.php" method="POST" class="formFetch">
