@@ -45,31 +45,6 @@ class ProductModel extends MainModel
     return $product->fetch();
   }
 
-  // Funcion de obtener todos los productos en el inventario
-  protected static function getProductsInventaryModel(array $filters = []): array
-  {
-    $words = $filters['words'];
-    $column = $filters['column'];
-    $value = $filters['value'];
-
-    if (empty($words) && empty($column) && empty($value)) $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number,pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id ORDER BY p.product_id DESC");
-    else {
-      if (!empty($words)) {
-        $words = "%$words%";
-        $products_all = MainModel::connect()->prepare("SELECT p.product_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id WHERE p.name LIKE :words OR pa.serial_number LIKE :words ORDER BY p.product_id DESC");
-        $products_all->bindParam(":words", $words, PDO::PARAM_STR);
-      };
-      if (!empty($column) && isset($value)) {
-        $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN categories c ON p.category_id = c.cat_id WHERE pa.$column=:value ORDER BY p.product_id DESC");
-        $products_all->bindParam(":value", $value, PDO::PARAM_STR);
-      }
-    }
-
-    $products_all->execute();
-
-    return $products_all->fetchAll();
-  }
-
   // Funcion para crear producto
   protected static function createProductModel(array $data): bool
   {
@@ -113,6 +88,57 @@ class ProductModel extends MainModel
   {
     $statement = MainModel::connect()->prepare("DELETE FROM products WHERE product_id=:product_id");
     $statement->bindParam(":product_id", $product_id);
+
+    return $statement->execute();
+  }
+
+  //? FUNCIONES PARA PRODUCTOS_ALL
+  // Funcion de obtener todos los productos en el inventario
+  protected static function getProductsInventaryModel(array $filters = []): array
+  {
+    $words = $filters['words'];
+    $product_id = $filters['product_id'];
+    $local_id = $filters['local_id'];
+    $state = $filters['state'];
+
+    if (empty($words)) $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number,pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id ORDER BY p.product_id DESC");
+    if (!empty($words)) {
+      $words = "%$words%";
+      $products_all = MainModel::connect()->prepare("SELECT p.product_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id WHERE p.name LIKE :words OR pa.serial_number LIKE :words ORDER BY p.product_id DESC");
+      $products_all->bindParam(":words", $words, PDO::PARAM_STR);
+    }
+    if (empty($words) && (!empty($product_id) || !empty($local_id) || !empty($state))) {
+      $sentence = "";
+
+      foreach ($filters as $column => $value) {
+        if (!empty($value)) {
+          if ($sentence == "") $sentence .= "pa.$column=" . $value;
+          else $sentence .= " AND pa.$column=" . $value;
+        }
+      }
+      $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN categories c ON p.category_id = c.cat_id WHERE $sentence ORDER BY p.product_id DESC");
+    }
+
+
+    $products_all->execute();
+
+    return $products_all->fetchAll();
+  }
+
+  // Funcion para editar producto de inventario, solo estado y local
+  protected static function editProductInventaryModel(array $new_data): bool
+  {
+    if (isset($new_data['local_id'])) {
+      $statement = MainModel::connect()->prepare("UPDATE products_all SET local_id=:local_id WHERE product_unit_id=:product_unit_id");
+
+      $statement->bindParam(":product_unit_id", $new_data['product_unit_id'], PDO::PARAM_INT);
+      $statement->bindParam(":local_id", $new_data['local_id'], PDO::PARAM_INT);
+    } else {
+      $statement = MainModel::connect()->prepare("UPDATE products_all SET state=:state WHERE product_unit_id=:product_unit_id");
+
+      $statement->bindParam(":product_unit_id", $new_data['product_unit_id'], PDO::PARAM_INT);
+      $statement->bindParam(":state", $new_data['state'], PDO::PARAM_INT);
+    }
 
     return $statement->execute();
   }

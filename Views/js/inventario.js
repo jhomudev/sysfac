@@ -4,6 +4,7 @@ const allBtn = document.getElementById("all");
 const filterSelect = document.querySelectorAll(".filter__select");
 const rowsCount = document.getElementById("rowsCount");
 const tbody = document.querySelector(".table__tbody");
+const formFetch = document.querySelector(".formFetch");
 
 function habilityDOM() {
   const formCreate = document.querySelector(".form__create");
@@ -99,19 +100,103 @@ async function getProductsInventary(words = "", column = "", value = "") {
   }
 }
 
-getProductsInventary();
+// getProductsInventary();
 
-inputSearch.addEventListener("input", () =>
-  getProductsInventary(inputSearch.value)
-);
-allBtn.addEventListener("click", () => {
-  getProductsInventary();
-  filterSelect.forEach((filter) => {
-    filter.selectedIndex = -1;
+// inputSearch.addEventListener("input", () =>
+//   getProductsInventary(inputSearch.value)
+// );
+// allBtn.addEventListener("click", () => {
+//   getProductsInventary();
+//   filterSelect.forEach((filter) => {
+//     filter.selectedIndex = -1;
+//   });
+// });
+// filterSelect.forEach((filter) => {
+//   filter.addEventListener("change", () => {
+//     getProductsInventary("", filter.dataset.col, filter.value);
+//   });
+// });
+
+// *este es el otro metodo sin fetch
+
+const checkboxMain = document.getElementById("checkboxMain");
+const checkboxAll = document.getElementsByName("p_checkeds[]");
+
+const action = document.getElementById("action");
+const localBox = document.getElementById("localBox");
+const stateBox = document.getElementById("stateBox");
+
+checkboxMain.addEventListener("change", () => {
+  checkboxAll.forEach((chexckbox) => {
+    chexckbox.checked = checkboxMain.checked;
   });
 });
-filterSelect.forEach((filter) => {
-  filter.addEventListener("change", () => {
-    getProductsInventary("", filter.dataset.col, filter.value);
+
+// checkboxAll.forEach((chexckbox) => {
+//   chexckbox.addEventListener("change", () => {
+//     if (chexckbox.checked) console.log(chexckbox.value);
+//   });
+// });
+
+// Mostrar campo adicional al elegir accion
+action.addEventListener("change", () => {
+  if (action.value == "assign_local") {
+    localBox.classList.remove("hidden");
+    stateBox.classList.add("hidden");
+  }
+  if (action.value == "change_state") {
+    stateBox.classList.remove("hidden");
+    localBox.classList.add("hidden");
+  }
+});
+
+// Funcionalidad de envio de forms con fetch
+// formFetch.addEventListener("submit", (e) => {
+//   sendFormFetch(e);
+// });
+formFetch.addEventListener("submit", (e) => {
+  e.preventDefault();
+  // Obtencion de los values de los checkbox seleccionados
+  let arrIds = [];
+  const checkboxAll = document.getElementsByName("p_checkeds[]");
+
+  checkboxAll.forEach((checkbox) => {
+    if (checkbox.checked) arrIds.push(checkbox.value);
+  });
+
+  const data = new FormData(e.target);
+  data.append("prods", arrIds);
+  const method = e.target.getAttribute("method");
+  const action = e.target.getAttribute("action");
+
+  const config = {
+    method: method,
+    body: data,
+  };
+
+  Swal.fire({
+    title: "Estas seguro de ejecutar la operación?",
+    text: "Presione Aceptar para continuar.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+  }).then(async (result) => {
+    try {
+      if (result.isConfirmed) {
+        const req = await fetch(action, config);
+        const res = await req.json();
+        alertFetch(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   });
 });
+
+// funcion para ejecutar accion
+// async function executeAction() {
+
+// }
