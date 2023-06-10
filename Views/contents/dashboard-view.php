@@ -83,7 +83,7 @@ $filters = [
     </div>
     <div class="box__bottom box__dash bestSells">
       <h1 class="graphic__title">Productos más vendidos</h1>
-      <p class="graphic__descri">Verifique los productos más vendidos del momento.</p>
+      <p class="graphic__descri">Verifique los productos más vendidos del momento del año.</p>
       <canvas class="graphic" id="graphicBestSelling"></canvas>
     </div>
     <aside class="movs__box box__dash recent">

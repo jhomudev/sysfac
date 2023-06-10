@@ -122,7 +122,7 @@ async function getGraphicBestSelling() {
       },
       responsive: true,
       plugins: {
-        legend:false,
+        legend: false,
         title: {
           display: true,
           text: "Productos más vendidos",
