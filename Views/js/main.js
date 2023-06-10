@@ -27,15 +27,6 @@ const btncloseNotiBarRes = document.querySelector(
   ".notifications__details__responsive__close"
 );
 
-// !no funciona
-// document.addEventListener("click", function (event) {
-//   if (notiBar.classList.contains("show") && !event.target.closest(".notifications__details")) {
-//     notiBar.classList.remove("show");
-//     console.log("first");
-//   } else if (event.target.closest(".notifications__details")) {
-//     notiBar.classList.add("show");
-//   }
-// });
 toggleShowNotibar.forEach((btn) => {
   btn.addEventListener("click", () => {
     toggleShowElement(notiBar);
@@ -63,7 +54,7 @@ notiCounts.forEach((notiCount) => {
     notificationsBox.forEach((box) => {
       box.innerHTML = `
       <div class="empty" style="background:transparent">
-        <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+        <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/2326/2326137.png" alt="vacio" class="empty__img"></div>
         <p class="empty__message">No hay notificaciones</p>
       </div>
       `;

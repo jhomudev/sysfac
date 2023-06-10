@@ -79,6 +79,7 @@ async function getProducts(words = "", column = "", value = "") {
       body: formData,
     });
     const res = await req.json();
+
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((product) => {

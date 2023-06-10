@@ -30,7 +30,7 @@
   </div>
   <div class="filter">
     <label class="filter__for">Producto: </label>
-    <select name="product_id" data-col="product_id" class="filter__select">
+    <select name="product_id" data-col="product_id" class="filter__select" required>
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/ProductController.php";
@@ -48,7 +48,7 @@
   </div>
   <div class="filter">
     <label class="filter__for">Estado: </label>
-    <select name="state" data-col="state" class="filter__select">
+    <select name="state" data-col="state" class="filter__select" required>
       <option selected disabled>--</option>
       <option value="<?php echo STATE_IN->stock; ?>">En stock</option>
       <option value="<?php echo STATE_IN->damaged; ?>">Dañado</option>
@@ -57,7 +57,7 @@
   </div>
   <div class="filter">
     <label class="filter__for">Local: </label>
-    <select name="local_id" data-col="local_id" class="filter__select">
+    <select name="local_id" data-col="local_id" class="filter__select" required>
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/LocalController.php";
