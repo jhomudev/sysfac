@@ -154,7 +154,6 @@ async function applyDiscount(e, type, discount) {
       config
     );
     const res = await req.json();
-    console.log(res);
     alertFetch(res);
     getItemsCart();
   } catch (error) {
