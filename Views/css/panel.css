@@ -1105,6 +1105,7 @@ textarea {
 }
 .dont_access__imgBox {
   width: min(100%, 200px);
+  opacity: 0.3;
 }
 .dont_access__img {
   width: 100%;
