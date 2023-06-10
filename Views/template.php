@@ -57,7 +57,7 @@ if ($vista == "proof") {
 
           if ($_SESSION['type'] == USER_TYPE->vendedor) {
             if (in_array($vista, $access_views_vendedor)) include_once  "./Views/contents/" . $vista . "-view.php";
-            else echo "No tiene acceso a este módulo";
+            else include_once  "./Views/inc/dont_access.php";
           } else include_once  "./Views/contents/" . $vista . "-view.php";
           ?>
         </main>

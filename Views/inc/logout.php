@@ -21,7 +21,6 @@
             });
             const res = await req.json();
             alertFetch(res);
-            console.log(res)
           }
         } catch (error) {
           console.log(error);
