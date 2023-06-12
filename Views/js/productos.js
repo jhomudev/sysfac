@@ -112,7 +112,7 @@ async function getProducts(words = "", column = "", value = "") {
     } else {
       tbody.innerHTML = `
       <tr>
-        <td aria-colspan="8" colspan="8">
+        <td aria-colspan="9" colspan="9">
           <div class="empty">
             <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
             <p class="empty__message">No hay registros</p>
