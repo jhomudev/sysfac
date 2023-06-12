@@ -104,7 +104,7 @@ class ProductModel extends MainModel
     if (empty($words)) $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number,pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id ORDER BY p.product_id DESC");
     if (!empty($words)) {
       $words = "%$words%";
-      $products_all = MainModel::connect()->prepare("SELECT p.product_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id WHERE p.name LIKE :words OR pa.serial_number LIKE :words ORDER BY p.product_id DESC");
+      $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id WHERE p.name LIKE :words OR pa.serial_number LIKE :words ORDER BY p.product_id DESC");
       $products_all->bindParam(":words", $words, PDO::PARAM_STR);
     }
     if (empty($words) && (!empty($product_id) || !empty($local_id) || !empty($state))) {
