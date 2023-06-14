@@ -234,6 +234,9 @@ textarea {
   display: grid;
   place-items: center;
 }
+.notifications__box .empty__imgBox{
+  width: min(100%, 6em);
+}
 .notifications__details__responsive__close {
   position: relative;
   margin-left: 1em;
@@ -605,7 +608,7 @@ textarea {
 }
 .table__tbody td {
   padding: 10px;
-  height: 4em;
+  min-height: 4em;
 }
 .table__tbody img {
   width: 80px;

@@ -65,7 +65,7 @@
           <button type="submit" class="purchase__btn__do form__submit" style="background:red;"><i class="ph ph-broom"></i> Limpiar lista de compra</button>
         </form>
       </div>
-      <div class="purchase__tableBox tableBox">
+      <div class="purchase__tableBox tableBox" style="min-height: auto;">
         <table class="purchase__table table">
           <thead class="table__thead">
             <tr>

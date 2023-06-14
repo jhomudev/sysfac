@@ -72,7 +72,7 @@ $filters = [
   </div>
   <div class="grid">
     <div class="sales__box box__dash">
-      <h1 class="graphic__title">Analisis de ventas</h1>
+      <h1 class="graphic__title">Análisis de movimientos</h1>
       <p class="graphic__descri">El gráfico muestra las ventas y compras mensuales a lo largo del tiempo. Puede ver cómo las transacciones han variado mes a mes.</p>
       <canvas class="graphic" id="graphicSales"></canvas>
     </div>
@@ -142,7 +142,7 @@ $filters = [
                 if ($diff_days == 1) $time_elapsed = "Hace un día";
                 else $time_elapsed = "Hace $diff_days días";
               } elseif ($diff_weeks < 4) {
-                if ($diff_weeks == 1) $time_elapsed = "Hace $una semana";
+                if ($diff_weeks == 1) $time_elapsed = "Hace una semana";
                 else $time_elapsed = "Hace $diff_weeks semanas";
               } elseif ($diff_months < 12) {
                 if ($diff_months == 1) $time_elapsed = "Hace un mes";
