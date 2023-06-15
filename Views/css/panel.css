@@ -234,7 +234,7 @@ textarea {
   display: grid;
   place-items: center;
 }
-.notifications__box .empty__imgBox{
+.notifications__box .empty__imgBox {
   width: min(100%, 6em);
 }
 .notifications__details__responsive__close {
@@ -705,6 +705,38 @@ textarea {
   font-size: small;
   font-weight: 600;
   color: var(--c_sky);
+}
+.linkImage__box {
+  display: flex;
+  gap: 5px;
+  flex-wrap: nowrap;
+  margin-bottom: 5px;
+}
+.btn__linkImage {
+  background-color: var(--c_sky);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+}
+.file__img__label {
+  display: block;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 3px;
+  text-align: center;
+  background-color: var(--c_dark);
+  color: var(--c_lightPurple);
+  font-weight: 600;
+  font-size: small;
+}
+.file__img__label:hover,
+.btn__linkImage:hover {
+  filter: brightness(90%);
+  cursor: pointer;
+}
+#file_cat {
+  position: absolute;
+  visibility: hidden;
 }
 .modal {
   position: fixed;

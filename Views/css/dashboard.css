@@ -82,17 +82,16 @@
 }
 .box__dash {
   background-color: var(--c_semidark);
-  padding: 1.5em;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding: 1.5em;
 }
 .ent {
   position: relative;
-  flex: 1;
-  min-width: 150px;
-  display:grid;
+  flex: 1 1 150px;
+  display: grid;
   place-items: center;
   transition: all 0.3s ease-in;
   overflow: hidden;
@@ -100,9 +99,9 @@
 }
 .ent:hover {
   transform: scale(1.04);
-  flex: 1.1;
+  flex: 1.1 1 150px;
 }
-.ent__box__info{
+.ent__box__info {
   position: relative;
   z-index: 1;
   display: flex;
@@ -114,7 +113,7 @@
 }
 .ent__link {
   position: absolute;
-  z-index:2;
+  z-index: 2;
   left: 0;
   top: 0;
   width: 100%;
@@ -132,13 +131,13 @@
   font-size: small;
   color: var(--c_lightPurple);
 }
-.ent__svg{
+.ent__svg {
   position: absolute;
   bottom: 0;
   right: 0;
-  transform: rotateZ(-10deg) translate(10%,37%);
+  transform: rotateZ(-10deg) translate(10%, 37%);
 }
-.ent__svg path{
+.ent__svg path {
   fill: var(--cl);
 }
 .graphic {
@@ -196,9 +195,23 @@
   }
 }
 
+@media screen and (max-width: 910px) {
+  .ent {
+    flex: 1 1 230px;
+  }
+  .ent:hover {
+    flex: 1.1 1 230px;
+  }
+}
 @media screen and (max-width: 540px) {
   .graphic#graphicStates {
     width: 340px !important;
     height: 340px !important;
+  }
+  .ent {
+    flex: 1 1 150px;
+  }
+  .ent:hover {
+    flex: 1.1 1 150px;
   }
 }
