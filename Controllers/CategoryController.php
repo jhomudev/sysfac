@@ -12,7 +12,28 @@ class CategoryController extends CategoryModel
   public function getCategoriesController()
   {
     $categories = CategoryModel::getCategoriesModel();
-    return json_encode($categories);
+
+    // obtencion de un nuevo array sin version indexada
+    $arr_new_cats = [];
+    foreach ($categories as $cat) {
+      $filteredElement = [];
+
+      foreach ($cat as $key => $value) {
+        if (is_string($key)) {
+          $filteredElement[$key] = $value;
+        }
+      }
+
+      $arr_new_cats[] = $filteredElement;
+    }
+    // conversion de file_image a base64 para poder ser leida por json_encode()
+    foreach ($arr_new_cats as $key => $cat) {
+      if (!empty($arr_new_cats[$key]['file_image'])) {
+        $arr_new_cats[$key]['file_image'] = "data:image/png;base64," . base64_encode($arr_new_cats[$key]['file_image']);
+      }
+    }
+
+    return json_encode($arr_new_cats);
   }
 
   // Funcion controlador para obetenr los datos de usuario
@@ -20,7 +41,19 @@ class CategoryController extends CategoryModel
   {
     $category_id = intval($_POST['categoryId']);
     $category = CategoryModel::getDataCategoryModel($category_id);
-    return json_encode($category);
+
+    // obtencion de un nuevo array sin version indexada
+    $arr_new_cat = [];
+
+    foreach ($category as $key => $value) {
+      if (is_string($key)) {
+        $arr_new_cat[$key] = $value;
+      }
+    }
+    if (!empty($arr_new_cat['file_image'])) $arr_new_cat['file_image'] = "data:image/png;base64," . base64_encode($arr_new_cat['file_image']);
+
+
+    return json_encode($arr_new_cat);
   }
 
   // Funcion controlador para crear o editar usuario
@@ -29,6 +62,10 @@ class CategoryController extends CategoryModel
     $name = MainModel::clearString($_POST['tx_nombre']);
     $link_image = MainModel::clearString($_POST['tx_linkImage']);
     $description = MainModel::clearString($_POST['tx_descripcion']);
+    // valor de file_image
+    if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
+      $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
+    } else  $file_image = "";
 
     // Validacion de campos vacios
     if (empty($name)) {
@@ -36,6 +73,17 @@ class CategoryController extends CategoryModel
         "Alert" => "simple",
         "title" => "Campos vacios",
         "text" => "Por favor. Complete todos los campos.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+    // Validacion de imagen vacia
+    if (empty($link_image) && empty($file_image)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Imagen no seleccionada",
+        "text" => "Por favor. Seleccione una imagen para la categoría.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -58,6 +106,7 @@ class CategoryController extends CategoryModel
     }
 
     $data = [
+      "file_image" => $file_image,
       "link_image" => $link_image,
       "name" => $name,
       "description" => $description,

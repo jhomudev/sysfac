@@ -25,14 +25,25 @@ class CategoryModel extends MainModel
   // Funcion para crear categoeria 
   protected static function createCategoryModel(array $data): bool
   {
-    $statement = MainModel::connect()->prepare("INSERT INTO 
-    categories(link_image,name,description,created_at) 
-    VALUES(:link_image,:name,:description,:created_at)");
+    if (!empty($data['file_image'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      categories(file_image,name,description,created_at) 
+      VALUES(:file_image,:name,:description,:created_at)");
 
-    $statement->bindParam(":link_image", $data['link_image']);
-    $statement->bindParam(":name", $data['name']);
-    $statement->bindParam(":description", $data['description']);
-    $statement->bindParam(":created_at", $data['created_at']);
+      $statement->bindParam(":file_image", $data['file_image'], PDO::PARAM_LOB);
+      $statement->bindParam(":name", $data['name'], PDO::PARAM_STR);
+      $statement->bindParam(":description", $data['description'], PDO::PARAM_STR);
+      $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+    } else {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      categories(link_image,name,description,created_at) 
+      VALUES(:link_image,:name,:description,:created_at)");
+
+      $statement->bindParam(":link_image", $data['link_image'], PDO::PARAM_STR);
+      $statement->bindParam(":name", $data['name'], PDO::PARAM_STR);
+      $statement->bindParam(":description", $data['description'], PDO::PARAM_STR);
+      $statement->bindParam(":created_at", $data['created_at'], PDO::PARAM_STR);
+    }
 
     return $statement->execute();
   }

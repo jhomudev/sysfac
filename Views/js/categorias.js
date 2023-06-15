@@ -37,10 +37,13 @@ async function setDataCategory(categoryId) {
       body: new URLSearchParams(`categoryId=${categoryId}`),
     });
     const res = await req.json();
+    console.log(res);
 
+    if (res.link_image)
+      document.querySelector(".form__img").src = res.link_image;
+    else document.querySelector(".form__img").src = res.file_image;
     document.querySelector(".form__title").textContent = "Modificar categoría";
     document.querySelector(".form__submit").value = "Modificar";
-    document.querySelector(".form__img").src = res.link_image;
     document.getElementById("categoryId").value = res.cat_id;
     document.getElementById("categoryIdDel").value = res.cat_id;
     document.getElementById("nombreCategoria").value = res.name;

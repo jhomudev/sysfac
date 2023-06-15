@@ -70,13 +70,32 @@ btnToggleBar.forEach((btn) => {
   btn.addEventListener("click", () => toggleShowElement(menuBarResponsive));
 });
 
-// funcion para cambiar imagen al colocar link
+// funcionalidad para cambiar imagen al colocar link
 const formImg = document.querySelector(".form__img");
+const btnLinkImage = document.querySelector(".btn__linkImage");
 const linkImage = document.getElementById("linkImage");
 if (linkImage) {
-  linkImage.addEventListener("input", (e) => {
-    const link = e.target.value;
+  btnLinkImage.addEventListener("click", (e) => {
+    e.preventDefault();
+    const link = linkImage.value;
     formImg.setAttribute("src", link);
+    fileImage.value = "";
+  });
+}
+// funcionalidad para cambiar imagen al colocar link
+const fileImage = document.getElementById("file_cat");
+if (fileImage) {
+  fileImage.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      formImg.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+
+    linkImage.value = "";
   });
 }
 

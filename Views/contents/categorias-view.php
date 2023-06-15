@@ -8,17 +8,20 @@
 <div class="categorysBox">
   <?php
   require_once "./Controllers/CategoryController.php";
-  $IP = new CategoryController();
-  $categorys = $IP->getCategoriesController();
+  $IC = new CategoryController();
+  $categorys = $IC->getCategoriesController();
+
   $categorys = json_decode($categorys);
   if (count($categorys) > 0) {
     foreach ($categorys as $key => $category) {
-      $img = !empty($category->link_image) ? $category->link_image : "https://img.freepik.com/vector-premium/dispositivos-digitales-realistas-isometria-conjunto-ilustraciones-isometricas_480270-71.jpg";
+      if (!empty($category->link_image)) $url_img = $category->link_image;
+      else if (!empty($category->file_image)) $url_img = $category->file_image;
+      else $url_img = "https://img.freepik.com/vector-premium/dispositivos-digitales-realistas-isometria-conjunto-ilustraciones-isometricas_480270-71.jpg";
       echo
       '
       <article class="category" data-key="' . $category->cat_id . '" title="' . $category->description . '">
         <div class="category__imgBox">
-          <img src="' . $img . '" alt="' . $category->name . '" class="category__img">
+          <img src="' . $url_img . '" alt="' . $category->name . '" class="category__img">
         </div>
         <h1 class="category__name">' . $category->name . '</h1>
       </article>
@@ -36,7 +39,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formCategoryFetch.php" method="POST" class="form form__create formFetch" style="width:100%;">
+    <form action="<?php echo SERVER_URL; ?>/fetch/formCategoryFetch.php" method="POST" enctype="multipart/form-data" class="form form__create formFetch" style="width:100%;">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar categoría</h1>
       <div class="form__imgBox">
@@ -48,13 +51,21 @@
         <input type="text" class="form__input" id="nombreCategoria" name="tx_nombre" mayus>
       </fieldset>
       <fieldset class="form__group">
-        <legend class="form__legend">Imagen</legend>
-        <input type="text" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Link de la imagen">
-      </fieldset>
-      <fieldset class="form__group">
         <legend class="form__legend">Descripción</legend>
         <textarea class="form__textarea" id="descripcion" name="tx_descripcion">
-        </textarea>
+          </textarea>
+      </fieldset>
+      <fieldset class="form__group">
+        <legend class="form__legend">Imagen</legend>
+        <div class="linkImage__box">
+          <input type="search" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Pegue el link de una imagen">
+          <button class="btn__linkImage">Subir</button>
+        </div>
+        <hr>
+        <div class="file__img__box">
+          <label for="file_cat" class="file__img__label">Subir imagen</label>
+          <input type="file" name="file_cat" id="file_cat" accept=".png,.jpg,.jpeg,.webp">
+        </div>
       </fieldset>
       <input type="submit" value="Agregar" class="form__submit">
     </form>
