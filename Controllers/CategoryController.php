@@ -106,8 +106,8 @@ class CategoryController extends CategoryModel
     }
 
     $data = [
-      "file_image" => $file_image,
       "link_image" => $link_image,
+      "file_image" => $file_image,
       "name" => $name,
       "description" => $description,
       "created_at" =>  date('Y-m-d H:i:s'),

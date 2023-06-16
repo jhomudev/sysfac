@@ -60,7 +60,6 @@ function sendFormFetch(e) {
         });
         const res = await req.data;
         alertFetch(res);
-        console.log(res);
       }
     } catch (error) {
       console.log(error);
