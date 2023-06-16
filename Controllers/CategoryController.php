@@ -141,6 +141,10 @@ class CategoryController extends CategoryModel
     $name = MainModel::clearString($_POST['tx_nombre']);
     $link_image = MainModel::clearString($_POST['tx_linkImage']);
     $description = MainModel::clearString($_POST['tx_descripcion']);
+    // valor de file_image
+    if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
+      $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
+    } else  $file_image = "";
 
     // Validacion de campos vacios
     if (empty($name)) {
@@ -148,6 +152,26 @@ class CategoryController extends CategoryModel
         "Alert" => "simple",
         "title" => "Campos vacios",
         "text" => "Por favor. Complete todos los campos.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+
+    if (!empty($file_image)) {
+      // Obtencion de file_image de la categoria para validacion de imagen
+      $sql_verify = MainModel::executeQuerySimple("SELECT file_image FROM categories WHERE cat_id=$cat_id");
+      $category_file_image = $sql_verify->fetchColumn();
+      if ($category_file_image) $file_image = $category_file_image;
+    }
+    
+    // Validacion de imagen vacia
+    if (empty($link_image) && empty($file_image)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Imagen no seleccionada",
+        "text" => "Por favor. Seleccione una imagen para la categoría.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -172,6 +196,7 @@ class CategoryController extends CategoryModel
     $new_data = [
       "category_id" => $cat_id,
       "link_image" => $link_image,
+      "file_image" => $file_image,
       "name" => $name,
       "description" => $description,
     ];

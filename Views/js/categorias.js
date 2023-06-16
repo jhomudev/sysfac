@@ -37,7 +37,6 @@ async function setDataCategory(categoryId) {
       body: new URLSearchParams(`categoryId=${categoryId}`),
     });
     const res = await req.json();
-    console.log(res);
 
     if (res.link_image)
       document.querySelector(".form__img").src = res.link_image;

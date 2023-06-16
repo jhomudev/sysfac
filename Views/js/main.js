@@ -77,7 +77,9 @@ const linkImage = document.getElementById("linkImage");
 if (linkImage) {
   btnLinkImage.addEventListener("click", (e) => {
     e.preventDefault();
-    const link = linkImage.value;
+    const link = linkImage.value
+      ? linkImage.value
+      : "https://cdn-icons-png.flaticon.com/512/1524/1524855.png";
     formImg.setAttribute("src", link);
     fileImage.value = "";
   });

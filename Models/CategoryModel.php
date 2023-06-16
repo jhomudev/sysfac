@@ -51,12 +51,23 @@ class CategoryModel extends MainModel
   // Funcion para editar categoria  
   protected static function editcategoryModel(array $new_data): bool
   {
-    $statement = MainModel::connect()->prepare("UPDATE categories SET link_image=:link_image, name=:name, description=:description WHERE cat_id=:category_id");
+    if (!empty($new_data['file_image'])) {
+      $statement = MainModel::connect()->prepare("UPDATE categories SET file_image=:file_image, link_image=:link_image, name=:name, description=:description WHERE cat_id=:category_id");
 
-    $statement->bindParam(":category_id", $new_data['category_id']);
-    $statement->bindParam(":link_image", $new_data['link_image']);
-    $statement->bindParam(":name", $new_data['name']);
-    $statement->bindParam(":description", $new_data['description']);
+      $statement->bindParam(":category_id", $new_data['category_id'], PDO::PARAM_STR);
+      $statement->bindParam(":file_image", $new_data['file_image'], PDO::PARAM_LOB);
+      $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
+      $statement->bindParam(":name", $new_data['name'], PDO::PARAM_STR);
+      $statement->bindParam(":description", $new_data['description'], PDO::PARAM_STR);
+    } else {
+      $statement = MainModel::connect()->prepare("UPDATE categories SET link_image=:link_image, file_image=:file_image, name=:name, description=:description WHERE cat_id=:category_id");
+
+      $statement->bindParam(":category_id", $new_data['category_id'], PDO::PARAM_STR);
+      $statement->bindParam(":link_image", $new_data['link_image'], PDO::PARAM_STR);
+      $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
+      $statement->bindParam(":name", $new_data['name'], PDO::PARAM_STR);
+      $statement->bindParam(":description", $new_data['description'], PDO::PARAM_STR);
+    }
 
     return $statement->execute();
   }
