@@ -4,13 +4,15 @@ const formsFetch = document.querySelectorAll(".formFetch");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 const categories = document.querySelectorAll(".category");
 const formCreate = document.querySelector(".form__create");
+const formDelete = document.querySelector(".form_delete");
 
 btnToggleForm.forEach((btn) => {
   btn.addEventListener("click", () => {
     toggleShowElement(modalForm);
-    document.querySelector(".form__title").textContent = "Agregar usuario";
+    document.querySelector(".form__title").textContent = "Agregar categoría";
     document.querySelector(".form__submit").value = "Agregar";
     document.getElementById("categoryId").value = "";
+    formDelete.style.display = "none";
     formCreate.reset();
   });
 });
@@ -46,6 +48,7 @@ async function setDataCategory(categoryId) {
       document.querySelector(".form__img").src =
         "https://cdn-icons-png.flaticon.com/512/1524/1524855.png";
     document.querySelector(".form__title").textContent = "Modificar categoría";
+    formDelete.style.display = "block";
     document.querySelector(".form__submit").value = "Modificar";
     document.getElementById("categoryId").value = res.cat_id;
     document.getElementById("categoryIdDel").value = res.cat_id;

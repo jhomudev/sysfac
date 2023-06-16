@@ -69,9 +69,9 @@
       </fieldset>
       <input type="submit" value="Agregar" class="form__submit">
     </form>
-    <form action="<?php echo SERVER_URL; ?>/fetch/deleteCategoryFetch.php" method="POST" class="form formFetch">
+    <form action="<?php echo SERVER_URL; ?>/fetch/deleteCategoryFetch.php" method="POST" class="form formFetch form_delete">
       <input type="hidden" id="categoryIdDel" name="tx_category_idDel">
-      <input type="submit" value="Eliminar" class="form__submit" style="background:red;color:#fff; margin-top:10px;">
+      <input type="submit" value="Eliminar categoría" class="form__submit" style="background:red;color:#fff; margin-top:10px;">
     </form>
   </div>
 </div>
