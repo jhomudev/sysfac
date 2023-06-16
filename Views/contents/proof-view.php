@@ -189,7 +189,7 @@ $ops = $sell->ops;
                 <?php
                 foreach ($ops as $key => $op) {
                     $op = json_decode(json_encode($op));
-                    $ns = ($op->serial_number) ? " / N.S." . $op->serial_number : "";
+                    $ns = ($op->serial_number) ? " / N.S.:" . $op->serial_number : "";
                     $details = ($op->details) ? " / " . $op->details  : "";
                     echo '
                         <tr>
