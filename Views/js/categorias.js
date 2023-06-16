@@ -40,7 +40,11 @@ async function setDataCategory(categoryId) {
 
     if (res.link_image)
       document.querySelector(".form__img").src = res.link_image;
-    else document.querySelector(".form__img").src = res.file_image;
+    else if (res.file_image)
+      document.querySelector(".form__img").src = res.file_image;
+    else
+      document.querySelector(".form__img").src =
+        "https://cdn-icons-png.flaticon.com/512/1524/1524855.png";
     document.querySelector(".form__title").textContent = "Modificar categoría";
     document.querySelector(".form__submit").value = "Modificar";
     document.getElementById("categoryId").value = res.cat_id;

@@ -13,8 +13,6 @@ if (isset($_SESSION['token'])) {
 
   if (empty($_POST['tx_category_id'])) print_r($IC->createCategoryController());
   else echo $IC->editCategoryController();
-
-  // echo json_encode([...$_POST, $_FILES]);
 } else {
   session_unset();
   session_destroy();

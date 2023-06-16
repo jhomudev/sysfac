@@ -78,17 +78,6 @@ class CategoryController extends CategoryModel
       return json_encode($alert);
       exit();
     }
-    // Validacion de imagen vacia
-    if (empty($link_image) && empty($file_image)) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Imagen no seleccionada",
-        "text" => "Por favor. Seleccione una imagen para la categoría.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
-    }
 
     // validación de duplicidad de nombre
     $sql_verify = MainModel::executeQuerySimple("SELECT * FROM categories WHERE name='$name'");
@@ -144,6 +133,7 @@ class CategoryController extends CategoryModel
     // valor de file_image
     if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
       $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
+      $link_image = "";
     } else  $file_image = "";
 
     // Validacion de campos vacios
@@ -158,24 +148,12 @@ class CategoryController extends CategoryModel
       exit();
     }
 
-
-    if (!empty($file_image)) {
+    if (empty($file_image)) {
       // Obtencion de file_image de la categoria para validacion de imagen
       $sql_verify = MainModel::executeQuerySimple("SELECT file_image FROM categories WHERE cat_id=$cat_id");
       $category_file_image = $sql_verify->fetchColumn();
       if ($category_file_image) $file_image = $category_file_image;
-    }
-    
-    // Validacion de imagen vacia
-    if (empty($link_image) && empty($file_image)) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Imagen no seleccionada",
-        "text" => "Por favor. Seleccione una imagen para la categoría.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
+      if (!empty($link_image)) $file_image = "";
     }
 
     // validación de duplicidad de nombre
