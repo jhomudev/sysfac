@@ -34,7 +34,11 @@ function sendFormFetch(e) {
 
   const config = {
     method: method,
+    url: action,
     body: data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   };
 
   Swal.fire({
@@ -49,9 +53,14 @@ function sendFormFetch(e) {
   }).then(async (result) => {
     try {
       if (result.isConfirmed) {
-        const req = await fetch(action, config);
-        const res = await req.json();
+        const req = await axios({
+          method: method,
+          url: action,
+          data: data,
+        });
+        const res = await req.data;
         alertFetch(res);
+        console.log(res);
       }
     } catch (error) {
       console.log(error);
