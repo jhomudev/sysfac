@@ -196,8 +196,25 @@ class UserController extends UserModel
     if ($isSuperAdmin) {
       $alert = [
         "Alert" => "simple",
-        "title" => "Acción rechazada",
+        "title" => "No puede eliminar al usuario",
         "text" => "Los superadmins no pueden ser eliminados.",
+        "icon" => "warning"
+      ];
+
+      return json_encode($alert);
+      exit();
+    }
+
+    // Verificacion si usuario ya ha realizado movimiento
+    $movs_verify = MainModel::executeQuerySimple("SELECT * FROM sells WHERE user_id=$user_id");
+    $movements = $movs_verify->fetchAll();
+    $has_movements = count($movements) > 0;
+
+    if ($has_movements) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "No puede eliminar al usuario",
+        "text" => "Este usuario ya ha realizado movimientos dentro del sistema, por lo cual no puede eliminarlo.",
         "icon" => "warning"
       ];
 
