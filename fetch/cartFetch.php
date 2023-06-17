@@ -28,6 +28,9 @@ if (isset($_SESSION['token'])) {
       case 'removeItem':
         echo $ICart->removeItemController();
         break;
+      case 'gratify':
+        echo $ICart->gratifyItemController();
+        break;
     }
   } else {
     echo "Accion no definida";

@@ -71,7 +71,7 @@ async function getDataCart() {
     console.log(error);
   }
 }
-getDataCart();
+// getDataCart();
 
 async function getItemsCart() {
   try {
@@ -91,11 +91,20 @@ async function getItemsCart() {
           <td>S/${item.price}</td>
           <td>${item.quantity}</td>
           <td>S/${item.total}</td>
-          <td><button class="cart__table__btn" data-col="${
+          <td>
+          <button class="cart__table__btn gratify_item" data-col="${
             item.serial_number ? "serial_number" : "product_id"
           }" data-val ="${
           item.serial_number ? item.serial_number : item.product_id
-        }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i></button></td>
+        }" title="Gratificar" style="--cl:var(--c_green);"><i class="ph ph-tag"></i>
+          </button>
+          <button class="cart__table__btn delete_item" data-col="${
+            item.serial_number ? "serial_number" : "product_id"
+          }" data-val ="${
+          item.serial_number ? item.serial_number : item.product_id
+        }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i>
+        </button>
+        </td>
         </tr>
         `;
       });
@@ -111,17 +120,25 @@ async function getItemsCart() {
     }
 
     getDataCart();
-
-    const removeBtns = document.querySelectorAll(".cart__table__btn");
+    // habilitar DOm
+    const removeBtns = document.querySelectorAll(".delete_item");
     removeBtns.forEach((btn) => {
       btn.addEventListener("click", () =>
         removeItem(btn.dataset.col, btn.dataset.val)
       );
     });
+
+    const gratifyBtns = document.querySelectorAll(".gratify_item");
+    gratifyBtns.forEach((btn) =>
+      btn.addEventListener("click", () =>
+        gratifyProduct(btn.dataset.col, btn.dataset.val)
+      )
+    );
   } catch (error) {
     console.log(error);
   }
 }
+
 getItemsCart();
 
 async function removeItem(col, val) {
@@ -156,6 +173,23 @@ async function applyDiscount(e, type, discount) {
     const res = await req.json();
     alertFetch(res);
     getItemsCart();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function gratifyProduct(col, val) {
+  try {
+    const config = {
+      method: "POST",
+      body: new URLSearchParams(`action=gratify&col=${col}&val=${val}`),
+    };
+    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
+    const res = await req.json();
+
+    alertFetch(res);
+    getItemsCart();
+    getDataCart();
   } catch (error) {
     console.log(error);
   }

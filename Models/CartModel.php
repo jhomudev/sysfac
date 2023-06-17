@@ -44,6 +44,23 @@ class CartModel extends MainModel
     return  $lenght_before == $lenght_after + 1;
   }
 
+  protected static function gratifyItemModel(string $col, mixed $val): mixed
+  {
+    $cart_before = $_SESSION['cart']['items'];
+    $new_cart = [];
+    foreach ($_SESSION['cart']['items'] as $item) {
+      if ($item[$col] == $val) {
+        $item['name'] .= ' (Gratis)';
+        $item['total'] = 0.00;
+      } 
+
+      $new_cart[] = $item;
+    }
+    $_SESSION['cart']['items'] = $new_cart;
+
+    return !($cart_before == $new_cart);
+  }
+
   protected static function applyDiscountModel(float $discount): bool
   {
     $_SESSION['cart']['discount'] = $discount;

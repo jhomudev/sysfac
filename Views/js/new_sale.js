@@ -5,12 +5,29 @@ const filterSelect = document.querySelectorAll(".filter__select");
 const productsBox = document.querySelector(".productsBox");
 const addFor = document.getElementById("addFor");
 const modalForm = document.getElementById("modalForm");
+const closeForm = document.querySelectorAll(".closeForm");
 
 const formAdd = document.querySelector(".product__form");
 formAdd.addEventListener("submit", (e) => {
   addProduct(e);
   toggleShowElement(modalForm);
 });
+
+closeForm.forEach((btn) => {
+  btn.addEventListener("click", () => modalForm.classList.remove("show"));
+});
+// funcion habilitar botones DOM
+function habilityDOM() {
+  const togglesForm = document.querySelectorAll(".toggleForm");
+  togglesForm.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      toggleShowElement(modalForm);
+      setDataProduct(btn.dataset.id);
+      // resetear form
+      formAdd.reset();
+    });
+  });
+}
 
 // peticion para traer productos para venta
 async function getProducts(words = "", column = "", value = "") {
@@ -26,27 +43,21 @@ async function getProducts(words = "", column = "", value = "") {
     const res = await req.text();
     productsBox.innerHTML = res;
 
-    const togglesForm = document.querySelectorAll(".toggleForm");
-    togglesForm.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        toggleShowElement(modalForm);
-        setDataProduct(btn.dataset.id);
-        // resetear form
-        formAdd.reset();
-      });
-    });
+    habilityDOM();
   } catch (error) {
     console.log(error);
   }
 }
+
 getProducts();
 
 inputSearch.addEventListener("input", () => getProducts(inputSearch.value));
 allBtn.addEventListener("click", () => {
-  getProducts();
+  inputSearch.value = "";
   filterSelect.forEach((filter) => {
     filter.selectedIndex = -1;
   });
+  getProducts();
 });
 filterSelect.forEach((filter) => {
   filter.addEventListener("change", () => {
@@ -80,5 +91,3 @@ async function setDataProduct(productIdName) {
     console.log(error);
   }
 }
-
-addFor.addEventListener("change", () => {});

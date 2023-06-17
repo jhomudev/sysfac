@@ -175,6 +175,32 @@ class CartController extends CartModel
     exit();
   }
 
+  public function gratifyItemController()
+  {
+    $val = MainModel::clearString($_POST['val']);
+    $col = MainModel::clearString($_POST['col']);
+
+    $stm = CartModel::gratifyItemModel($col, $val);
+
+    if ($stm) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Producto gratificado",
+        "text" => "No se cobrará por el producto en esta venta." . $stm,
+        "icon" => "success"
+      ];
+    } else {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Opsss...",
+        "text" => "No pudimos gratificar el producto." . $stm,
+        "icon" => "error"
+      ];
+    }
+    return json_encode($alert);
+    exit();
+  }
+
   public function applyDiscountController()
   {
     // Validacion de carrito vacio
