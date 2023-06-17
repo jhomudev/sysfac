@@ -70,7 +70,7 @@ if ($vista == "proof") {
               <thead class="cart__table__thead">
                 <th>Producto</th>
                 <th>N.S.</th>
-                <th>Precio</th>
+                <th>P.U.</th>
                 <th>Cantidad</th>
                 <th>Total</th>
                 <th></th>

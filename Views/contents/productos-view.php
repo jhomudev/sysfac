@@ -67,7 +67,7 @@
       <input type="hidden" id="productIdName" name="tx_product_id">
       <fieldset class="form__group">
         <legend class="form__legend">Nombre*</legend>
-        <input type="text" class="form__input" id="nombre" name="tx_nombre">
+        <input type="text" class="form__input" id="nombre" name="tx_nombre" mayus>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Precio de venta*</legend>

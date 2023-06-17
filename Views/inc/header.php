@@ -41,7 +41,7 @@
           }
 
           // Notificaiones de stock minimo
-          $products = MainModel::executeQuerySimple("SELECT pa.product_id, p.name, p.inventary_min FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id GROUP BY pa.product_id");
+          $products = MainModel::executeQuerySimple("SELECT * FROM products WHERE is_active=1");
           $products = json_decode(json_encode($products->fetchAll()));
 
           foreach ($products as $product) {
@@ -112,7 +112,7 @@
     }
 
     // Notificaiones de stock minimo
-    $products = MainModel::executeQuerySimple("SELECT pa.product_id, p.name, p.inventary_min FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id GROUP BY pa.product_id");
+    $products = MainModel::executeQuerySimple("SELECT * FROM products WHERE is_active=1");
     $products = json_decode(json_encode($products->fetchAll()));
 
     foreach ($products as $product) {
