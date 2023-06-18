@@ -75,7 +75,7 @@ class ClientController extends ClientModel
     if ($client == false) {
       $alert = [
         "Alert" => "simple",
-        "title" => "Cliente no encontrado" . implode(",", $_POST),
+        "title" => "Cliente no encontrado",
         "text" => "Al paracer el cliente no esta registrado.",
         "icon" => "warning"
       ];
