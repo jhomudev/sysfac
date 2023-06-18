@@ -255,7 +255,7 @@ class ProductController extends ProductModel
         "Alert" => "simple",
         "title" => "Acción rechazada",
         "text" => "No puede eliminar el producto, ya que este ya tiene venta y/o compras registradas.",
-        "icon" => "error"
+        "icon" => "warning"
       ];
 
       return json_encode($alert);

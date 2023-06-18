@@ -181,6 +181,21 @@ class SupplierController extends SupplierModel
       return json_encode($alert);
       exit();
     }
+    // Validacion de que el supplier haya proveido compras
+    $verify = MainModel::executeQuerySimple("SELECT * FROM sells WHERE supplier_id=$supplier_id");
+    $purchases = $verify->fetchAll();
+
+    if (count($purchases) > 0) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Acción rechazada",
+        "text" => "No puede eliminar el proveedor, ya que este ya proveyó algunas compras.",
+        "icon" => "warning"
+      ];
+
+      return json_encode($alert);
+      exit();
+    }
 
     $stm = SupplierModel::deleteSupplierModel($supplier_id);
 
