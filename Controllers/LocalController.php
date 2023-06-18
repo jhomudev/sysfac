@@ -1,6 +1,6 @@
 <?php
 
-if ($requestFetch) {
+if ($request) {
   require_once "./../Models/LocalModel.php";
 } else {
   require_once "./Models/LocalModel.php";

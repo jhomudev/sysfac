@@ -37,7 +37,7 @@ async function getProducts(words = "", column = "", value = "") {
     formData.append("column", column);
     formData.append("value", value);
     const req = await axios.post(
-      `${serverURL}/fetch/getProductsForSaleFetch.php`,
+      `${serverURL}/Request/getProductsForSaleRequest.php`,
       formData,
       { responseType: "text" }
     );
@@ -70,7 +70,7 @@ filterSelect.forEach((filter) => {
 async function setDataProduct(productIdName) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataProductFetch.php`,
+      `${serverURL}/Request/getDataProductRequest.php`,
       new URLSearchParams(`productIdName=${productIdName}`)
     );
     const res = await req.data;

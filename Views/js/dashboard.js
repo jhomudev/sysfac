@@ -2,7 +2,7 @@
 async function getDataGraphicSales(data, year = "", month = "") {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataGraphicFetch.php`,
+      `${serverURL}/Request/getDataGraphicRequest.php`,
       new URLSearchParams(`graphic=${data}&year=${year}&month=${month}`)
     );
     const res = await req.data;

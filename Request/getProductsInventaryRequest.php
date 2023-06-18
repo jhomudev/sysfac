@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -12,7 +12,6 @@ if (isset($_SESSION['token'])) {
   $IP = new ProductController();
 
   echo $IP->getProductsInventaryController();
-
 } else {
   session_unset();
   session_destroy();

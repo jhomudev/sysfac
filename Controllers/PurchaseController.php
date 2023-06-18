@@ -1,6 +1,6 @@
 <?php
 
-if ($requestFetch) {
+if ($request) {
   require_once "./../Models/PurchaseModel.php";
   require_once "./../Controllers/CartPurchaseController.php";
 } else {

@@ -17,7 +17,7 @@ require_once './../libraries/phpspreadsheet/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/UserController.php';
 
 $IU = new UserController();

@@ -28,7 +28,7 @@ $sheet_inv->setCellValue('B1', 'NÚMERO DE SERIE');
 $sheet_inv->setCellValue('C1', 'LOCAL');
 $sheet_inv->setCellValue('D1', 'ESTADO');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/ProductController.php';
 
 $IP = new ProductController();

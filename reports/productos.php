@@ -30,7 +30,7 @@ $sheet->setCellValue('E1', 'VENTA POR');
 $sheet->setCellValue('F1', 'CATEGORÍA');
 $sheet->setCellValue('G1', 'ACTIVO');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/ProductController.php';
 
 $IP = new ProductController();

@@ -1,4 +1,4 @@
-function alertFetch(alert = {}) {
+function alertRequest(alert = {}) {
   if (alert.Alert === "simple") {
     Swal.fire({
       icon: alert.icon,
@@ -26,7 +26,7 @@ function alertFetch(alert = {}) {
 }
 
 // Funcio enviar formulario
-function sendFormFetch(e) {
+function sendFormRequest(e) {
   e.preventDefault();
   const data = new FormData(e.target);
   const method = e.target.getAttribute("method");
@@ -50,7 +50,7 @@ function sendFormFetch(e) {
           data: data,
         });
         const res = await req.data;
-        alertFetch(res);
+        alertRequest(res);
       }
     } catch (error) {
       console.log(error);

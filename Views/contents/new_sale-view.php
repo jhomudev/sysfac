@@ -49,7 +49,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/cartFetch.php" method="POST" class="form product__form">
+    <form action="<?php echo SERVER_URL; ?>/Request/cartRequest.php" method="POST" class="form product__form">
       <div class="form__btnclose closeForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar a carrito</h1>
       <input type="hidden" class="form__input" id="productIdName" name="tx_product_id">

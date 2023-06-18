@@ -31,7 +31,7 @@ $sheet_ventas->setCellValue('E1', 'DESCUENTO');
 $sheet_ventas->setCellValue('F1', 'TOTAL PAGADO');
 $sheet_ventas->setCellValue('G1', 'FECHA');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/SellController.php';
 
 $IC = new SellController();

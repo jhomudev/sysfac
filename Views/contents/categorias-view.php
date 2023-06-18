@@ -39,7 +39,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formCategoryFetch.php" method="POST" enctype="multipart/form-data" class="form form__create formFetch" style="width:100%;">
+    <form action="<?php echo SERVER_URL; ?>/Request/formCategoryRequest.php" method="POST" enctype="multipart/form-data" class="form form__create formRequest" style="width:100%;">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar categoría</h1>
       <div class="form__imgBox">
@@ -69,7 +69,7 @@
       </fieldset>
       <input type="submit" value="Agregar" class="form__submit">
     </form>
-    <form action="<?php echo SERVER_URL; ?>/fetch/deleteCategoryFetch.php" method="POST" class="form formFetch form_delete">
+    <form action="<?php echo SERVER_URL; ?>/Request/deleteCategoryRequest.php" method="POST" class="form formRequest form_delete">
       <input type="hidden" id="categoryIdDel" name="tx_category_idDel">
       <input type="submit" value="Eliminar categoría" class="form__submit" style="background:red;color:#fff; margin-top:10px;">
     </form>

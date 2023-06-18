@@ -29,7 +29,7 @@ $sheet_compras->setCellValue('C1', 'PROVEEDOR');
 $sheet_compras->setCellValue('D1', 'TOTAL');
 $sheet_compras->setCellValue('E1', 'FECHA');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/PurchaseController.php';
 
 $IP = new PurchaseController();

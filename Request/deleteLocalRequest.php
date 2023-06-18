@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 

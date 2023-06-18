@@ -25,7 +25,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formClientFetch.php" method="POST" class="form form__edit formFetch">
+    <form action="<?php echo SERVER_URL; ?>/Request/formClientRequest.php" method="POST" class="form form__edit formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Datos del cliente</h1>
       <input type="hidden" class="form__input" id="userId" name="tx_client_id">

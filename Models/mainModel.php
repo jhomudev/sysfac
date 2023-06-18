@@ -1,5 +1,5 @@
 <?php
-if ($requestFetch) require_once "../config/SERVER.php";
+if ($request) require_once "../config/SERVER.php";
 else require_once "./config/SERVER.php";
 
 class MainModel

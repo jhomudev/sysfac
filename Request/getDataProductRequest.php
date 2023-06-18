@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -8,10 +8,10 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/CategoryController.php";
-  $IP = new CategoryController();
+  require_once "../Controllers/ProductController.php";
+  $IP = new ProductController();
 
-  echo $IP->getDataCategoryController();
+  echo $IP->getDataProductController();
 } else {
   session_unset();
   session_destroy();

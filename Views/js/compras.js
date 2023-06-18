@@ -21,7 +21,7 @@ async function getPurchases(
     formData.append("date_start", dateStart);
     formData.append("date_end", dateEnd);
     const req = await axios.post(
-      `${serverURL}/fetch/getPurchasesFetch.php`,
+      `${serverURL}/Request/getPurchasesRequest.php`,
       formData,
       { responseType: "text" }
     );

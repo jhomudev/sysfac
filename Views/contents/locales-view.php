@@ -34,7 +34,7 @@
               <td>
                 <div class="actions">
                   <button data-key="' . $location->local_id . '" class="actions__btn btn_edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-                  <form action="' . SERVER_URL . '/fetch/deleteLocalFetch.php" method="POST" class="formFetch">
+                  <form action="' . SERVER_URL . '/Request/deleteLocalRequest.php" method="POST" class="formRequest">
                     <input type="hidden" value="' . $location->local_id  . '" name="tx_local_id">
                     <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
                   </form>
@@ -62,7 +62,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formLocalFetch.php" method="POST" class="form form__create formFetch">
+    <form action="<?php echo SERVER_URL; ?>/Request/formLocalRequest.php" method="POST" class="form form__create formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar local</h1>
       <input type="hidden" id="localId" name="tx_local_id">

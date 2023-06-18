@@ -1,6 +1,6 @@
 // TODO: DECLARACIÓN DE ELEMENTOS
 const modalForm = document.getElementById("modalForm");
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 const btnsEdit = document.querySelectorAll(".btn_edit");
 const formCreate = document.querySelector(".form__create");
@@ -23,9 +23,9 @@ btnsEdit.forEach((btn) => {
 });
 
 // Funcionalidad de envio de forms con fetch
-formsFetch.forEach((form) => {
+formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e);
+    sendFormRequest(e);
   });
 });
 
@@ -33,7 +33,7 @@ formsFetch.forEach((form) => {
 async function setDataLocal(localId) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataLocalFetch.php`,
+      `${serverURL}/Request/getDataLocalRequest.php`,
       new URLSearchParams(`localId=${localId}`)
     );
     const res = await req.data;

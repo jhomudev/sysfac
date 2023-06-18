@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -14,10 +14,11 @@ if (empty($_SESSION['token'])) {
   exit();
 }
 
-require_once "../Controllers/ClientController.php";
+require_once "../Controllers/SellController.php";
 
-$IClient = new ClientController();
+$IS = new SellController();
 
-$clients = $IClient->getClientsController();
+$res = $IS->generateSellController();
 
-echo $clients;
+echo $res;
+// echo json_encode($_POST);

@@ -25,7 +25,7 @@ $sheet = $spreadsheet->getActiveSheet();
 $sheet->setCellValue('A1', 'NOMBRE');
 $sheet->setCellValue('B1', 'DESCRIPCIÓN');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/CategoryController.php';
 
 $IC = new CategoryController();

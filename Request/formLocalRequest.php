@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -8,10 +8,11 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/CartController.php";
-  $ICart = new CartController();
+  require_once "../Controllers/LocalController.php";
+  $IL = new LocalController();
 
-  echo $ICart->applyDiscountController();
+  if (empty($_POST['tx_local_id'])) echo $IL->createLocalController();
+  else echo $IL->editLocalController();
 } else {
   session_unset();
   session_destroy();

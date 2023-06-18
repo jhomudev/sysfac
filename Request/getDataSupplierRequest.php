@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -8,10 +8,10 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/UserController.php";
-  $IU = new UserController();
+  require_once "../Controllers/SupplierController.php";
+  $IS = new SupplierController();
 
-  echo $IU->deleteUserController();
+  echo $IS->getDataSupplierController();
 } else {
   session_unset();
   session_destroy();

@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -8,11 +8,11 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/UserController.php";
-  $IU = new UserController();
+  require_once "../Controllers/ProductController.php";
+  $IP = new ProductController();
 
-  if (empty($_POST['tx_user_id'])) echo $IU->createUserController();
-  else echo $IU->editUserController();
+  if (empty($_POST['tx_product_id'])) echo $IP->createProductController();
+  else echo $IP->editProductController();
 } else {
   session_unset();
   session_destroy();

@@ -3,7 +3,7 @@ const modalForm = document.getElementById("modalForm");
 // const modalDetails = document.getElementById("modalDetails");
 
 const toggleForm = document.querySelectorAll(".toggleForm");
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 const formCreate = document.querySelector(".formCreate");
 const btnsEdit = document.querySelectorAll(".btn_edit");
 
@@ -18,8 +18,8 @@ toggleForm.forEach((btn) => {
 });
 
 // Funcionalidad de envio de forms con fetch
-formsFetch.forEach((form) => {
-  form.addEventListener("submit", (e) => sendFormFetch(e));
+formsRequest.forEach((form) => {
+  form.addEventListener("submit", (e) => sendFormRequest(e));
 });
 
 // Set data de proveedor
@@ -31,7 +31,7 @@ btnsEdit.forEach((btn) => {
 async function setDataSupplier(supplierIdRUC) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataSupplierFetch.php`,
+      `${serverURL}/Request/getDataSupplierRequest.php`,
       new URLSearchParams(`supplierIdRUC=${supplierIdRUC}`)
     );
     const res = await req.data;

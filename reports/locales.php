@@ -27,7 +27,7 @@ $sheet->setCellValue('B1', 'DIRECCIÓN');
 $sheet->setCellValue('C1', 'TILO');
 $sheet->setCellValue('D1', 'CANSTORE');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/LocalController.php';
 
 $IL = new LocalController();

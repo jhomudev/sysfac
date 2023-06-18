@@ -8,11 +8,10 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/ProductController.php";
-  $IP = new ProductController();
+  require_once "../Controllers/ClientController.php";
+  $IL = new ClientController();
 
-  if (empty($_POST['tx_product_id'])) echo $IP->createProductController();
-  else echo $IP->editProductController();
+  echo $IL->getDataClientController();
 } else {
   session_unset();
   session_destroy();

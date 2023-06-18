@@ -1,5 +1,5 @@
 // TODO: DECLARACIÓN DE ELEMENTOS
-const formFetch = document.querySelector(".formFetch");
+const formRequest = document.querySelector(".formRequest");
 const checkboxMain = document.getElementById("checkboxMain");
 const checkboxAll = document.getElementsByName("p_checkeds[]");
 
@@ -25,7 +25,7 @@ action.addEventListener("change", () => {
   }
 });
 
-formFetch.addEventListener("submit", (e) => {
+formRequest.addEventListener("submit", (e) => {
   e.preventDefault();
   // Obtencion de los values de los checkbox seleccionados
   let arrIds = [];
@@ -60,7 +60,7 @@ formFetch.addEventListener("submit", (e) => {
       if (result.isConfirmed) {
         const req = await axios(config);
         const res = await req.data;
-        alertFetch(res);
+        alertRequest(res);
       }
     } catch (error) {
       console.log(error);

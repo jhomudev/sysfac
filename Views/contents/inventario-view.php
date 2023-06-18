@@ -90,7 +90,7 @@
   ?>
 </p>
 <div class="actions__prods">
-  <form action="<?php echo SERVER_URL; ?>/fetch/formProductInvFetch.php" method="POST" class="form__prod box__entries formFetch">
+  <form action="<?php echo SERVER_URL; ?>/Request/formProductInvRequest.php" method="POST" class="form__prod box__entries formRequest">
     <fieldset class="form__group">
       <legend class="form__label">Acción</legend>
       <select name="action" id="action" class="form__input" required>

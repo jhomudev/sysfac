@@ -9,7 +9,7 @@ const productPrice = document.getElementById("productPrice");
 const productPriceSale = document.getElementById("productPriceSale");
 const formAdd = document.querySelector(".purchase__products__form");
 
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 
 // Funcionalidad traer datos de proveedor
 supplierRUC.addEventListener("input", () => {
@@ -25,7 +25,7 @@ productName.addEventListener("input", () => {
 async function getDataSupplier(supplierRUC) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataSupplierFetch.php`,
+      `${serverURL}/Request/getDataSupplierRequest.php`,
       new URLSearchParams("supplierIdRUC=" + supplierRUC)
     );
     const res = await req.data;
@@ -43,7 +43,7 @@ async function getDataSupplier(supplierRUC) {
 async function getDataProduct(productIdName) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataProductFetch.php`,
+      `${serverURL}/Request/getDataProductRequest.php`,
       new URLSearchParams("productIdName=" + productIdName)
     );
     const res = await req.data;
@@ -68,7 +68,7 @@ async function getDataProduct(productIdName) {
 async function getDataList() {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      `${serverURL}/Request/cartPurchaseRequest.php`,
       new URLSearchParams("action=getDataList")
     );
     const res = await req.data;
@@ -127,12 +127,12 @@ async function addProduct(e) {
     e.preventDefault();
 
     const req = await axios.post(
-      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      `${serverURL}/Request/cartPurchaseRequest.php`,
       new FormData(e.target)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     if (res.icon == "success") {
       getDataList();
       e.target.reset();
@@ -145,12 +145,12 @@ async function addProduct(e) {
 async function removeItem(col, val) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      `${serverURL}/Request/cartPurchaseRequest.php`,
       new URLSearchParams(`action=removeItem&col=${col}&val=${val}`)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     getDataList();
   } catch (error) {
     console.log(error);
@@ -160,12 +160,12 @@ async function removeItem(col, val) {
 async function clearDataList() {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      `${serverURL}/Request/cartPurchaseRequest.php`,
       new URLSearchParams(`action=clear`)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     getDataList();
   } catch (error) {
     console.log(error);
@@ -192,8 +192,8 @@ productQuantity.addEventListener("input", () => {
 
 formAdd.addEventListener("submit", (e) => addProduct(e));
 
-formsFetch.forEach((form) => {
+formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e);
+    sendFormRequest(e);
   });
 });

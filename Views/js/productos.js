@@ -8,7 +8,7 @@ const modalDetails = document.getElementById("modalDetails");
 
 function habilityDOM() {
   const formCreate = document.querySelector(".form__create");
-  const formsFetch = document.querySelectorAll(".formFetch");
+  const formsRequest = document.querySelectorAll(".formRequest");
   const btnToggleForm = document.querySelectorAll(".toggleForm");
   const btnsEdit = document.querySelectorAll(".btn__edit");
   const btnToggleDetails = document.querySelectorAll(".toggleDetails");
@@ -38,9 +38,9 @@ function habilityDOM() {
   });
 
   // Funcionalidad de envio de forms con fetch
-  formsFetch.forEach((form) => {
+  formsRequest.forEach((form) => {
     form.addEventListener("submit", (e) => {
-      sendFormFetch(e);
+      sendFormRequest(e);
     });
   });
 }
@@ -49,7 +49,7 @@ function habilityDOM() {
 async function setDataProduct(productIdName) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataProductFetch.php`,
+      `${serverURL}/Request/getDataProductRequest.php`,
       new URLSearchParams(`productIdName=${productIdName}`)
     );
     const res = await req.json();
@@ -82,7 +82,7 @@ async function getProducts(words = "", column = "", value = "") {
     formData.append("column", column);
     formData.append("value", value);
     const req = await axios.post(
-      `${serverURL}/fetch/getProductsFetch.php`,
+      `${serverURL}/Request/getProductsRequest.php`,
       formData
     );
     const res = await req.data;
@@ -111,7 +111,7 @@ async function getProducts(words = "", column = "", value = "") {
               <button data-key="${
                 product.product_id
               }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-              <form action="${serverURL}/fetch/deleteProductFetch.php" method="POST" class="formFetch formDelete">
+              <form action="${serverURL}/Request/deleteProductRequest.php" method="POST" class="formRequest formDelete">
                 <input type="hidden" value="${
                   product.product_id
                 }" name="tx_product_id">

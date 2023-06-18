@@ -30,12 +30,12 @@ async function addProduct(e) {
     e.preventDefault();
 
     const req = await axios.post(
-      `${serverURL}/fetch/cartFetch.php`,
+      `${serverURL}/Request/cartRequest.php`,
       new FormData(e.target)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     getDataCart();
     getItemsCart();
   } catch (error) {
@@ -46,7 +46,7 @@ async function addProduct(e) {
 async function getDataCart() {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartFetch.php`,
+      `${serverURL}/Request/cartRequest.php`,
       new URLSearchParams("action=getDataCart")
     );
     const res = await req.data;
@@ -74,7 +74,7 @@ async function getDataCart() {
 async function getItemsCart() {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartFetch.php`,
+      `${serverURL}/Request/cartRequest.php`,
       new URLSearchParams("action=getCart")
     );
     const res = await req.data;
@@ -141,12 +141,12 @@ getItemsCart();
 async function removeItem(col, val) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartFetch.php`,
+      `${serverURL}/Request/cartRequest.php`,
       new URLSearchParams(`action=removeItem&col=${col}&val=${val}`)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     getItemsCart();
     getDataCart();
   } catch (error) {
@@ -159,11 +159,11 @@ async function applyDiscount(e, type, discount) {
     e.preventDefault();
 
     const req = await axios.post(
-      `${serverURL}/fetch/applyDiscountFetch.php`,
+      `${serverURL}/Request/applyDiscountRequest.php`,
       new URLSearchParams(`type=${type}&discount=${discount}`)
     );
     const res = await req.data;
-    alertFetch(res);
+    alertRequest(res);
     getItemsCart();
   } catch (error) {
     console.log(error);
@@ -173,12 +173,12 @@ async function applyDiscount(e, type, discount) {
 async function gratifyProduct(col, val) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/cartFetch.php`,
+      `${serverURL}/Request/cartRequest.php`,
       new URLSearchParams(`action=gratify&col=${col}&val=${val}`)
     );
     const res = await req.data;
 
-    alertFetch(res);
+    alertRequest(res);
     getItemsCart();
     getDataCart();
   } catch (error) {
@@ -217,7 +217,7 @@ async function getDataClient(e) {
     e.preventDefault();
 
     const req = await axios.post(
-      `${serverURL}/fetch/getDataClientFetch.php`,
+      `${serverURL}/Request/getDataClientRequest.php`,
       new URLSearchParams(
         `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
       )
@@ -225,7 +225,7 @@ async function getDataClient(e) {
     const res = await req.data;
 
     if (res.Alert) {
-      alertFetch(res);
+      alertRequest(res);
       document.getElementById("clientId").value = "";
       document.getElementById("clientDNI").value = "";
       document.getElementById("clientRUC").value = "";
@@ -247,4 +247,4 @@ async function getDataClient(e) {
 btnClientSearch.addEventListener("click", (e) => getDataClient(e));
 
 // generate sell
-formSell.addEventListener("submit", (e) => sendFormFetch(e));
+formSell.addEventListener("submit", (e) => sendFormRequest(e));

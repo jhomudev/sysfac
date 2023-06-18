@@ -1,6 +1,6 @@
 <?php
 
-if ($requestFetch) {
+if ($request) {
   require_once "./../Models/SupplierModel.php";
 } else {
   require_once "./Models/SupplierModel.php";

@@ -1,6 +1,6 @@
 <?php
 
-$requestFetch = true;
+$request = true;
 
 require_once "../config/APP.php";
 
@@ -8,11 +8,10 @@ session_name(NAMESESSION);
 session_start();
 
 if (isset($_SESSION['token'])) {
-  require_once "../Controllers/ClientController.php";
-  $IC = new ClientController();
+  require_once "../Controllers/LocalController.php";
+  $IL = new LocalController();
 
-  if (!empty($_POST['tx_client_id'])) echo $IC->editClientController();
-  // print_r($_POST);
+  echo $IL->getDataLocalController();
 } else {
   session_unset();
   session_destroy();

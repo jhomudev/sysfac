@@ -60,7 +60,7 @@
           </fieldset>
           <input type="submit" value="Agregar a compra" class="form__submit">
         </form>
-        <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POST" class="formFetch">
+        <form action="<?php echo SERVER_URL; ?>/Request/cartPurchaseRequest.php" method="POST" class="formRequest">
           <input type="hidden" name="action" value="clear">
           <button type="submit" class="purchase__btn__do form__submit" style="background:red;"><i class="ph ph-broom"></i> Limpiar lista de compra</button>
         </form>
@@ -85,7 +85,7 @@
         </table>
       </div>
       <div class="purchase__total__pay">TOTAL: <span id="total"></span></div>
-      <form action="<?php echo SERVER_URL; ?>/fetch/cartPurchaseFetch.php" method="POST" class="formFetch">
+      <form action="<?php echo SERVER_URL; ?>/Request/cartPurchaseRequest.php" method="POST" class="formRequest">
         <input type="hidden" name="action" value="do">
         <input type="hidden" name="tx_supplier_id" id="supplierIdRUC">
         <div class="supplier__data__box box__entries">

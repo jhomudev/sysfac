@@ -59,7 +59,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formProductFetch.php" method="POST" class="form form__create formFetch">
+    <form action="<?php echo SERVER_URL; ?>/Request/formProductRequest.php" method="POST" class="form form__create formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar producto</h1>
       <div class="form__imgBox">

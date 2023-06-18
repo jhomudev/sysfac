@@ -34,7 +34,7 @@
             <td>
               <div class="actions">
                 <button data-key="' . $supplier->supplier_id . '" class="actions__btn btn_edit toggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-                <form action="' . SERVER_URL . '/fetch/deleteSupplierFetch.php" method="POST" class="formFetch">
+                <form action="' . SERVER_URL . '/Request/deleteSupplierRequest.php" method="POST" class="formRequest">
                 <input type="hidden" value="' . $supplier->supplier_id  . '" name="tx_supplier_id">
                 <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
                 </form>
@@ -61,7 +61,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form method="POST" action="<?php echo SERVER_URL; ?>/fetch/formSupplierfetch.php" class="form formCreate formFetch">
+    <form method="POST" action="<?php echo SERVER_URL; ?>/Request/formSupplierfetch.php" class="form formCreate formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar proveedor</h1>
       <input type="hidden" id="supplierIdRUC" name="tx_supplier_id">

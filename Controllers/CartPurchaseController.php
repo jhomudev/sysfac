@@ -1,6 +1,6 @@
 <?php
 
-if ($requestFetch) {
+if ($request) {
   require_once "./../Models/CartPurchaseModel.php";
 } else {
   require_once "./Models/CartPurchaseModel.php";
@@ -130,7 +130,7 @@ class CartPurchaseController extends CartPurchaseModel
         $alert = [
           "Alert" => "simple",
           "title" => "Números de serie ya registrados en la lista",
-          "text" => "N.S. que repiten :".implode(' ', $ns_repeat),
+          "text" => "N.S. que repiten :" . implode(' ', $ns_repeat),
           "icon" => "warning"
         ];
         return json_encode($alert);

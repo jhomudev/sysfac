@@ -28,7 +28,7 @@ $sheet->setCellValue('C1', 'DIRECCIÓN');
 $sheet->setCellValue('D1', 'TELÉFONO');
 $sheet->setCellValue('E1', 'FECHA DE ADICIÓN');
 
-$requestFetch = true;
+$request = true;
 include './../Controllers/SupplierController.php';
 
 $IS = new SupplierController();

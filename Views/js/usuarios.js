@@ -5,7 +5,7 @@ const modalDetails = document.getElementById("modalDetails");
 
 // funcion para hablitar funcionalidades de lso botones
 
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 const btnsEdit = document.querySelectorAll(".btn_edit");
 const btnToggleDetails = document.querySelectorAll(".toggleDetails");
@@ -37,9 +37,9 @@ btnsEdit.forEach((btn) => {
 });
 
 // Funcionalidad de envio de forms con fetch
-formsFetch.forEach((form) => {
+formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e);
+    sendFormRequest(e);
   });
 });
 
@@ -47,7 +47,7 @@ formsFetch.forEach((form) => {
 async function setDataUser(userId) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataUserFetch.php`,
+      `${serverURL}/Request/getDataUserRequest.php`,
       new URLSearchParams(`userId=${userId}`)
     );
     const res = await req.data;
@@ -69,7 +69,7 @@ async function setDataUser(userId) {
 async function setDetailsUser(userId) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataUserFetch.php`,
+      `${serverURL}/Request/getDataUserRequest.php`,
       new URLSearchParams(`userId=${userId}`)
     );
     const res = await req.data;

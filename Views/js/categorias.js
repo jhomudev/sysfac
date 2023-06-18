@@ -1,6 +1,6 @@
 // TODO: DECLARACIÓN DE ELEMENTOS
 const modalForm = document.getElementById("modalForm");
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 const categories = document.querySelectorAll(".category");
 const formCreate = document.querySelector(".form__create");
@@ -25,9 +25,9 @@ categories.forEach((category) => {
 });
 
 // Funcionalidad de envio de forms con fetch
-formsFetch.forEach((form) => {
+formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e);
+    sendFormRequest(e);
   });
 });
 
@@ -35,7 +35,7 @@ formsFetch.forEach((form) => {
 async function setDataCategory(categoryId) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getCategoriesFetch.php`,
+      `${serverURL}/Request/getCategoriesRequest.php`,
       new URLSearchParams(`categoryId=${categoryId}`)
     );
     const res = await req.data;

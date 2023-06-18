@@ -36,7 +36,7 @@
             <td>
               <div class="actions">
                 <button data-key="' . $user->user_id . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-                <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
+                <form action="' . SERVER_URL . '/Request/deleteUserRequest.php" method="POST" class="formRequest">
                   <input type="hidden" value="' . $user->user_id  . '" name="tx_user_id">
                   <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
                 </form>
@@ -64,7 +64,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form action="<?php echo SERVER_URL; ?>/fetch/formUserFetch.php" method="POST" class="form form__create formFetch">
+    <form action="<?php echo SERVER_URL; ?>/Request/formUserRequest.php" method="POST" class="form form__create formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar usuario</h1>
       <fieldset class="form__group">

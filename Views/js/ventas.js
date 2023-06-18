@@ -21,7 +21,7 @@ async function getSells(
     formData.append("date_start", dateStart);
     formData.append("date_end", dateEnd);
     const req = await axios.post(
-      `${serverURL}/fetch/getSellsFetch.php`,
+      `${serverURL}/Request/getSellsRequest.php`,
       formData,
       { responseType: "text" }
     );

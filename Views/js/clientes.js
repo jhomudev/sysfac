@@ -2,7 +2,7 @@
 const tbody = document.querySelector(".table__tbody");
 const inputSearch = document.getElementById("inputSearch");
 const modalForm = document.getElementById("modalForm");
-const formsFetch = document.querySelectorAll(".formFetch");
+const formsRequest = document.querySelectorAll(".formRequest");
 const btnToggleForm = document.querySelectorAll(".toggleForm");
 
 btnToggleForm.forEach((btn) => {
@@ -10,9 +10,9 @@ btnToggleForm.forEach((btn) => {
 });
 
 // Funcionalidad de envio de forms con fetch
-formsFetch.forEach((form) => {
+formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
-    sendFormFetch(e);
+    sendFormRequest(e);
   });
 });
 
@@ -20,7 +20,7 @@ formsFetch.forEach((form) => {
 async function getClients(words = "") {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getClientsFetch.php`,
+      `${serverURL}/Request/getClientsRequest.php`,
       new URLSearchParams("words=" + words)
     );
     const res = await req.data;
@@ -80,7 +80,7 @@ inputSearch.addEventListener("input", () => getClients(inputSearch.value));
 async function setDataClient(clientId) {
   try {
     const req = await axios.post(
-      `${serverURL}/fetch/getDataClientFetch.php`,
+      `${serverURL}/Request/getDataClientRequest.php`,
       new URLSearchParams(`client_id=${clientId}`)
     );
     const res = await req.data;

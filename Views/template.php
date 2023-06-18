@@ -1,5 +1,5 @@
 <?php
-$requestFetch = false;
+$request = false;
 require_once "./Controllers/ViewController.php";
 $IV = new ViewController();
 $vista = $IV->getViewController();
@@ -106,7 +106,7 @@ if ($vista == "proof") {
               <input type="text" class="client__inputSearch" name="tx_dni_ruc" id="dni_ruc" placeholder="Escriba el DNI" number required>
               <button class="client__btnSearch" id="btnClientSearch"><i class="ph ph-magnifying-glass"></i></button>
             </div>
-            <form action="<?php echo SERVER_URL; ?>/fetch/generateSellFetch.php" method="POST" class="form__client formFetch" id="formSell">
+            <form action="<?php echo SERVER_URL; ?>/Request/generateSellRequest.php" method="POST" class="form__client formRequest" id="formSell">
               <div class="form__part part_details_client">
                 <div class="form__data__client">
                   <input type="hidden" name="tx_client_id" id="clientId">
