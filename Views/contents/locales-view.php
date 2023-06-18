@@ -31,12 +31,14 @@
               <td>' . $location->address . '</td>
               <td>' . $type_local . '</td>
               <td>' . $can_store . '</td>
-              <td class="actions">
-                <button data-key="' . $location->local_id . '" class="actions__btn btn_edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-                <form action="' . SERVER_URL . '/fetch/deleteLocalFetch.php" method="POST" class="formFetch">
-                  <input type="hidden" value="' . $location->local_id  . '" name="tx_local_id">
-                  <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
-                </form>
+              <td>
+                <div class="actions">
+                  <button data-key="' . $location->local_id . '" class="actions__btn btn_edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+                  <form action="' . SERVER_URL . '/fetch/deleteLocalFetch.php" method="POST" class="formFetch">
+                    <input type="hidden" value="' . $location->local_id  . '" name="tx_local_id">
+                    <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+                  </form>
+                </div>
               </td>
             </tr>
             ';

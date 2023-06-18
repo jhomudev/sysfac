@@ -33,13 +33,15 @@
             <td>' . $user->email . '</td>
             <td>' . $type . '</td>
             <td>' . $is_active . '</td>
-            <td class="actions">
-              <button data-key="' . $user->user_id . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-              <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
-                <input type="hidden" value="' . $user->user_id  . '" name="tx_user_id">
-                <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
-              </form>
-              <button data-key="' . $user->user_id  . '" class="actions__btn toggleDetails" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
+            <td>
+              <div class="actions">
+                <button data-key="' . $user->user_id . '" class="actions__btn btn_edit btnToggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+                <form action="' . SERVER_URL . '/fetch/deleteUserFetch.php" method="POST" class="formFetch">
+                  <input type="hidden" value="' . $user->user_id  . '" name="tx_user_id">
+                  <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+                </form>
+                <button data-key="' . $user->user_id  . '" class="actions__btn toggleDetails" style="--cl:var(--c_green);" title="Detalles"><i class="ph ph-note"></i></button>
+              </div>
             </td>
           </tr>
           ';

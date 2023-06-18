@@ -41,6 +41,7 @@
 <div class="tableBox">
   <table class="table">
     <thead class="table__thead">
+      <th>Imagen</th>
       <th>Nombre</th>
       <th>Precio venta</th>
       <th>Unidad</th>
@@ -78,12 +79,20 @@
         <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus>
       </fieldset>
       <fieldset class="form__group">
-        <legend class="form__legend">Mínimo en en inventario*</legend>
+        <legend class="form__legend">Mínimo en inventario*</legend>
         <input type="number" class="form__input" id="minimo" name="tx_minimo" number>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Imagen</legend>
-        <input type="text" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Link de la imagen">
+        <div class="linkImage__box">
+          <input type="search" class="form__input" id="linkImage" name="tx_linkImage" placeholder="Pegue el link de una imagen">
+          <button class="btn__linkImage">Subir</button>
+        </div>
+        <hr>
+        <div class="file__img__box">
+          <label for="file_cat" class="file__img__label">Subir imagen</label>
+          <input type="file" name="file_cat" id="file_cat" accept=".png,.jpg,.jpeg,.webp">
+        </div>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Categoría*</legend>

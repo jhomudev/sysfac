@@ -35,10 +35,12 @@ async function getClients(words = "") {
           <td>${client.phone ? client.phone : "--"}</td>
           <td>${client.email ? client.email : "--"}</td>
           <td>${client.address ? client.address : "--"}</td>
-          <td class="actions">
-            <button data-key="${
-              client.client_id
-            }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+          <td>
+            <div class="actions">
+              <button data-key="${
+                client.client_id
+              }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+            </div>
           </td>
         </tr>
         `;

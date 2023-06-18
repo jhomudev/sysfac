@@ -22,8 +22,10 @@ if (isset($_SESSION['token'])) {
         <td>' . $purchase->supplier . '</td>
         <td>S/' . $purchase->total_pay . '</td>
         <td class="nowrap">' . date("d-m-Y", strtotime($purchase->created_at)) . '</td>
-        <td class="actions">
-        <a href="' . SERVER_URL . '/purchase?purchase_id=' . $IP->encryption($purchase->sell_code) . '" class="actions__btn" style="--cl:var(--c_green);"><i class="ph ph-note"></i> Ver detalles</a>
+        <td>
+          <div class="actions">
+            <a href="' . SERVER_URL . '/purchase?purchase_id=' . $IP->encryption($purchase->sell_code) . '" class="actions__btn" style="--cl:var(--c_green);"><i class="ph ph-note"></i> Ver detalles</a>
+          </div>
         </td>
         </tr>
         ';

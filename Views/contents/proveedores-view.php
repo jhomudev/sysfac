@@ -31,12 +31,14 @@
             <td>' . $supplier->address . '</td>
             <td>' . $supplier->phone . '</td>
             <td class="nowrap">' . date("d-m-Y", strtotime($supplier->created_at)) . '</td>
-            <td class="actions">
-              <button data-key="' . $supplier->supplier_id . '" class="actions__btn btn_edit toggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-              <form action="' . SERVER_URL . '/fetch/deleteSupplierFetch.php" method="POST" class="formFetch">
+            <td>
+              <div class="actions">
+                <button data-key="' . $supplier->supplier_id . '" class="actions__btn btn_edit toggleForm" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+                <form action="' . SERVER_URL . '/fetch/deleteSupplierFetch.php" method="POST" class="formFetch">
                 <input type="hidden" value="' . $supplier->supplier_id  . '" name="tx_supplier_id">
                 <button type="submit" class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
-              </form>
+                </form>
+              </div>
             </td>
           </tr>
           ';
