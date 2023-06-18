@@ -15,11 +15,10 @@
       }).then(async (result) => {
         try {
           if (result.isConfirmed) {
-            const req = await fetch("<?php echo SERVER_URL ?>/fetch/loginFetch.php", {
-              method: "POST",
-              body: new URLSearchParams(`token=<?php echo $lc->encryption($_SESSION['token']); ?>`)
-            });
-            const res = await req.json();
+            const req = await axios.post("<?php echo SERVER_URL ?>/fetch/loginFetch.php",
+              new URLSearchParams(`token=<?php echo $lc->encryption($_SESSION['token']); ?>`)
+            );
+            const res = await req.data;
             alertFetch(res);
           }
         } catch (error) {

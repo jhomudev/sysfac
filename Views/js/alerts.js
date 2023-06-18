@@ -32,15 +32,6 @@ function sendFormFetch(e) {
   const method = e.target.getAttribute("method");
   const action = e.target.getAttribute("action");
 
-  const config = {
-    method: method,
-    url: action,
-    body: data,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
-
   Swal.fire({
     title: "Estas seguro de realizar la operación?",
     text: "Esta acción es irreversible",

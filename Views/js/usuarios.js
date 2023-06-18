@@ -46,11 +46,11 @@ formsFetch.forEach((form) => {
 // Peticion para llenar campos de formulario para edición
 async function setDataUser(userId) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataUserFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`userId=${userId}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataUserFetch.php`,
+      new URLSearchParams(`userId=${userId}`)
+    );
+    const res = await req.data;
 
     document.querySelector(".form__title").textContent = "Modificar usuario";
     document.querySelector(".form__submit").value = "Modificar";
@@ -68,11 +68,11 @@ async function setDataUser(userId) {
 // Peticion para llenar campos de formulario para edición
 async function setDetailsUser(userId) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataUserFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`userId=${userId}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataUserFetch.php`,
+      new URLSearchParams(`userId=${userId}`)
+    );
+    const res = await req.data;
 
     document.getElementById("userDNI").textContent = res.dni;
     document.getElementById("userNames").textContent = res.names;

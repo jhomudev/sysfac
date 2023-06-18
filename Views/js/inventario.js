@@ -42,7 +42,8 @@ formFetch.addEventListener("submit", (e) => {
 
   const config = {
     method: method,
-    body: data,
+    url: action,
+    data: data,
   };
 
   Swal.fire({
@@ -57,8 +58,8 @@ formFetch.addEventListener("submit", (e) => {
   }).then(async (result) => {
     try {
       if (result.isConfirmed) {
-        const req = await fetch(action, config);
-        const res = await req.json();
+        const req = await axios(config);
+        const res = await req.data;
         alertFetch(res);
       }
     } catch (error) {

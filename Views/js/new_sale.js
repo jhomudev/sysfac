@@ -36,11 +36,12 @@ async function getProducts(words = "", column = "", value = "") {
     formData.append("words", words);
     formData.append("column", column);
     formData.append("value", value);
-    const req = await fetch(`${serverURL}/fetch/getProductsForSaleFetch.php`, {
-      method: "POST",
-      body: formData,
-    });
-    const res = await req.text();
+    const req = await axios.post(
+      `${serverURL}/fetch/getProductsForSaleFetch.php`,
+      formData,
+      { responseType: "text" }
+    );
+    const res = await req.data;
     productsBox.innerHTML = res;
 
     habilityDOM();
@@ -68,11 +69,11 @@ filterSelect.forEach((filter) => {
 // peticion getdataproduct
 async function setDataProduct(productIdName) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`productIdName=${productIdName}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataProductFetch.php`,
+      new URLSearchParams(`productIdName=${productIdName}`)
+    );
+    const res = await req.data;
 
     document.getElementById("productIdName").value = res.product_id;
     document.getElementById("productName").value = res.name;

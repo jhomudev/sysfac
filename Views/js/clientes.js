@@ -19,11 +19,11 @@ formsFetch.forEach((form) => {
 // Funcion obtener clientes
 async function getClients(words = "") {
   try {
-    const req = await fetch(`${serverURL}/fetch/getClientsFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams("words=" + words),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getClientsFetch.php`,
+      new URLSearchParams("words=" + words)
+    );
+    const res = await req.data;
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((client) => {
@@ -79,11 +79,11 @@ inputSearch.addEventListener("input", () => getClients(inputSearch.value));
 // Peticion para llenar campos de formulario para edición de cliente
 async function setDataClient(clientId) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataClientFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`client_id=${clientId}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataClientFetch.php`,
+      new URLSearchParams(`client_id=${clientId}`)
+    );
+    const res = await req.data;
 
     document.getElementById("userId").value = res.client_id;
     document.getElementById("dni").value = res.dni;

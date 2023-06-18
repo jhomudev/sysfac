@@ -34,11 +34,11 @@ formsFetch.forEach((form) => {
 // Peticion para llenar campos de formulario para edición
 async function setDataCategory(categoryId) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getCategoriesFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`categoryId=${categoryId}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getCategoriesFetch.php`,
+      new URLSearchParams(`categoryId=${categoryId}`)
+    );
+    const res = await req.data;
 
     if (res.link_image)
       document.querySelector(".form__img").src = res.link_image;

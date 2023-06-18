@@ -32,11 +32,11 @@ formsFetch.forEach((form) => {
 // Peticion para llenar campos de formulario para edición
 async function setDataLocal(localId) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataLocalFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`localId=${localId}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataLocalFetch.php`,
+      new URLSearchParams(`localId=${localId}`)
+    );
+    const res = await req.data;
 
     document.querySelector(".form__title").textContent = "Modificar local";
     document.querySelector(".form__submit").value = "Modificar";

@@ -30,11 +30,11 @@ btnsEdit.forEach((btn) => {
 // Peticion para llenar campos de formulario para edición
 async function setDataSupplier(supplierIdRUC) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataSupplierFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`supplierIdRUC=${supplierIdRUC}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataSupplierFetch.php`,
+      new URLSearchParams(`supplierIdRUC=${supplierIdRUC}`)
+    );
+    const res = await req.data;
 
     document.querySelector(".form__title").textContent = "Modificar proveedor";
     document.querySelector(".form__submit").value = "Modificar";

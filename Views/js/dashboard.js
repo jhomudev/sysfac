@@ -1,11 +1,11 @@
 // FUNCIONES PARA TRAER LOS DATOS DE LOS GRAFICOS
 async function getDataGraphicSales(data, year = "", month = "") {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataGraphicFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`graphic=${data}&year=${year}&month=${month}`),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataGraphicFetch.php`,
+      new URLSearchParams(`graphic=${data}&year=${year}&month=${month}`)
+    );
+    const res = await req.data;
     return res;
   } catch (error) {
     console.log(error);

@@ -48,10 +48,10 @@ function habilityDOM() {
 // Peticion para llenar campos de formulario para edición
 async function setDataProduct(productIdName) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(`productIdName=${productIdName}`),
-    });
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataProductFetch.php`,
+      new URLSearchParams(`productIdName=${productIdName}`)
+    );
     const res = await req.json();
 
     document.querySelector(".form__title").textContent = "Modificar usuario";
@@ -81,11 +81,11 @@ async function getProducts(words = "", column = "", value = "") {
     formData.append("words", words);
     formData.append("column", column);
     formData.append("value", value);
-    const req = await fetch(`${serverURL}/fetch/getProductsFetch.php`, {
-      method: "POST",
-      body: formData,
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getProductsFetch.php`,
+      formData
+    );
+    const res = await req.data;
 
     if (res.length > 0) {
       tbody.innerHTML = "";

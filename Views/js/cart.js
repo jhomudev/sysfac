@@ -29,12 +29,11 @@ async function addProduct(e) {
   try {
     e.preventDefault();
 
-    const config = {
-      method: "POST",
-      body: new FormData(e.target),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartFetch.php`,
+      new FormData(e.target)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     getDataCart();
@@ -46,12 +45,11 @@ async function addProduct(e) {
 
 async function getDataCart() {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams("action=getDataCart"),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartFetch.php`,
+      new URLSearchParams("action=getDataCart")
+    );
+    const res = await req.data;
 
     cartCount.forEach(
       (cartCountItem) => (cartCountItem.innerHTML = res.items_count)
@@ -75,12 +73,11 @@ async function getDataCart() {
 
 async function getItemsCart() {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams("action=getCart"),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartFetch.php`,
+      new URLSearchParams("action=getCart")
+    );
+    const res = await req.data;
     if (res.length > 0) {
       cartTableItems.innerHTML = "";
       res.forEach((item) => {
@@ -143,12 +140,11 @@ getItemsCart();
 
 async function removeItem(col, val) {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams(`action=removeItem&col=${col}&val=${val}`),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartFetch.php`,
+      new URLSearchParams(`action=removeItem&col=${col}&val=${val}`)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     getItemsCart();
@@ -162,15 +158,11 @@ async function applyDiscount(e, type, discount) {
   try {
     e.preventDefault();
 
-    const config = {
-      method: "POST",
-      body: new URLSearchParams(`type=${type}&discount=${discount}`),
-    };
-    const req = await fetch(
+    const req = await axios.post(
       `${serverURL}/fetch/applyDiscountFetch.php`,
-      config
+      new URLSearchParams(`type=${type}&discount=${discount}`)
     );
-    const res = await req.json();
+    const res = await req.data;
     alertFetch(res);
     getItemsCart();
   } catch (error) {
@@ -180,12 +172,11 @@ async function applyDiscount(e, type, discount) {
 
 async function gratifyProduct(col, val) {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams(`action=gratify&col=${col}&val=${val}`),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartFetch.php`,
+      new URLSearchParams(`action=gratify&col=${col}&val=${val}`)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     getItemsCart();
@@ -217,7 +208,6 @@ typeDiscount.addEventListener("change", () => {
 // aplicar descuento
 btnApplyDiscount.addEventListener("click", (e) => {
   applyDiscount(e, typeDiscount.value, discountValue.value);
-  console.log(typeDiscount.value, discountValue.value);
   discountValue.value = "";
 });
 
@@ -226,13 +216,13 @@ async function getDataClient(e) {
   try {
     e.preventDefault();
 
-    const req = await fetch(`${serverURL}/fetch/getDataClientFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams(
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataClientFetch.php`,
+      new URLSearchParams(
         `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
-      ),
-    });
-    const res = await req.json();
+      )
+    );
+    const res = await req.data;
 
     if (res.Alert) {
       alertFetch(res);

@@ -24,11 +24,11 @@ productName.addEventListener("input", () => {
 // ?FUNCIONES O PETICIONES PARA ENTRADAS
 async function getDataSupplier(supplierRUC) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataSupplierFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams("supplierIdRUC=" + supplierRUC),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataSupplierFetch.php`,
+      new URLSearchParams("supplierIdRUC=" + supplierRUC)
+    );
+    const res = await req.data;
 
     document.getElementById("nameSupplier").value = res.name ? res.name : "";
     document.getElementById("supplierIdRUC").value = res.supplier_id
@@ -42,11 +42,11 @@ async function getDataSupplier(supplierRUC) {
 
 async function getDataProduct(productIdName) {
   try {
-    const req = await fetch(`${serverURL}/fetch/getDataProductFetch.php`, {
-      method: "POST",
-      body: new URLSearchParams("productIdName=" + productIdName),
-    });
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/getDataProductFetch.php`,
+      new URLSearchParams("productIdName=" + productIdName)
+    );
+    const res = await req.data;
 
     document.getElementById("productId").value = res.product_id
       ? res.product_id
@@ -67,12 +67,11 @@ async function getDataProduct(productIdName) {
 //* FUNCIONES PETICIONES PARA CARRITO DE COMPRA/LISTA
 async function getDataList() {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams("action=getDataList"),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      new URLSearchParams("action=getDataList")
+    );
+    const res = await req.data;
 
     const items = res.items;
     const total = res.total;
@@ -127,12 +126,11 @@ async function addProduct(e) {
   try {
     e.preventDefault();
 
-    const config = {
-      method: "POST",
-      body: new FormData(e.target),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      new FormData(e.target)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     if (res.icon == "success") {
@@ -146,12 +144,11 @@ async function addProduct(e) {
 
 async function removeItem(col, val) {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams(`action=removeItem&col=${col}&val=${val}`),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      new URLSearchParams(`action=removeItem&col=${col}&val=${val}`)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     getDataList();
@@ -162,12 +159,11 @@ async function removeItem(col, val) {
 
 async function clearDataList() {
   try {
-    const config = {
-      method: "POST",
-      body: new URLSearchParams(`action=clear`),
-    };
-    const req = await fetch(`${serverURL}/fetch/cartPurchaseFetch.php`, config);
-    const res = await req.json();
+    const req = await axios.post(
+      `${serverURL}/fetch/cartPurchaseFetch.php`,
+      new URLSearchParams(`action=clear`)
+    );
+    const res = await req.data;
 
     alertFetch(res);
     getDataList();

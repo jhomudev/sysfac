@@ -20,11 +20,12 @@ async function getPurchases(
     formData.append("value", value);
     formData.append("date_start", dateStart);
     formData.append("date_end", dateEnd);
-    const req = await fetch(`${serverURL}/fetch/getPurchasesFetch.php`, {
-      method: "POST",
-      body: formData,
-    });
-    const res = await req.text();
+    const req = await axios.post(
+      `${serverURL}/fetch/getPurchasesFetch.php`,
+      formData,
+      { responseType: "text" }
+    );
+    const res = await req.data;
     tbody.innerHTML = res;
   } catch (error) {
     console.log(error);
