@@ -96,8 +96,8 @@
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Categoría*</legend>
-        <select name="tx_category" id="acceso" class="form__input">
-          <option selected disabled>Seleccione la categoría</option>
+        <select name="tx_category" id="acceso" class="form__input" required>
+          <option value="" selected disabled>Seleccione la categoría</option>
           <?php
           require_once "./Controllers/CategoryController.php";
           $IP = new CategoryController();
@@ -112,16 +112,16 @@
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Venta por: *</legend>
-        <select name="tx_sale_for" id="sale_for" class="form__input">
-          <option selected disabled>Asigne un valor</option>
+        <select name="tx_sale_for" id="sale_for" class="form__input" required>
+          <option value="" selected disabled>Asigne un valor</option>
           <option value="<?php echo ADD_FOR->quantity ?>">Cantidad</option>
           <option value="<?php echo ADD_FOR->serial_number  ?>">Unidad/Número de serie</option>
         </select>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Activo*</legend>
-        <select name="tx_activo" id="activo" class="form__input">
-          <option selected disabled>Asigne el estado</option>
+        <select name="tx_activo" id="activo" class="form__input" required>
+          <option value="" selected disabled>Asigne el estado</option>
           <option value="<?php echo STATE->active ?>">Sí</option>
           <option value="<?php echo STATE->inactive  ?>">No</option>
         </select>

@@ -25,13 +25,33 @@ class ProductController extends ProductModel
       $products[$key]['stock'] = $stock;
     }
 
+    // obtencion de un nuevo array sin version indexada
+    $arr_new_products = [];
+    foreach ($products as $product) {
+      $filteredElement = [];
+
+      foreach ($product as $key => $value) {
+        if (is_string($key)) {
+          $filteredElement[$key] = $value;
+        }
+      }
+
+      $arr_new_products[] = $filteredElement;
+    }
+    // conversion de file_image a base64 para poder ser leida por json_encode()
+    foreach ($arr_new_products as $key => $product) {
+      if (!empty($arr_new_products[$key]['file_image'])) {
+        $arr_new_products[$key]['file_image'] = "data:image/png;base64," . base64_encode($arr_new_products[$key]['file_image']);
+      }
+    }
+
     // ordenamiento segun stock
-    usort($products, function ($a, $b) {
+    usort($arr_new_products, function ($a, $b) {
       return $a["stock"] - $b["stock"];
     });
 
 
-    return json_encode($products);
+    return json_encode($arr_new_products);
   }
 
   // Funcion controlador para obetenr los datos de producto
@@ -39,7 +59,18 @@ class ProductController extends ProductModel
   {
     $product_id_name = $_POST['productIdName'];
     $product = ProductModel::getDataProductModel($product_id_name);
-    return json_encode($product);
+
+    // obtencion de un nuevo array sin version indexada
+    $arr_new_product = [];
+
+    foreach ($product as $key => $value) {
+      if (is_string($key)) {
+        $arr_new_product[$key] = $value;
+      }
+    }
+    if (!empty($arr_new_product['file_image'])) $arr_new_product['file_image'] = "data:image/png;base64," . base64_encode($arr_new_product['file_image']);
+
+    return json_encode($arr_new_product);
   }
 
   // Funcion controlador para crear o editar producto
@@ -54,12 +85,18 @@ class ProductController extends ProductModel
     $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
 
+    // valor de file_image
+    if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
+      $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
+      $link_image = "";
+    } else  $file_image = "";
+
     // Validacion de campos vacios
     if (empty($price) || empty($name) || empty($unit) || empty($min) || empty($category) || !isset($is_active) || !isset($sale_for)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
-        "text" => "Por favor. Complete todos los campos.",
+        "text" => "Por favor. Complete todos los campos necesarios.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -83,6 +120,7 @@ class ProductController extends ProductModel
 
     $data = [
       "link_image" => $link_image,
+      "file_image" => $file_image,
       "name" => $name,
       "inventary_min" => $min,
       "price_sale" => $price,
@@ -127,6 +165,11 @@ class ProductController extends ProductModel
     $sale_for = MainModel::clearString($_POST['tx_sale_for']);
     $category = MainModel::clearString($_POST['tx_category']);
     $is_active = intval($_POST['tx_activo']);
+    // valor de file_image
+    if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
+      $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
+      $link_image = "";
+    } else  $file_image = "";
 
     // Valididación de campos vacios
     if (empty($name) || empty($price) || empty($unit) || empty($min) || empty($category) || !isset($is_active) || !isset($sale_for)) {
@@ -140,7 +183,15 @@ class ProductController extends ProductModel
       exit();
     }
 
-    // validación de ducplicidad de datos, nombre de producto
+    if (empty($file_image)) {
+      // Obtencion de file_image de la categoria para validacion de imagen
+      $sql_verify = MainModel::executeQuerySimple("SELECT file_image FROM products WHERE product_id=$product_id");
+      $product_file_image = $sql_verify->fetchColumn();
+      if ($product_file_image) $file_image = $product_file_image;
+      if (!empty($link_image)) $file_image = "";
+    }
+
+    // validación de duplicidad de datos, nombre de producto
     $sql_verify = MainModel::executeQuerySimple("SELECT * FROM products WHERE product_id<>$product_id AND name='$name'");
     $products = $sql_verify->fetchAll();
     $duplicated = count($products) > 0;
@@ -158,6 +209,7 @@ class ProductController extends ProductModel
     $new_data = [
       "product_id" => $product_id,
       "link_image" => $link_image,
+      "file_image" => $file_image,
       "name" => $name,
       "inventary_min" => $min,
       "price_sale" => $price,

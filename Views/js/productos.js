@@ -62,6 +62,13 @@ async function setDataProduct(productIdName) {
     document.getElementById("unidad").value = res.unit;
     document.getElementById("minimo").value = res.inventary_min;
     document.getElementById("linkImage").value = res.link_image;
+    if (res.link_image)
+      document.querySelector(".form__img").src = res.link_image;
+    else if (res.file_image)
+      document.querySelector(".form__img").src = res.file_image;
+    else
+      document.querySelector(".form__img").src =
+        "https://cdn-icons-png.flaticon.com/512/1524/1524855.png";
   } catch (error) {
     console.log(error);
   }
@@ -83,10 +90,14 @@ async function getProducts(words = "", column = "", value = "") {
     if (res.length > 0) {
       tbody.innerHTML = "";
       res.forEach((product) => {
+        let img = "https://cdn-icons-png.flaticon.com/512/5445/5445197.png";
+        if (product.link_image) img = product.link_image;
+        if (product.file_image) img = product.file_image;
         tbody.innerHTML += `
         <tr style="background:${
           product.stock <= product.inventary_min ? "#F0D0D6" : ""
         };">
+          <td><img src="${img}" class="product__img__table"></td>
           <td>${product.name}</td>
           <td>S/ ${product.price_sale}</td>
           <td>${product.unit}</td>
@@ -95,16 +106,18 @@ async function getProducts(words = "", column = "", value = "") {
           <td>${product.inventary_min}</td>
           <td>${product.stock}</td>
           <td>${product.is_active ? "SI" : "NO"}</td>
-          <td class="actions">
-            <button data-key="${
-              product.product_id
-            }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
-            <form action="${serverURL}/fetch/deleteProductFetch.php" method="POST" class="formFetch formDelete">
-              <input type="hidden" value="${
+          <td>
+            <div class="actions">
+              <button data-key="${
                 product.product_id
-              }" name="tx_product_id">
-              <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
-            </form>
+              }" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+              <form action="${serverURL}/fetch/deleteProductFetch.php" method="POST" class="formFetch formDelete">
+                <input type="hidden" value="${
+                  product.product_id
+                }" name="tx_product_id">
+                <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+              </form>
+            </div>
           </td>
         </tr>
         `;
@@ -112,7 +125,7 @@ async function getProducts(words = "", column = "", value = "") {
     } else {
       tbody.innerHTML = `
       <tr>
-        <td aria-colspan="9" colspan="9">
+        <td aria-colspan="10" colspan="10">
           <div class="empty">
             <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
             <p class="empty__message">No hay registros</p>

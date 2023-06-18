@@ -12,15 +12,15 @@ class ProductModel extends MainModel
     $column = $filters['column'];
     $value = $filters['value'];
 
-    if (empty($words) && empty($column) && empty($value)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
+    if (empty($words) && empty($column) && empty($value)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
     else {
       if (!empty($words)) {
         $words = "%$words%";
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
+        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
         $products->bindParam(":words", $words, PDO::PARAM_STR);
       };
       if (!empty($column) && isset($value)) {
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER BY p.product_id DESC");
+        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER BY p.product_id DESC");
         $products->bindParam(":value", $value, PDO::PARAM_STR);
       }
     }
@@ -48,11 +48,25 @@ class ProductModel extends MainModel
   // Funcion para crear producto
   protected static function createProductModel(array $data): bool
   {
-    $statement = MainModel::connect()->prepare("INSERT INTO 
-    products(link_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
-    VALUES(:link_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
+    if (!empty($new_data['file_image'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      products(file_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
+      VALUES(:file_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
 
-    $statement->bindParam(":link_image", $data['link_image'], PDO::PARAM_STR);
+      $statement->bindParam(":file_image", $data['file_image'], PDO::PARAM_LOB);
+    } else if (!empty($data['link_image'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      products(link_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
+      VALUES(:link_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
+
+      $statement->bindParam(":link_image", $data['link_image'], PDO::PARAM_STR);
+    }
+
+    if (empty($data['link_image']) && empty($data['file_image'])) {
+      $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
+      $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
+    }
+
     $statement->bindParam(":name", $data['name'], PDO::PARAM_STR);
     $statement->bindParam(":inventary_min", $data['inventary_min'], PDO::PARAM_INT);
     $statement->bindParam(":price_sale", $data['price_sale'], PDO::PARAM_STR);
@@ -68,8 +82,21 @@ class ProductModel extends MainModel
   // Funcion para editar producto  
   protected static function editProductModel(array $new_data): bool
   {
-    $statement = MainModel::connect()->prepare("UPDATE products SET link_image=:link_image, name=:name, inventary_min=:inventary_min, price_sale=:price_sale, unit=:unit, sale_for=:sale_for,category_id=:category_id, is_active=:is_active WHERE product_id=:product_id");
+    $statement = MainModel::connect()->prepare("UPDATE products SET file_image=:file_image, link_image=:link_image, name=:name, inventary_min=:inventary_min, price_sale=:price_sale, unit=:unit, sale_for=:sale_for,category_id=:category_id, is_active=:is_active WHERE product_id=:product_id");
 
+    if (!empty($new_data['file_image'])) {
+      $statement->bindParam(":file_image", $new_data['file_image'], PDO::PARAM_LOB);
+      $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
+    } else if (!empty($new_data['link_image'])) {
+      $statement->bindParam(":link_image", $new_data['link_image'], PDO::PARAM_STR);
+      $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
+    }
+
+    if (empty($new_data['link_image']) && empty($new_data['file_image'])) {
+      $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
+      $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
+    }
+    
     $statement->bindParam(":product_id", $new_data['product_id'], PDO::PARAM_INT);
     $statement->bindParam(":link_image", $new_data['link_image'], PDO::PARAM_STR);
     $statement->bindParam(":name", $new_data['name'], PDO::PARAM_STR);
