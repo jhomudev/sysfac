@@ -94,7 +94,7 @@
     <fieldset class="form__group">
       <legend class="form__label">Acción</legend>
       <select name="action" id="action" class="form__input" required>
-        <option selected disabled>Seleccione una acción</option>
+        <option value="" selected disabled>Seleccione una acción</option>
         <option value="assign_local">Asignar local a producto(s)</option>
         <option value="change_state">Cambiar estado de producto(s)</option>
       </select>
