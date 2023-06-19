@@ -41,12 +41,27 @@
           }
 
           // Notificaiones de stock minimo
-          $products = MainModel::executeQuerySimple("SELECT * FROM products WHERE is_active=1");
+          $products = MainModel::executeQuerySimple("SELECT product_id, name , inventary_min FROM products WHERE is_active=1");
           $products = json_decode(json_encode($products->fetchAll()));
 
           foreach ($products as $product) {
             $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=$product->product_id AND pa.state=" . STATE_IN->stock)->fetchColumn();
-            if ($stock <= $product->inventary_min) {
+
+            if ($stock == 0) {
+              echo '
+              <a href="' . SERVER_URL . '/productos" class="notification">
+                <div class="notification__imgBox">
+                  <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
+                </div>
+                <div class="notification__text">
+                  <h2 class="notification__title">Producto agotado</h2>
+                  <p class="notification__p">El producto <strong>' . $product->name . '</strong> no tiene unidades en el inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
+                </div>
+              </a>
+              ';
+            }
+
+            if ($stock > 0 && $stock <= $product->inventary_min) {
               echo '
               <a href="' . SERVER_URL . '/productos" class="notification">
                 <div class="notification__imgBox">
@@ -93,41 +108,60 @@
             <p class="notification__p">Hay productos en el carrito de venta, realize la venta o limpie el carrito.</p>
           </div>
         </a>
-        ';
+      ';
     }
 
     // Notificación de carrito de compra
     if (isset($_SESSION['cart_purchase']) && count($_SESSION['cart_purchase']['items']) > 0) {
       echo '
-          <a href="' . SERVER_URL . '/new_purchase" class="notification">
-            <div class="notification__imgBox">
-              <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/3847/3847867.png" alt="proveedor">
-            </div>
-            <div class="notification__text">
-              <h2 class="notification__title">Compra inconclusa</h2>
-              <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
-            </div>
-          </a>
-        ';
+        <a href="' . SERVER_URL . '/new_purchase" class="notification">
+          <div class="notification__imgBox">
+            <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/3847/3847867.png" alt="proveedor">
+          </div>
+          <div class="notification__text">
+            <h2 class="notification__title">Compra inconclusa</h2>
+            <p class="notification__p">Tiene una compra inconclusa, hay productos en la lista de compra.</p>
+          </div>
+        </a>
+      ';
     }
 
     // Notificaiones de stock minimo
     $products = MainModel::executeQuerySimple("SELECT * FROM products WHERE is_active=1");
     $products = json_decode(json_encode($products->fetchAll()));
 
+    // Notificaiones de stock minimo
+    $products = MainModel::executeQuerySimple("SELECT product_id, name , inventary_min FROM products WHERE is_active=1");
+    $products = json_decode(json_encode($products->fetchAll()));
+
     foreach ($products as $product) {
       $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=$product->product_id AND pa.state=" . STATE_IN->stock)->fetchColumn();
-      if ($stock <= $product->inventary_min) {
+
+      if ($stock == 0) {
         echo '
-        <a href="' . SERVER_URL . '/productos" class="notification">
-          <div class="notification__imgBox">
-            <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
-          </div>
-          <div class="notification__text">
-            <h2 class="notification__title">Stock por agotarse</h2>
-            <p class="notification__p">El producto <strong>' . $product->name . '</strong> está en su mínimo de inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
-          </div>
-        </a>
+          <a href="' . SERVER_URL . '/productos" class="notification">
+            <div class="notification__imgBox">
+              <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
+            </div>
+            <div class="notification__text">
+              <h2 class="notification__title">Producto agotado</h2>
+              <p class="notification__p">El producto <strong>' . $product->name . '</strong> no tiene unidades en el inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
+            </div>
+          </a>
+        ';
+      }
+
+      if ($stock > 0 && $stock <= $product->inventary_min) {
+        echo '
+          <a href="' . SERVER_URL . '/productos" class="notification">
+            <div class="notification__imgBox">
+              <img class="notification__img" src="https://cdn-icons-png.flaticon.com/512/5166/5166939.png" alt="product not sctock">
+            </div>
+            <div class="notification__text">
+              <h2 class="notification__title">Stock por agotarse</h2>
+              <p class="notification__p">El producto <strong>' . $product->name . '</strong> está en su mínimo de inventario. Realize la compra del producto o cambie de estado a inactivo.</p>
+            </div>
+          </a>
         ';
       }
     }
