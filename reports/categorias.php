@@ -22,8 +22,9 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 // Establece los encabezados de las columnas
-$sheet->setCellValue('A1', 'NOMBRE');
-$sheet->setCellValue('B1', 'DESCRIPCIÓN');
+$sheet->setCellValue('A1', 'N°');
+$sheet->setCellValue('B1', 'NOMBRE');
+$sheet->setCellValue('C1', 'DESCRIPCIÓN');
 
 $request = true;
 include './../Controllers/CategoryController.php';
@@ -37,6 +38,7 @@ foreach ($categories as $key => $category) {
   // colocando valores a celdas
   $sheet->setCellValue('A' . $row, sprintf("%02d", $key + 1));
   $sheet->setCellValue('B' . $row, $category->name);
+  $sheet->setCellValue('C' . $row, $category->description);
   $row++;
 }
 // Crea una instancia del objeto Xlsx Writer
