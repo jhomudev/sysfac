@@ -52,7 +52,7 @@ async function setDataProduct(productIdName) {
       `${serverURL}/Request/getDataProductRequest.php`,
       new URLSearchParams(`productIdName=${productIdName}`)
     );
-    const res = await req.json();
+    const res = await req.data;
 
     document.querySelector(".form__title").textContent = "Modificar usuario";
     document.querySelector(".form__submit").value = "Modificar";
