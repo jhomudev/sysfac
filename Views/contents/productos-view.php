@@ -68,19 +68,19 @@
       <input type="hidden" id="productIdName" name="tx_product_id">
       <fieldset class="form__group">
         <legend class="form__legend">Nombre*</legend>
-        <input type="text" class="form__input" id="nombre" name="tx_nombre" mayus>
+        <input type="text" class="form__input" id="nombre" name="tx_nombre" mayus required>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Precio de venta*</legend>
-        <input type="text" class="form__input" id="precio" name="tx_precio" decimal>
+        <input type="text" class="form__input" id="precio" name="tx_precio" decimal required>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Unidad*</legend>
-        <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus>
+        <input type="text" class="form__input" id="unidad" name="tx_unidad" mayus required>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Mínimo en inventario*</legend>
-        <input type="number" class="form__input" id="minimo" name="tx_minimo" number>
+        <input type="number" class="form__input" id="minimo" name="tx_minimo" number required>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Imagen</legend>

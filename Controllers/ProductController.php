@@ -103,7 +103,7 @@ class ProductController extends ProductModel
       exit();
     }
 
-    // validación datos dupliacods, nombre de producto
+    // validación datos duplicados, nombre de producto
     $sql_verify = MainModel::executeQuerySimple("SELECT * FROM products WHERE name='$name'");
     $products = $sql_verify->fetchAll();
     $duplicated = count($products) > 0;

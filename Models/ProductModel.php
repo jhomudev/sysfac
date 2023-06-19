@@ -48,7 +48,7 @@ class ProductModel extends MainModel
   // Funcion para crear producto
   protected static function createProductModel(array $data): bool
   {
-    if (!empty($new_data['file_image'])) {
+    if (!empty($data['file_image'])) {
       $statement = MainModel::connect()->prepare("INSERT INTO 
       products(file_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
       VALUES(:file_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
@@ -63,6 +63,10 @@ class ProductModel extends MainModel
     }
 
     if (empty($data['link_image']) && empty($data['file_image'])) {
+      $statement = MainModel::connect()->prepare("INSERT INTO 
+      products(file_image,link_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
+      VALUES(:file_image,:link_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
+      
       $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
       $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
     }
@@ -96,7 +100,7 @@ class ProductModel extends MainModel
       $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
       $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
     }
-    
+
     $statement->bindParam(":product_id", $new_data['product_id'], PDO::PARAM_INT);
     $statement->bindParam(":link_image", $new_data['link_image'], PDO::PARAM_STR);
     $statement->bindParam(":name", $new_data['name'], PDO::PARAM_STR);
