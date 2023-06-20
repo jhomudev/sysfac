@@ -131,7 +131,7 @@ class CartPurchaseController extends CartPurchaseModel
         $alert = [
           "Alert" => "simple",
           "title" => "Números de serie existente ya en el sistema",
-          "text" => "Uno o más de los numeros de serie que ingresó ya esta registrado a otro producto existente. N.S. que repiten :" . implode(' ', $ns_repeat),
+          "text" => "Uno o más de los numeros de serie que ingresó ya esta registrado a otro producto existente. N.S. que repiten :" . implode(', ', $ns_repeat),
           "icon" => "warning"
         ];
         return json_encode($alert);
@@ -151,7 +151,7 @@ class CartPurchaseController extends CartPurchaseModel
         $alert = [
           "Alert" => "simple",
           "title" => "Números de serie ya registrados en la lista",
-          "text" => "N.S. que repiten :" . implode(' ', $ns_repeat),
+          "text" => "N.S. que repiten :" . implode(', ', $ns_repeat),
           "icon" => "warning"
         ];
         return json_encode($alert);
