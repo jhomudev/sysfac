@@ -85,11 +85,13 @@ class MainModel
     return $string;
   }
 
-  // Funcion para validar datos de los inputs,retorna un bool dependiendo si el dato es correcto
-  protected static function verifyInputData(string $filter, string $string): bool
+
+  // Funcion para obtener valor limpio de un valor $_POST,
+  protected static function getCleanPostValue(string $name_key): string
   {
-    if (preg_match("/^$filter$/", $string)) return true;
-    else return false;
+    $value = isset($_POST[$name_key]) && !empty($_POST[$name_key]) ? $_POST[$name_key] : "";
+
+    return $value;
   }
 
   // Funcion para validar fechas de los inputs, retorna un bool dependiendo si el dato es correcto

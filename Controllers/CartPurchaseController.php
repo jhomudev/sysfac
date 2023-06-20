@@ -17,30 +17,51 @@ class CartPurchaseController extends CartPurchaseModel
 
   public function addItemController()
   {
-    // validacion precio vacio
-    if (empty($_POST['tx_product_price'])  || empty($_POST['tx_product_id']) || empty($_POST['tx_product_profit'])) {
+    $enabled_profit = MainModel::getCleanPostValue('enable_profit');
+    $product_id = MainModel::getCleanPostValue('tx_product_id');
+    $price = MainModel::getCleanPostValue('tx_product_price');
+    $profit = MainModel::getCleanPostValue('tx_product_profit');
+    $ns = MainModel::getCleanPostValue('tx_product_ns');
+    $quantity = MainModel::getCleanPostValue('tx_quantity');
+
+    // validacion de campos vacios
+    if (empty($price)  || empty($product_id)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
-        "text" => "Por favor. Defina el producto, el costo de compra  y ganancia del producto.",
+        "text" => "Por favor. Defina el producto y el costo de compra.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
     }
 
-    $product_id = MainModel::clearString($_POST['tx_product_id']);
+    if ($enabled_profit) {
+      // validacion de campos vacios , habilitados profit
+      if (empty($profit)) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "Ganancia no definida",
+          "text" => "Por favor. Defina la ganancia para la actualización del precio de venta del producto.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+    } else {
+    }
+
+
     $product = $this->executeQuerySimple("SELECT * FROM products WHERE product_id=$product_id")->fetch();
-    $name = $product['name'];
-    $price = MainModel::clearString($_POST['tx_product_price']);
-    $profit = MainModel::clearString($_POST['tx_product_profit']);
-    $add_for = $product['sale_for'];
-    $ns = MainModel::clearString($_POST['tx_product_ns']);
-    $quantity = MainModel::clearString(intval($_POST['tx_quantity']));
+    $product_name = $product['name'];
+    $product_some_price = $product['price_sale'];
+    $product_add_for = $product['sale_for'];
 
+    // Dando valor de price_sale por gaancia o mismo precio anterior, depende de enabled_profit
+    $price_sale = $enabled_profit ? null : $product_some_price;
 
-    if ($add_for == ADD_FOR->quantity) {
-
+    $quantity = intval($quantity);
+    if ($product_add_for == ADD_FOR->quantity) {
       $ok_q =  is_numeric($quantity) && !empty($quantity) && $quantity > 0;
       if (!$ok_q) {
         $alert = [
@@ -54,7 +75,7 @@ class CartPurchaseController extends CartPurchaseModel
       }
 
       // validacion de que producto ya sta ahi
-      foreach ($_SESSION['cart_purchase']['items'] as $key => $item) {
+      foreach ($_SESSION['cart_purchase']['items'] as $item) {
         if ($item['product_id'] == $product_id) {
           $alert = [
             "Alert" => "simple",
@@ -67,8 +88,8 @@ class CartPurchaseController extends CartPurchaseModel
         }
       }
 
-      $stm = CartPurchaseModel::addItemModel(intval($product_id), "", $name, floatval($price), intval($quantity), intval($profit));
-    } else if ($add_for == ADD_FOR->serial_number) {
+      $stm = CartPurchaseModel::addItemModel(intval($product_id), "", $product_name, floatval($price), floatval($price_sale), intval($quantity), intval($profit));
+    } else if ($product_add_for == ADD_FOR->serial_number) {
       // validacion de campos ns vacio
       if (empty($ns)) {
         $alert = [
@@ -120,8 +141,8 @@ class CartPurchaseController extends CartPurchaseModel
       // validacion si numeros de serie son iguales a uno q ya esta en la lista de compra
       $ns_repeat = [];/* array que contendra los ns iguales a los q ya estan */
       $items_cart_purchase = $_SESSION['cart_purchase']['items'];
-      foreach ($serial_numbers as $key => $ns) {
-        foreach ($items_cart_purchase as $key => $item) {
+      foreach ($serial_numbers as $ns) {
+        foreach ($items_cart_purchase as $item) {
           if ($item['serial_number'] == $ns) array_push($ns_repeat, $ns);
         }
       }
@@ -137,9 +158,8 @@ class CartPurchaseController extends CartPurchaseModel
         exit();
       }
 
-
-      foreach ($serial_numbers as $key => $ns) {
-        $stm = CartPurchaseModel::addItemModel(intval($product_id), $ns, $name, floatval($price), 1, intval($profit));
+      foreach ($serial_numbers as $ns) {
+        $stm = CartPurchaseModel::addItemModel(intval($product_id), $ns, $product_name, floatval($price), floatval($price_sale), 1, intval($profit));
       }
     }
 

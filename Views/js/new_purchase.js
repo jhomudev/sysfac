@@ -81,7 +81,7 @@ async function getDataList() {
       items.forEach((item, id) => {
         TableItems.innerHTML += `
         <tr">
-          <td>${id.toString().length == 1 ? "0" + (id + 1) : id + 1}</td>
+          <td>${(id + 1).toString().padStart(2, "0")}</td>
           <td>${item.name}</td>
           <td>${item.serial_number ? item.serial_number : "N-A"}</td>
           <td>S/${item.price.toFixed(2)}</td>
@@ -196,4 +196,27 @@ formsRequest.forEach((form) => {
   form.addEventListener("submit", (e) => {
     sendFormRequest(e);
   });
+});
+
+// funcionalidad enableProfit, habilitar ganancia
+function disable(elements = [], boolean = true) {
+  elements.forEach((element) => {
+    if (boolean) {
+      element.disabled = boolean;
+      element.querySelector("input").required = !boolean;
+      element.style.display = "none";
+    } else {
+      element.disabled = boolean;
+      element.querySelector("input").required = !boolean;
+      element.style.display = "block";
+    }
+  });
+}
+
+const checkEnabledProfit = document.getElementById("enable_profit");
+const profit = document.getElementById("profit");
+const salePrice = document.getElementById("salePrice");
+checkEnabledProfit.addEventListener("change", () => {
+  if (!checkEnabledProfit.checked) disable([profit, salePrice]);
+  else disable([profit, salePrice], false);
 });

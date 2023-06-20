@@ -24,7 +24,7 @@
           <input type="hidden" name="action" value="Agregar">
           <fieldset class="form__group">
             <legend class="form__label">Producto*</legend>
-            <input type="text" class="form__input" id="productName" list="listProducts" placeholder="Buscar por nombre">
+            <input type="text" class="form__input" id="productName" list="listProducts" placeholder="Buscar por nombre" required>
             <datalist id="listProducts">
               <?php
               require_once "./Controllers/ProductController.php";
@@ -40,7 +40,7 @@
           </fieldset>
           <fieldset class="form__group hidden nsBox">
             <legend class="form__label">Numero de serie*</legend>
-            <input type="text" name="tx_product_ns" class="form__input" id="productNS" placeholder="Ejm: 123NZ2Z342, 54T65ZR5445">
+            <input type="text" name="tx_product_ns" class="form__input" id="productNS" placeholder="Ejm: 123NZ2Z342, 54T65ZR5445" mayus>
           </fieldset>
           <fieldset class="form__group hidden quantityBox">
             <legend class="form__label">Cantidad*</legend>
@@ -48,17 +48,21 @@
           </fieldset>
           <fieldset class="form__group">
             <legend class="form__label">Costo S/ *</legend>
-            <input type="text" name="tx_product_price" class="form__input" id="productPrice" placeholder="Precio de compra por unidad" decimal>
+            <input type="text" name="tx_product_price" class="form__input" id="productPrice" placeholder="Precio de compra por unidad" decimal required>
           </fieldset>
-          <fieldset class="form__group">
+          <fieldset class="form__group hidden" id="profit">
             <legend class="form__label">Ganancia (%)*</legend>
             <input type="text" name="tx_product_profit" class="form__input" id="productProfit" placeholder="Ganancia deseada en %" decimal>
           </fieldset>
-          <fieldset class="form__group">
+          <fieldset class="form__group hidden" id="salePrice">
             <legend class="form__label">Precio de venta S/</legend>
-            <input type="text" class="form__input" id="productPriceSale" placeholder="Defina la ganancia para obtener el precio de venta" decimal disabled>
+            <input type="text" class="form__input" id="productPriceSale" placeholder="Defina la ganancia para obtener el precio de venta" decimal>
           </fieldset>
           <input type="submit" value="Agregar a compra" class="form__submit">
+          <div class="form__box__checkbox">
+            <input type="checkbox" id="enable_profit" name="enable_profit" value="enabled_profit">
+            <label for="enable_profit" title="Al seleccionar esta opción, el precio de los productos que ingrese se actualizaran de acuerdo a la ganancia que usted defina al realizar la compra.">Definir precio de venta por ganancia</label>
+          </div>
         </form>
         <form action="<?php echo SERVER_URL; ?>/Request/cartPurchaseRequest.php" method="POST" class="formRequest">
           <input type="hidden" name="action" value="clear">

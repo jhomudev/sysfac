@@ -18,6 +18,7 @@ if (isset($_SESSION['token'])) {
     switch ($_POST["action"]) {
       case 'Agregar':
         echo $ICart->addItemController();
+        // echo json_encode($_POST);
         break;
       case 'getDataList':
         echo $ICart->getDataCartPurchaseController();
