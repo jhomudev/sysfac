@@ -529,12 +529,16 @@ textarea {
   object-fit: cover;
 }
 .product_name {
-  display: grid;
-  place-items: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
   text-transform: uppercase;
   font-size: small;
   color: var(--c_lightPurple);
-  height: 4em;
+  height: 3.5em;
 }
 .product_price {
   font-size: large;
@@ -826,6 +830,17 @@ textarea {
   border-radius: 4px;
   border: 1px solid var(--c_sky);
   padding: 7px 10px;
+}
+.form__box__checkbox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--c_lightPurple);
+  font-size: small;
+}
+.form__box__checkbox #enable_profit {
+  accent-color: var(--c_yellow);
 }
 .form__legend,
 .form__label {
