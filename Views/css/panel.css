@@ -215,7 +215,7 @@ textarea {
   opacity: 1;
   border: 1px solid var(--c_lightPurple);
   min-height: 10em;
-  max-height: 30em;
+  max-height: 76vh;
 }
 .notifications__details__title {
   background-color: var(--c_dark);
