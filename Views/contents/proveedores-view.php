@@ -61,7 +61,7 @@
 </div>
 <div class="modal" id="modalForm">
   <div class="box">
-    <form method="POST" action="<?php echo SERVER_URL; ?>/Request/formSupplierfetch.php" class="form formCreate formRequest">
+    <form method="POST" action="<?php echo SERVER_URL; ?>/Request/formSupplierRequest.php" class="form formCreate formRequest">
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Agregar proveedor</h1>
       <input type="hidden" id="supplierIdRUC" name="tx_supplier_id">
