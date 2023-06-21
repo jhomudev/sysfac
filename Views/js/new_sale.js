@@ -30,12 +30,11 @@ function habilityDOM() {
 }
 
 // peticion para traer productos para venta
-async function getProducts(words = "", column = "", value = "") {
+async function getProducts(words = "", category = "") {
   try {
     const formData = new FormData();
     formData.append("words", words);
-    formData.append("column", column);
-    formData.append("value", value);
+    formData.append("category_id", category);
     const req = await axios.post(
       `${serverURL}/Request/getProductsForSaleRequest.php`,
       formData,
@@ -62,7 +61,7 @@ allBtn.addEventListener("click", () => {
 });
 filterSelect.forEach((filter) => {
   filter.addEventListener("change", () => {
-    getProducts("", filter.dataset.col, filter.value);
+    getProducts("", filter.value);
   });
 });
 

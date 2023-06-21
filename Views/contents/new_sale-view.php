@@ -29,7 +29,7 @@
   </div>
   <div class="filter">
     <label for="fil_categoria" class="filter__for">Categoría: </label>
-    <select name="tx_categoria" data-col="category_id" class="filter__select">
+    <select name="category_id" data-col="category_id" class="filter__select">
       <option selected disabled>--</option>
       <?php
       require_once "./Controllers/CategoryController.php";

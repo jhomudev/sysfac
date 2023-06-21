@@ -33,7 +33,7 @@
               $products = json_decode($IP->getProductsController());
 
               foreach ($products as $key => $product) {
-                echo '<option value="' . $product->name . '">P-' . $product->product_id . '</option>';
+                echo "<option value='$product->name'>P-$product->product_id</option>";
               }
               ?>
             </datalist>
