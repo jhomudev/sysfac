@@ -1,21 +1,22 @@
 <div class="flexnav">
-  <div class="browser">
+  <form action="" method="POST" class="browser">
     <label for="inputSearch" class="browser__label">Buscar producto</label>
-    <input type="search" class="browser__input" id="inputSearch" placeholder="Escribe el nombre del producto">
-  </div>
+    <input type="search" class="browser__input" name="words" id="inputSearch" placeholder="Escribe el nombre del producto" required>
+    <button type="submit" class="form__submit" style="width:min-content; padding:7px 10px; font-size:medium; font-weight:bold; display:grid;" title="Buscar"><i class="ph ph-magnifying-glass"></i></button>
+  </form>
   <div class="buttons">
     <button class="buttons_btn toggleForm" style="--cl:var(--c_yellow);">Nuevo producto</button>
     <a href="<?php echo SERVER_URL; ?>/reports/productos.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
-<div class="filterBox">
+<form action="" method="POST" class="filterBox">
   <div class="filter" id="all">
-    <h2 class="filter__for">Todos</h2>
+    <a href="" class="filter__for">Todos</a>
   </div>
   <div class="filter">
     <label for="fil_categoria" class="filter__for">Categoría: </label>
-    <select name="tx_categoria" data-col="category_id" class="filter__select">
-      <option selected disabled>--</option>
+    <select name="category_id" data-col="category_id" class="filter__select" required>
+      <option value="" selected disabled>--</option>
       <?php
       require_once "./Controllers/CategoryController.php";
       $IP = new CategoryController();
@@ -30,14 +31,30 @@
   </div>
   <div class="filter">
     <label for="fil_activo" class="filter__for">Activo: </label>
-    <select name="tx_categoria" data-col="is_active" class="filter__select">
+    <select name="is_active" data-col="is_active" class="filter__select">
       <option selected disabled>--</option>
       <option value="<?php echo STATE->active; ?>">Sí</option>
       <option value="<?php echo STATE->inactive; ?>">No</option>
     </select>
   </div>
-  <a href="<?php echo SERVER_URL; ?>/inventario" class="filter__products_all_btn">Productos en inventario</a>
-</div>
+  <button type="submit" class="filter" title="Filtrar" style="border-radius: 3px; padding:7px 10px;">Filtrar</button>
+  <a href="<?php echo SERVER_URL; ?>/inventario" class="filter__products_btn">Productos en inventario</a>
+</form>
+<p class="table__numrows">
+  <strong id="rowsCount">
+    <?php
+    require_once "./Controllers/ProductController.php";
+
+    $IP = new ProductController();
+    $products = json_decode($IP->getProductsController());
+
+    echo count($products);
+    ?>
+  </strong> Producto(s) encontrados
+  <?php
+  if (isset($_POST['words_in'])) echo ' relacionados a "' . $_POST['words_in'] . '"';
+  ?>
+</p>
 <div class="tableBox">
   <table class="table">
     <thead class="table__thead">
@@ -53,7 +70,51 @@
       <th>Acciones</th>
     </thead>
     <tbody class="table__tbody">
-      <!-- peticion -->
+      <?php
+      if (count($products) > 0) {
+        foreach ($products as $product) {
+          $img = "https://cdn-icons-png.flaticon.com/512/5445/5445197.png";
+          $sale_for = $product->sale_for == 1 ? "CANTIDAD" : "UNIDAD/N.S.";
+          $is_active = $product->is_active ? "SI" : "NO";
+          $color = $product->stock <= $product->inventary_min ? "#F0D0D6" : "";
+          if ($product->link_image) $img = $product->link_image;
+          if ($product->file_image) $img = $product->file_image;
+          echo '
+          <tr style="background:' . $color . ';">
+            <td><img src="' . $img . '" loading="lazy" class="product__img__table"></td>
+            <td>' . $product->name . '</td>
+            <td>S/ ' . $product->price_sale . '</td>
+            <td>' . $product->unit . '</td>
+            <td>' . $sale_for . '</td>
+            <td>' . $product->category . '</td>
+            <td>' . $product->inventary_min . '</td>
+            <td>' . $product->stock . '</td>
+            <td>' . $is_active . '</td>
+            <td>
+              <div class="actions">
+                <button data-key="' . $product->product_id . '" class="actions__btn btn__edit" style="--cl:var(--c_sky);" title="Editar"><i class="ph ph-pencil-simple-line"></i></button>
+                <form action="' . SERVER_URL . '/Request/deleteProductRequest.php" method="POST" class="formRequest formDelete">
+                  <input type="hidden" value="' . $product->product_id . '" name="tx_product_id">
+                  <button class="actions__btn btn_delete" style="--cl:red;" title="Eliminar"><i class="ph ph-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          ';
+        }
+      } else {
+        echo '
+        <tr>
+          <td aria-colspan="10" colspan="10">
+            <div class="empty">
+              <div class="empty__imgBox"><img src="https://cdn-icons-png.flaticon.com/512/5445/5445197.png" alt="vacio" class="empty__img"></div>
+              <p class="empty__message">No hay registros</p>
+            </div>
+          </td>
+        </tr>
+        ';
+      }
+      ?>
     </tbody>
   </table>
 </div>

@@ -9,20 +9,25 @@ class ProductModel extends MainModel
   protected static function getProductsModel(array $filters = []): array
   {
     $words = $filters['words'];
-    $column = $filters['column'];
-    $value = $filters['value'];
+    $category_id = $filters['category_id'];
+    $is_active = $filters['is_active'];
 
-    if (empty($words) && empty($column) && empty($value)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
-    else {
-      if (!empty($words)) {
-        $words = "%$words%";
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
-        $products->bindParam(":words", $words, PDO::PARAM_STR);
-      };
-      if (!empty($column) && isset($value)) {
-        $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.$column=:value ORDER BY p.product_id DESC");
-        $products->bindParam(":value", $value, PDO::PARAM_STR);
+    if (empty($words)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
+    if (!empty($words)) {
+      $words = "%$words%";
+      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
+      $products->bindParam(":words", $words, PDO::PARAM_STR);
+    }
+    if (empty($words) && (!empty($category_id) || !empty($is_active))) {
+      $sentence = "";
+
+      foreach ($filters as $column => $value) {
+        if (!empty($value)) {
+          if ($sentence == "") $sentence .= "p.$column=" . $value;
+          else $sentence .= " AND p.$column=" . $value;
+        }
       }
+      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE $sentence ORDER BY p.product_id DESC");
     }
 
     $products->execute();
@@ -66,7 +71,7 @@ class ProductModel extends MainModel
       $statement = MainModel::connect()->prepare("INSERT INTO 
       products(file_image,link_image, name,inventary_min,price_sale,unit,sale_for,category_id,is_active,created_at) 
       VALUES(:file_image,:link_image, :name,:inventary_min,:price_sale,:unit,:sale_for,:category_id,:is_active,:created_at)");
-      
+
       $statement->bindValue(":link_image", null, PDO::PARAM_NULL);
       $statement->bindValue(":file_image", null, PDO::PARAM_NULL);
     }

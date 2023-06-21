@@ -12,10 +12,11 @@ class ProductController extends ProductModel
   public function getProductsController()
   {
     $filters = [
-      "words" => isset($_POST['words']) ? MainModel::clearString($_POST['words']) : "",
-      "column" => isset($_POST['column']) ? MainModel::clearString($_POST['column']) : "",
-      "value" => isset($_POST['value']) ? MainModel::clearString($_POST['value']) : "",
+      "words" => MainModel::getCleanPostValue('words'),
+      "category_id" => MainModel::getCleanPostValue('category_id'),
+      "is_active" => MainModel::getCleanPostValue('is_active'),
     ];
+    
     $products = ProductModel::getProductsModel($filters);
 
     // Agregando stock a los productos
