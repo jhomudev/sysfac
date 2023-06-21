@@ -89,7 +89,7 @@ class MainModel
   // Funcion para obtener valor limpio de un valor $_POST,
   protected static function getCleanPostValue(string $name_key): string
   {
-    $value = isset($_POST[$name_key]) && !empty($_POST[$name_key]) ? $_POST[$name_key] : "";
+    $value = isset($_POST[$name_key]) && !empty($_POST[$name_key]) ? self::clearString($_POST[$name_key]) : "";
 
     return $value;
   }
