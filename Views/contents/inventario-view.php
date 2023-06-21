@@ -73,22 +73,6 @@
   </div>
   <button type="submit" class="filter" title="Filtrar" style="border-radius: 3px; padding:7px 10px;">Filtrar</button>
 </form>
-<p class="table__numrows">
-  <strong id="rowsCount">
-    <?php
-    require_once "./Controllers/ProductController.php";
-
-    $IP = new ProductController();
-
-    $products_all = json_decode($IP->getProductsInventaryController());
-
-    echo count($products_all);
-    ?>
-  </strong> Producto(s) encontrados
-  <?php
-  if (isset($_POST['words_in'])) echo ' relacionados a "' . $_POST['words_in'] . '"';
-  ?>
-</p>
 <div class="actions__prods">
   <form action="<?php echo SERVER_URL; ?>/Request/formProductInvRequest.php" method="POST" class="form__prod box__entries formRequest">
     <fieldset class="form__group">
@@ -126,6 +110,21 @@
     <input type="submit" value="Ejecutar" class="form__submit">
   </form>
 </div>
+<p class="table__numrows">
+  <strong id="rowsCount">
+    <?php
+    require_once "./Controllers/ProductController.php";
+
+    $IP = new ProductController();
+    $products_all = json_decode($IP->getProductsInventaryController());
+
+    echo count($products_all);
+    ?>
+  </strong> Unidade(s) encontradas
+  <?php
+  if (isset($_POST['words_in'])) echo ' relacionados a "' . $_POST['words_in'] . '"';
+  ?>
+</p>
 <div class="tableBox">
   <table class="table">
     <thead class="table__thead">
@@ -137,14 +136,7 @@
     </thead>
     <tbody class="table__tbody">
       <?php
-      require_once "./Controllers/ProductController.php";
-
-      $IP = new ProductController();
-
-      $products_all = json_decode($IP->getProductsInventaryController());
-
       if (count($products_all) > 0) {
-
         foreach ($products_all as $product) {
           $local = isset($product->local_name) ? $product->local_name : "No asignado";
           $ns = $product->serial_number ? $product->serial_number : "N.A.";
@@ -170,7 +162,6 @@
         </tr>
         ';
       }
-
       ?>
     </tbody>
   </table>
