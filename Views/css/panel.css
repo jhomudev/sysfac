@@ -500,6 +500,14 @@ textarea {
 .filter__date:focus::before {
   color: var(--c_green);
 }
+.filter__products_btn{
+  width: min(100%,250px);
+  padding: 5px 10px;
+  margin-left: auto;
+  background-color: var(--c_yellow);
+  border-radius: 5px;
+  text-align: center;
+}
 
 .productsBox {
   width: 100%;
@@ -1179,10 +1187,19 @@ textarea {
   }
 }
 
+@media screen and (max-width: 1110px) {
+  .filter__products_btn{
+    width: min(100%,250px);
+    margin-left: 0;
+  }
+}
 @media screen and (max-width: 842px) {
   .buttons_btn {
     width: auto;
     flex: 1;
+  }
+  .filter__products_btn{
+    width: 100%;
   }
 }
 @media screen and (max-width: 768px) {
