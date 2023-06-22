@@ -13,9 +13,7 @@ if (empty($_SESSION["token"])) {
 require_once "./Controllers/SellController.php";
 $IS = new SellController();
 
-$parametros = MainModel::getParamsUrl();
-
-$proof_code_enc = $parametros['proof_code'];
+$proof_code_enc = MainModel::getCleanGetValue('proof_code');
 $proof_code = $IS->decryption($proof_code_enc);
 $_GET['proof_code'] = $proof_code;
 

@@ -3,9 +3,7 @@
 require_once "./Controllers/PurchaseController.php";
 $IP = new PurchaseController();
 
-$parametros = MainModel::getParamsUrl();
-
-$purchase_id_enc = $parametros['purchase_id'];
+$purchase_id_enc = MainModel::getCleanGetValue('purchase_id');
 $purchase_id = $IP->decryption($purchase_id_enc);
 $_GET['purchase_id'] = $purchase_id;
 
