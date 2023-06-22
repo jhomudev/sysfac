@@ -3,11 +3,7 @@
 require_once "./Controllers/PurchaseController.php";
 $IP = new PurchaseController();
 
-$url_actual = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-// Descomponemos la URL
-$componentes_url = parse_url($url_actual);
-// Obtenemos los valores de los parámetros
-parse_str($componentes_url['query'], $parametros);
+$parametros = MainModel::getParamsUrl();
 
 $purchase_id_enc = $parametros['purchase_id'];
 $purchase_id = $IP->decryption($purchase_id_enc);

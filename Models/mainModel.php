@@ -42,7 +42,7 @@ class MainModel
   }
 
   // Generar codigos aleatorios
-  protected static function generateRandomcode(string $letter, int $length, int $num): string
+  public static function generateRandomcode(string $letter, int $length, int $num): string
   {
     for ($i = 0; $i < $length; $i++) {
       $random = rand(0, 9);
@@ -52,7 +52,7 @@ class MainModel
   }
 
   // Funcion para limpiar cadenas, para evitar inyecciones SQL
-  protected static function clearString(string $string): string
+  public static function clearString(string $string): string
   {
     $string = trim($string);
     $string = stripslashes($string);
@@ -87,11 +87,24 @@ class MainModel
 
 
   // Funcion para obtener valor limpio de un valor $_POST,
-  protected static function getCleanPostValue(string $name_key): string
+  public static function getCleanPostValue(string $name_key): string
   {
-    $value = isset($_POST[$name_key]) && !empty($_POST[$name_key]) ? self::clearString($_POST[$name_key]) : "";
+    $value = isset($_POST[$name_key]) && $_POST[$name_key] != "" ? self::clearString($_POST[$name_key]) : "";
 
     return $value;
+  }
+
+  // Funcion para obtener los parametros GEt de la URL,
+  public static function getParamsUrl(string $url = null): array
+  {
+    $url = $url == null ? "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $url;
+
+    // Descomponemos la URL
+    $componentes_url = parse_url($url);
+    // Obtenemos los valores de los parámetros
+    parse_str($componentes_url['query'], $parametros);
+
+    return $parametros;
   }
 
   // Funcion para validar fechas de los inputs, retorna un bool dependiendo si el dato es correcto

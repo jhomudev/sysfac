@@ -13,11 +13,7 @@ if (empty($_SESSION["token"])) {
 require_once "./Controllers/SellController.php";
 $IS = new SellController();
 
-$url_actual = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-// Descomponemos la URL
-$componentes_url = parse_url($url_actual);
-// Obtenemos los valores de los parámetros
-parse_str($componentes_url['query'], $parametros);
+$parametros = MainModel::getParamsUrl();
 
 $proof_code_enc = $parametros['proof_code'];
 $proof_code = $IS->decryption($proof_code_enc);
