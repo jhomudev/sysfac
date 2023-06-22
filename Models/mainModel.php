@@ -94,6 +94,21 @@ class MainModel
     return $value;
   }
 
+  // Funcion para obtener el valor limpio de un valor GET,
+  public static function getCleanGetValue(string $name_key): string
+  {
+    $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    // Descomponemos la URL
+    $componentes_url = parse_url($url);
+    // Obtenemos los valores de los parámetros
+    $parametros = [];
+
+    if (isset($componentes_url['query']) && !empty($componentes_url['query'])) parse_str($componentes_url['query'], $parametros);
+
+    return isset($parametros[$name_key]) && $parametros[$name_key] != "" ? self::clearString($parametros[$name_key]) : "";
+  }
+
   // Funcion para obtener los parametros GEt de la URL,
   public static function getParamsUrl(string $url = null): array
   {
@@ -102,7 +117,8 @@ class MainModel
     // Descomponemos la URL
     $componentes_url = parse_url($url);
     // Obtenemos los valores de los parámetros
-    parse_str($componentes_url['query'], $parametros);
+    $parametros = [];
+    if (isset($componentes_url['query']) && !empty($componentes_url['query'])) parse_str($componentes_url['query'], $parametros);
 
     return $parametros;
   }
