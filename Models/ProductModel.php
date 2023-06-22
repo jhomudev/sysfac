@@ -18,11 +18,11 @@ class ProductModel extends MainModel
       $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
       $products->bindParam(":words", $words, PDO::PARAM_STR);
     }
-    if (empty($words) && (!empty($category_id) || !empty($is_active))) {
+    if (empty($words) && (!empty($category_id) || $is_active != "")) {
       $sentence = "";
 
       foreach ($filters as $column => $value) {
-        if (!empty($value)) {
+        if ($value != "") {
           if ($sentence == "") $sentence .= "p.$column=" . $value;
           else $sentence .= " AND p.$column=" . $value;
         }

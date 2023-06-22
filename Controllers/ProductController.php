@@ -16,7 +16,7 @@ class ProductController extends ProductModel
       "category_id" => MainModel::getCleanPostValue('category_id'),
       "is_active" => MainModel::getCleanPostValue('is_active'),
     ];
-    
+
     $products = ProductModel::getProductsModel($filters);
 
     // Agregando stock a los productos
@@ -52,6 +52,7 @@ class ProductController extends ProductModel
     });
 
 
+    // return json_encode($arr_new_products);
     return json_encode($arr_new_products);
   }
 

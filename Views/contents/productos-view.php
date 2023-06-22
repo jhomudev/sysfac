@@ -32,7 +32,7 @@
   <div class="filter">
     <label for="fil_activo" class="filter__for">Activo: </label>
     <select name="is_active" data-col="is_active" class="filter__select">
-      <option selected disabled>--</option>
+      <option value="" selected disabled>--</option>
       <option value="<?php echo STATE->active; ?>">Sí</option>
       <option value="<?php echo STATE->inactive; ?>">No</option>
     </select>
@@ -47,6 +47,7 @@
 
     $IP = new ProductController();
     $products = json_decode($IP->getProductsController());
+    // $products = $IP->getProductsController();
 
     echo count($products);
     ?>
