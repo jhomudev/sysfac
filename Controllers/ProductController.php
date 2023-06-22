@@ -9,15 +9,15 @@ if ($request) {
 class ProductController extends ProductModel
 {
   // Función controlador para obtener los productos
-  public function getProductsController()
+  public function getProductsController(mixed $start = null, mixed $end = null)
   {
     $filters = [
-      "words" => MainModel::getCleanPostValue('words'),
-      "category_id" => MainModel::getCleanPostValue('category_id'),
-      "is_active" => MainModel::getCleanPostValue('is_active'),
+      "words" => MainModel::getCleanGetValue('words'),
+      "category_id" => MainModel::getCleanGetValue('category_id'),
+      "is_active" => MainModel::getCleanGetValue('is_active'),
     ];
 
-    $products = ProductModel::getProductsModel($filters);
+    $products = ProductModel::getProductsModel($filters, $start, $end);
 
     // Agregando stock a los productos
     foreach ($products as $key => $product) {
@@ -51,9 +51,8 @@ class ProductController extends ProductModel
       return $a["stock"] - $b["stock"];
     });
 
-
-    // return json_encode($arr_new_products);
     return json_encode($arr_new_products);
+    // return $products;
   }
 
   // Funcion controlador para obetenr los datos de producto

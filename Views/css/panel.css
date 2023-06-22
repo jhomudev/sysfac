@@ -500,8 +500,8 @@ textarea {
 .filter__date:focus::before {
   color: var(--c_green);
 }
-.filter__products_btn{
-  width: min(100%,250px);
+.filter__products_btn {
+  width: min(100%, 250px);
   padding: 5px 10px;
   margin-left: auto;
   background-color: var(--c_yellow);
@@ -585,8 +585,8 @@ textarea {
   display: flex;
   width: 100%;
   height: auto;
-  max-height: 800px;
-  min-height: 600px;
+  /* max-height: 800px;
+  min-height: 600px; */
   overflow: auto;
   border-radius: 5px;
   border: 1px solid var(--c_lightPurple);
@@ -624,6 +624,37 @@ textarea {
 }
 .table__tbody img {
   width: 150px;
+}
+.pager {
+  width: min-content;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  background-color: #fff;
+  overflow: hidden;
+}
+.pager__link {
+  display: grid;
+  place-items: center;
+  font-size: medium;
+  font-weight: 600;
+  color: var(--c_lightPurple);
+  padding: 0.5em 1em;
+  background-color: #fff;
+}
+.pager__link.disabled {
+  pointer-events: none;
+  color: rgb(192, 188, 188);
+  cursor: default;
+}
+.pager__link.selected {
+  margin-top: -5px;
+  font-weight: 800;
+  color: var(--c_orange);
+}
+.pager__link:hover {
+  filter: brightness(0.9);
 }
 .actions {
   display: flex;
@@ -1188,8 +1219,8 @@ textarea {
 }
 
 @media screen and (max-width: 1110px) {
-  .filter__products_btn{
-    width: min(100%,250px);
+  .filter__products_btn {
+    width: min(100%, 250px);
     margin-left: 0;
   }
 }
@@ -1198,7 +1229,7 @@ textarea {
     width: auto;
     flex: 1;
   }
-  .filter__products_btn{
+  .filter__products_btn {
     width: 100%;
   }
 }

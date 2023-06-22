@@ -1,5 +1,5 @@
 <div class="flexnav">
-  <form action="" method="POST" class="browser">
+  <form action="" method="GET" class="browser">
     <label for="inputSearch" class="browser__label">Buscar producto</label>
     <input type="search" class="browser__input" name="words" id="inputSearch" placeholder="Escribe el nombre del producto" required>
     <button type="submit" class="form__submit" style="width:min-content; padding:7px 10px; font-size:medium; font-weight:bold; display:grid;" title="Buscar"><i class="ph ph-magnifying-glass"></i></button>
@@ -9,9 +9,9 @@
     <a href="<?php echo SERVER_URL; ?>/reports/productos.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
-<form action="" method="POST" class="filterBox">
+<form action="" method="GET" class="filterBox">
   <div class="filter" id="all">
-    <a href="" class="filter__for">Todos</a>
+    <a href="<?php echo SERVER_URL; ?>/productos" class="filter__for">Todos</a>
   </div>
   <div class="filter">
     <label for="fil_categoria" class="filter__for">Categoría: </label>
@@ -40,20 +40,30 @@
   <button type="submit" class="filter" title="Filtrar" style="border-radius: 3px; padding:7px 10px;">Filtrar</button>
   <a href="<?php echo SERVER_URL; ?>/inventario" class="filter__products_btn">Productos en inventario</a>
 </form>
-<p class="table__numrows">
+<p class="table__numrows">Mostrando
   <strong id="rowsCount">
     <?php
     require_once "./Controllers/ProductController.php";
 
     $IP = new ProductController();
-    $products = json_decode($IP->getProductsController());
-    // $products = $IP->getProductsController();
+
+    $rows = 20;
+    $page = MainModel::getCleanGetValue('page');
+
+    if (!isset($page) || empty($page)) $page = 1;
+
+    $start = is_numeric($page) ? ($page - 1) * $rows : 0;
+
+    $total_products = json_decode($IP->getProductsController());
+    $products = json_decode($IP->getProductsController($start, $rows));
+    $pages = ceil(count($total_products) / $rows);
+    // $products = $IP->getProductsController(1, 10);
 
     echo count($products);
     ?>
-  </strong> Producto(s) encontrados
+  </strong>de <?php echo count($total_products); ?> Producto(s) encontrados
   <?php
-  if (isset($_POST['words_in'])) echo ' relacionados a "' . $_POST['words_in'] . '"';
+  if (!empty(MainModel::getCleanGetValue('words'))) echo ' relacionados a "' . MainModel::getCleanGetValue('words') . '"';
   ?>
 </p>
 <div class="tableBox">
@@ -118,6 +128,36 @@
       ?>
     </tbody>
   </table>
+</div>
+<div>
+  <ul class="pager">
+    <?php
+    $params = MainModel::getParamsUrl();
+    $params_url = "";
+    if (!empty($params)) {
+      unset($params['page']);
+      foreach ($params as $key => $param) {
+        $params_url .= "$key=$params[$key]&";
+      }
+    };
+    $prev = $page > 1 ? "" : "disabled";
+
+    $next = $page < $pages ? "" : "disabled";
+
+    echo '
+    <li class="pager__li"><a class="pager__link ' . $prev . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $page - 1 . '"><i class="ph ph-caret-left"></i></a></li>
+    ';
+
+    for ($i = 1; $i <= $pages; $i++) {
+      $select = $i == $page ? "selected" : "";
+      echo '<li class="pager__li"><a class="pager__link ' . $select . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $i . '">' . $i . '</a></li>';
+    }
+
+    echo '
+    <li class="pager__li"><a class="pager__link ' . $next . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $page + 1 . '"><i class="ph ph-caret-right"></i></a></li>
+    ';
+    ?>
+  </ul>
 </div>
 <div class="modal" id="modalForm">
   <div class="box">

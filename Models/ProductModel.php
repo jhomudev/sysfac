@@ -6,16 +6,18 @@ class ProductModel extends MainModel
 {
 
   // Funcion de obtener productos
-  protected static function getProductsModel(array $filters = []): array
+  protected static function getProductsModel(array $filters = [], mixed $start = "", mixed $end = ""): array
   {
     $words = $filters['words'];
     $category_id = $filters['category_id'];
     $is_active = $filters['is_active'];
 
-    if (empty($words)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC");
+    $limit = $start != "" && $end != "" ? "LIMIT $start,$end" : "";
+
+    if (empty($words)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY p.product_id DESC $limit");
     if (!empty($words)) {
       $words = "%$words%";
-      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC");
+      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE p.name LIKE :words ORDER BY p.product_id DESC $limit");
       $products->bindParam(":words", $words, PDO::PARAM_STR);
     }
     if (empty($words) && (!empty($category_id) || $is_active != "")) {
@@ -27,7 +29,7 @@ class ProductModel extends MainModel
           else $sentence .= " AND p.$column=" . $value;
         }
       }
-      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE $sentence ORDER BY p.product_id DESC");
+      $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image,p.file_image,p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category FROM products p INNER JOIN categories c ON p.category_id = c.cat_id WHERE $sentence ORDER BY p.product_id DESC $limit");
     }
 
     $products->execute();
