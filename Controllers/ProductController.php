@@ -19,13 +19,6 @@ class ProductController extends ProductModel
 
     $products = ProductModel::getProductsModel($filters, $start, $end);
 
-    // Agregando stock a los productos
-    foreach ($products as $key => $product) {
-      $stock = MainModel::executeQuerySimple("SELECT COUNT(pa.product_id) FROM products_all pa INNER JOIN products p ON p.product_id=pa.product_id WHERE pa.product_id=" . $products[$key]['product_id'] . " AND pa.state=" . STATE_IN->stock)->fetchColumn();
-
-      $products[$key]['stock'] = $stock;
-    }
-
     // obtencion de un nuevo array sin version indexada
     $arr_new_products = [];
     foreach ($products as $product) {
@@ -46,13 +39,7 @@ class ProductController extends ProductModel
       }
     }
 
-    // ordenamiento segun stock
-    usort($arr_new_products, function ($a, $b) {
-      return $a["stock"] - $b["stock"];
-    });
-
     return json_encode($arr_new_products);
-    // return $products;
   }
 
   // Funcion controlador para obetenr los datos de producto
