@@ -132,7 +132,6 @@
     $total_products_all = json_decode($IP->getProductsInventaryController());
     $products_all = json_decode($IP->getProductsInventaryController($start, $rows));
     $pages = ceil(count($total_products_all) / $rows);
-    // $products_all = json_decode($IP->getProductsInventaryController());
 
     echo count($products_all);
     ?>
