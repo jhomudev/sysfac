@@ -16,6 +16,14 @@ class ProductController extends ProductModel
       "category_id" => MainModel::getCleanGetValue('category_id'),
       "is_active" => MainModel::getCleanGetValue('is_active'),
     ];
+    
+    if ($_POST) {
+      $filters = [
+        "words" => MainModel::getCleanPostValue('words'),
+        "category_id" => MainModel::getCleanPostValue('category_id'),
+        "is_active" => MainModel::getCleanPostValue('is_active'),
+      ];
+    }
 
     $products = ProductModel::getProductsModel($filters, $start, $end);
 

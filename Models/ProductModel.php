@@ -14,7 +14,7 @@ class ProductModel extends MainModel
 
     $limit = $start != "" && $end != "" ? "LIMIT $start,$end" : "";
 
-    $query_stock="SELECT COUNT(*) FROM products_all WHERE product_id=p.product_id";
+    $query_stock = "SELECT COUNT(*) FROM products_all WHERE product_id=p.product_id AND state=" . STATE_IN->stock;
 
     if (empty($words)) $products = MainModel::connect()->prepare("SELECT p.product_id,p.link_image, p.file_image, p.name, p.price_sale,p.unit, p.sale_for, p.category_id,p.inventary_min, p.is_active,c.name AS category, ($query_stock) AS stock FROM products p INNER JOIN categories c ON p.category_id = c.cat_id ORDER BY stock ASC, p.product_id DESC, p.category_id DESC $limit");
     if (!empty($words)) {
