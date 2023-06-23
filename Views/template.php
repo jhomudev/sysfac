@@ -50,17 +50,24 @@ if ($vista == "proof") {
     <div class="container_all">
       <?php include_once "./views/inc/menuBar.php"; ?>
       <div class="col_2">
-        <?php include_once "./views/inc/header.php"; ?>
-        <main class="view">
-          <?php
-          // Condicionales para las vistas dependiendo del tipo de usuario
-          $access_views_vendedor = ["ventas", "new_sale", "clientes", "dashboard"];
+        <?php
+        include_once "./views/inc/header.php";
 
-          if ($_SESSION['type'] == USER_TYPE->vendedor) {
-            if (in_array($vista, $access_views_vendedor)) include_once  "./Views/contents/" . $vista . "-view.php";
-            else include_once  "./Views/inc/dont_access.php";
-          } else include_once  "./Views/contents/" . $vista . "-view.php";
-          ?>
+        // Condicionales para las vistas dependiendo del tipo de usuario
+        $access_views_vendedor = ["ventas", "new_sale", "clientes", "dashboard"];
+        
+        $style = "";/* para el height del main view , para vista dont_access */
+
+        if ($_SESSION['type'] == USER_TYPE->vendedor) {
+          if (in_array($vista, $access_views_vendedor)) $view_show = "./Views/contents/" . $vista . "-view.php";
+          else {
+            $view_show = "./Views/inc/dont_access.php";
+            $style = "style='height:100%;'";
+          }
+        } else  $view_show = "./Views/contents/" . $vista . "-view.php";
+        ?>
+        <main class="view" <?php echo $style; ?>>
+          <?php include_once $view_show; ?>
         </main>
       </div>
       <div class="cart__modal">
