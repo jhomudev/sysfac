@@ -86,13 +86,12 @@ $ops = $sell->ops;
         }
 
         table.data__sell {
-            font-size: small;
+            font-size: x-small;
             margin-bottom: 2em;
         }
 
         table.table__sell__items {
             width: 100%;
-            font-size: small;
             border: 1px solid gray;
             border-collapse: collapse;
             text-align: center;
@@ -100,7 +99,7 @@ $ops = $sell->ops;
 
         table.table__pay,
         table.table__sell__items {
-            font-size: x-small;
+            font-size: xx-small;
         }
 
         table.table__pay th,
@@ -118,7 +117,6 @@ $ops = $sell->ops;
         table.table__pay {
             border-collapse: collapse;
             width: 250px;
-            font-size: small;
             float: right;
             margin-top: 2em;
         }

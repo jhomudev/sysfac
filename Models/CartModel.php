@@ -51,8 +51,9 @@ class CartModel extends MainModel
     foreach ($_SESSION['cart']['items'] as $item) {
       if ($item[$col] == $val) {
         $item['name'] .= ' (Gratis)';
+        $item['details'] .= ' (Gratis)';
         $item['total'] = 0.00;
-      } 
+      }
 
       $new_cart[] = $item;
     }
