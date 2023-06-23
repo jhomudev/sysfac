@@ -15,7 +15,7 @@
   </nav>
 </div>
 <div class="flexnav">
-  <form action="" method="POST" class="browser">
+  <form action="" method="GET" class="browser">
     <label for="inputSearch" class="browser__label">Buscar producto</label>
     <input type="search" class="browser__input" name="words_in" id="inputSearch" placeholder="Escribe el nombre del producto o serie" required>
     <button type="submit" class="form__submit" style="width:min-content; padding:7px 10px; font-size:medium; font-weight:bold; display:grid;" title="Buscar"><i class="ph ph-magnifying-glass"></i></button>
@@ -24,9 +24,9 @@
     <a href="<?php echo SERVER_URL; ?>/reports/inventario.php" class="buttons_btn" style="--cl:var(--c_orange);">Generar reporte</a>
   </div>
 </div>
-<form action="" method="POST" class="filterBox">
+<form action="" method="GET" class="filterBox">
   <div class="filter" id="all">
-    <a href="" class="filter__for">Todos</a>
+    <a href="<?php echo SERVER_URL; ?>/inventario" class="filter__for">Todos</a>
   </div>
   <div class="filter">
     <label class="filter__for">Producto: </label>
@@ -41,7 +41,13 @@
 
 
       foreach ($products as $key => $product) {
-        echo '<option value="' . $product->product_id . '">' . $product->name . '</option>';
+        $product_name = $product->name;
+        $limited_text = substr($product->name, 0, 30);
+        if (strlen($product_name) > 20) {
+          $limited_text .= "...";
+        }
+        $product_name = $limited_text;
+        echo '<option value="' . $product->product_id . '">' . $product_name . '</option>';
       }
       ?>
     </select>
@@ -116,19 +122,29 @@
     require_once "./Controllers/ProductController.php";
 
     $IP = new ProductController();
-    $products_all = json_decode($IP->getProductsInventaryController());
+    $rows = 50;
+    $page = MainModel::getCleanGetValue('page');
+
+    if (!isset($page) || empty($page)) $page = 1;
+
+    $start = is_numeric($page) ? ($page - 1) * $rows : 0;
+
+    $total_products_all = json_decode($IP->getProductsInventaryController());
+    $products_all = json_decode($IP->getProductsInventaryController($start, $rows));
+    $pages = ceil(count($total_products_all) / $rows);
+    // $products_all = json_decode($IP->getProductsInventaryController());
 
     echo count($products_all);
     ?>
-  </strong> Unidade(s) encontradas
+  </strong>de <?php echo count($total_products_all); ?> Unidad(es) encontradas
   <?php
-  if (isset($_POST['words_in'])) echo ' relacionados a "' . $_POST['words_in'] . '"';
+  if (!empty(MainModel::getCleanGetValue('words_in'))) echo ' relacionados a "' . MainModel::getCleanGetValue('words_in') . '"';
   ?>
 </p>
 <div class="tableBox">
   <table class="table">
     <thead class="table__thead">
-      <th><input type="checkbox" name="checkboxMain" id="checkboxMain"></th>
+      <th><input type="checkbox" name="checkboxMain" id="checkboxMain" class="checkbox__inv"></th>
       <th>Producto</th>
       <th>Número de serie</th>
       <th>Local</th>
@@ -142,7 +158,7 @@
           $ns = $product->serial_number ? $product->serial_number : "N.A.";
           echo '
             <tr>
-              <td><input type="checkbox" name="p_checkeds[]" value="' . $product->product_unit_id . '"></td>
+              <td><input type="checkbox" class="checkbox__inv" name="p_checkeds[]" value="' . $product->product_unit_id . '"></td>
               <td>' . $product->product_name . '</td>
               <td>' . $ns . '</td>
               <td>' . $local . '</td>
@@ -165,4 +181,39 @@
       ?>
     </tbody>
   </table>
+</div>
+<div>
+  <ul class="pager">
+    <?php
+    $params = MainModel::getParamsUrl();
+    $params_url = "";
+    if (!empty($params)) {
+      unset($params['page']);
+      foreach ($params as $key => $param) {
+        $params_url .= "$key=$params[$key]&";
+      }
+    };
+    $prev = $page > 1 ? "" : "disabled";
+
+    $next = $page < $pages ? "" : "disabled";
+
+    echo '
+    <li class="pager__li"><a class="pager__link" href="' . SERVER_URL . '/inventario?' . $params_url . 'page=1"><i class="ph ph-caret-double-left"></i></a></li>
+    <li class="pager__li"><a class="pager__link ' . $prev . '" href="' . SERVER_URL . '/inventario?' . $params_url . 'page=' . $page - 1 . '"><i class="ph ph-caret-left"></i></a></li>
+    ';
+
+    $n_page_start = ($page - 2) > 1 ? $page - 2 : 1;
+    $n_page_end = ($n_page_start + 4) > $pages ? $pages : $n_page_start + 4;
+
+    for ($i = $n_page_start; $i <= $n_page_end; $i++) {
+      $select = $i == $page ? "selected" : "";
+      echo '<li class="pager__li"><a class="pager__link ' . $select . '" href="' . SERVER_URL . '/inventario?' . $params_url . 'page=' . $i . '">' . $i . '</a></li>';
+    }
+
+    echo '
+    <li class="pager__li"><a class="pager__link ' . $next . '" href="' . SERVER_URL . '/inventario?' . $params_url . 'page=' . $page + 1 . '"><i class="ph ph-caret-right"></i></a></li>
+    <li class="pager__li"><a class="pager__link" href="' . SERVER_URL . '/inventario?' . $params_url . 'page=' . $pages . '"><i class="ph ph-caret-double-right"></i></a></li>
+    ';
+    ?>
+  </ul>
 </div>

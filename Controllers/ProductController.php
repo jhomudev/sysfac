@@ -285,19 +285,18 @@ class ProductController extends ProductModel
     exit();
   }
 
-  // FUNCIONES CONTROLLER PARA PRODUCTS_ALL
-
+  // ?FUNCIONES CONTROLLER PARA PRODUCTS_ALL
   // Función controlador para obtener todos los productos en inventario
-  public function getProductsInventaryController()
+  public function getProductsInventaryController(mixed $start = null, mixed $end = null)
   {
     $filters = [
-      "words" => isset($_POST['words_in']) && !empty($_POST['words_in']) ? MainModel::clearString($_POST['words_in']) : "",
-      "product_id" => isset($_POST['product_id']) && !empty($_POST['product_id']) ? MainModel::clearString($_POST['product_id']) : "",
-      "local_id" => isset($_POST['local_id']) && !empty($_POST['local_id']) ? MainModel::clearString($_POST['local_id']) : "",
-      "state" => isset($_POST['state']) && !empty($_POST['state']) ? MainModel::clearString($_POST['state']) : "",
+      "words" => MainModel::getCleanGetValue('words_in'),
+      "product_id" => MainModel::getCleanGetValue('product_id'),
+      "local_id" => MainModel::getCleanGetValue('local_id'),
+      "state" => MainModel::getCleanGetValue('state'),
     ];
 
-    $products_all = ProductModel::getProductsInventaryModel($filters);
+    $products_all = ProductModel::getProductsInventaryModel($filters, $start, $end);
 
     foreach ($products_all as $key => $product_unit) {
       if ($products_all[$key]['state'] == STATE_IN->stock) $products_all[$key]['state'] = 'En stock';

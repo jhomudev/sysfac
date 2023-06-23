@@ -57,7 +57,6 @@
     $total_products = json_decode($IP->getProductsController());
     $products = json_decode($IP->getProductsController($start, $rows));
     $pages = ceil(count($total_products) / $rows);
-    // $products = $IP->getProductsController(1, 10);
 
     echo count($products);
     ?>
@@ -145,16 +144,21 @@
     $next = $page < $pages ? "" : "disabled";
 
     echo '
+    <li class="pager__li"><a class="pager__link" href="' . SERVER_URL . '/productos?' . $params_url . 'page=1"><i class="ph ph-caret-double-left"></i></a></li>
     <li class="pager__li"><a class="pager__link ' . $prev . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $page - 1 . '"><i class="ph ph-caret-left"></i></a></li>
     ';
 
-    for ($i = 1; $i <= $pages; $i++) {
+    $n_page_start = ($page - 2) > 1 ? $page - 2 : 1;
+    $n_page_end = ($n_page_start + 4) > $pages ? $pages : $n_page_start + 4;
+
+    for ($i = $n_page_start; $i <= $n_page_end; $i++) {
       $select = $i == $page ? "selected" : "";
       echo '<li class="pager__li"><a class="pager__link ' . $select . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $i . '">' . $i . '</a></li>';
     }
 
     echo '
     <li class="pager__li"><a class="pager__link ' . $next . '" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $page + 1 . '"><i class="ph ph-caret-right"></i></a></li>
+    <li class="pager__li"><a class="pager__link" href="' . SERVER_URL . '/productos?' . $params_url . 'page=' . $pages . '"><i class="ph ph-caret-double-right"></i></a></li>
     ';
     ?>
   </ul>

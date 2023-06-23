@@ -8,8 +8,20 @@ const localBox = document.getElementById("localBox");
 const stateBox = document.getElementById("stateBox");
 
 checkboxMain.addEventListener("change", () => {
-  checkboxAll.forEach((chexckbox) => {
-    chexckbox.checked = checkboxMain.checked;
+  checkboxAll.forEach((checkbox) => {
+    checkbox.checked = checkboxMain.checked;
+
+    const row = checkbox.parentNode.parentNode;
+    if (checkbox.checked) row.classList.add("checked");
+    else row.classList.remove("checked");
+  });
+});
+
+checkboxAll.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    const row = checkbox.parentNode.parentNode;
+    if (checkbox.checked) row.classList.add("checked");
+    else row.classList.remove("checked");
   });
 });
 

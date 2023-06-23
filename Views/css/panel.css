@@ -441,6 +441,7 @@ textarea {
 .filter {
   position: relative;
   width: max-content;
+  max-width: 300px;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -465,6 +466,7 @@ textarea {
   color: var(--c_green);
 }
 .filter__select {
+  width: 100%;
   background: transparent;
   color: var(--c_green);
   border: none;
@@ -581,12 +583,15 @@ textarea {
   font-size: small;
   color: var(--c_lightPurple);
 }
+.checkbox__inv {
+  accent-color: var(--c_sky);
+}
 .tableBox {
   display: flex;
   width: 100%;
   height: auto;
-  /* max-height: 800px;
-  min-height: 600px; */
+  max-height: 1900px;
+  /* min-height: 600px; */
   overflow: auto;
   border-radius: 5px;
   border: 1px solid var(--c_lightPurple);
@@ -615,6 +620,9 @@ textarea {
   font-size: small;
   background-color: #fff;
 }
+.table__tbody tr.checked {
+  background-color: rgb(216 232 241 / 93%);
+}
 .table__tbody tr:hover {
   filter: brightness(95%);
 }
@@ -640,7 +648,7 @@ textarea {
   font-size: medium;
   font-weight: 600;
   color: var(--c_lightPurple);
-  padding: 0.5em 1em;
+  padding: 10px;
   background-color: #fff;
 }
 .pager__link.disabled {
