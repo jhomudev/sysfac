@@ -1203,9 +1203,8 @@ textarea {
   object-fit: contain;
 }
 .dont_access__message {
-  font-size: medium;
+  font-size: small;
   font-weight: 500;
-  font-style: italic;
   color: var(--c_orange);
 }
 
