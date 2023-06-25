@@ -43,7 +43,7 @@ class SellController extends SellModel
 
     $client_id = $this->decryption($_POST['tx_client_id']);
     $user_id = $_SESSION['user_id'];
-    $proof_type = (array_key_exists('tx_proof_type', $_POST)) ? intval($_POST['tx_proof_type']) : "";
+    $proof_type = TYPE_PROOF->boleta;
     $discount = $cart_data->discount;
     $total_import = $cart_data->total_import;
     $total_pay = $cart_data->total_pay;
@@ -62,7 +62,7 @@ class SellController extends SellModel
     }
 
     // validacion campos vacios
-    if (empty($_POST['tx_proof_type']) || empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
+    if (empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",

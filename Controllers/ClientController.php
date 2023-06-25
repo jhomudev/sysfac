@@ -44,20 +44,19 @@ class ClientController extends ClientModel
 
       $_POST['id_dni_ruc'] = $this->decryption($client_id);
     } else {
-      // SI ES POR DNI/RUC
       // validar campos vacios si es por DNI o RUC
-      if (empty($type_proof) || empty($dni_ruc)) {
+      if (empty($dni_ruc)) {
         $alert = [
           "Alert" => "simple",
           "title" => "Campos vacios",
-          "text" => "Por favor. Elija el tipo de comprobante de pago y escriba el RUC/DNI.",
+          "text" => "Por favor. Escriba el DNI.",
           "icon" => "warning"
         ];
         return json_encode($alert);
         exit();
       }
 
-      if (is_string($type_proof) || !(is_numeric($dni_ruc))) {
+      if (!(is_numeric($dni_ruc))) {
         $alert = [
           "Alert" => "simple",
           "title" => "Datos inválidos",
@@ -98,7 +97,7 @@ class ClientController extends ClientModel
     $email = isset($_POST['tx_client_email']) ? MainModel::clearString($_POST['tx_client_email']) : "";
 
     // Validacion de campos vacios
-    if (empty($names) || empty($lastnames) || (empty($dni) && empty($RUC))) {
+    if (empty($names) || empty($lastnames) || (empty($dni))) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
@@ -110,25 +109,15 @@ class ClientController extends ClientModel
     }
 
     // validación de duplicidad de dni o RUC
-    if (!empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE (dni=$dni OR RUC=$RUC)");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (!empty($dni) && empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE dni=$dni");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE RUC=$RUC");
-      $clients = $sql_verify->fetchAll();
-    }
+    $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE dni=$dni");
+    $clients = $sql_verify->fetchAll();
 
     $duplicated = count($clients) > 0;
     if ($duplicated) {
       $alert = [
         "Alert" => "simple",
         "title" => "Duplicidad de datos",
-        "text" => "El DNI/RUC ya está registrado a otro cliente.",
+        "text" => "El DNI perteence a otro cliente.",
         "icon" => "warning"
       ];
       return json_encode($alert);

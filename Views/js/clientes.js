@@ -30,7 +30,6 @@ async function getClients(words = "") {
         tbody.innerHTML += `
         <tr>
           <td>${client.dni ? client.dni : "--"}</td>
-          <td>${client.RUC ? client.RUC : "--"}</td>
           <td>${client.names} ${client.lastnames}</td>
           <td>${client.phone ? client.phone : "--"}</td>
           <td>${client.email ? client.email : "--"}</td>
@@ -87,7 +86,6 @@ async function setDataClient(clientId) {
 
     document.getElementById("userId").value = res.client_id;
     document.getElementById("dni").value = res.dni;
-    document.getElementById("RUC").value = res.RUC;
     document.getElementById("nombres").value = res.names;
     document.getElementById("apellidos").value = res.lastnames;
     document.getElementById("phone").value = res.phone;

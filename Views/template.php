@@ -122,10 +122,6 @@ if ($vista == "proof") {
                     <input type="text" name="tx_client_dni" id="clientDNI" class="form__input" minlength="8" maxlength="8" number>
                   </fieldset>
                   <fieldset class="form__group">
-                    <legend class="form__legend">RUC</legend>
-                    <input type="text" name="tx_client_RUC" id="clientRUC" class="form__input" minlength="11" maxlength="11" number>
-                  </fieldset>
-                  <fieldset class="form__group">
                     <legend class="form__legend">Nombres</legend>
                     <input type="text" name="tx_client_names" id="clientNames" class="form__input" mayus>
                   </fieldset>
@@ -137,14 +133,6 @@ if ($vista == "proof") {
               </div>
               <div class="form__part part_details_sell">
                 <h2 class="cart__subtitle">Detalles de venta</h2>
-                <fieldset class="form__group">
-                  <legend class="form__legend">Tipo de comprobante</legend>
-                  <select name="tx_proof_type" id="typeProof" class="form__input">
-                    <option selected disabled>Seleccione el tipo de comprobante</option>
-                    <option value="<?php echo TYPE_PROOF->factura; ?>">Factura</option>
-                    <option value="<?php echo TYPE_PROOF->boleta; ?>">Boleta de venta</option>
-                  </select>
-                </fieldset>
                 <fieldset class="form__group">
                   <legend class="form__legend">DESCUENTO</legend>
                   <select name="tx_discount_type" id="typeDiscount" class="form__input">

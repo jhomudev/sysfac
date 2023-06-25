@@ -3,7 +3,6 @@ const cartModal = document.querySelector(".cart__modal");
 const cart = document.getElementById("cart");
 const cartTableItems = document.getElementById("cartTableItems");
 const toggleCartModal = document.querySelectorAll(".toggleShowCart");
-const typeProof = document.getElementById("typeProof");
 const typeDiscount = document.getElementById("typeDiscount");
 const cartCount = document.querySelectorAll(".cart_icon_count");
 const totalPay = document.getElementById("totalPay");
@@ -186,15 +185,6 @@ async function gratifyProduct(col, val) {
   }
 }
 
-// Poner placeholder de acuerdo al dato x el q buscar cliente
-typeProof.addEventListener("change", () => {
-  let doc = "";
-  if (typeProof.value == 1) doc = "DNI";
-  else if (typeProof.value == 2) doc = "RUC";
-
-  dni_ruc.placeholder = "Escriba el " + doc;
-});
-
 // Poner placeholder de acuerdo al dato x el q aplicar descuento
 typeDiscount.addEventListener("change", () => {
   let placeholder = "";
@@ -218,9 +208,7 @@ async function getDataClient(e) {
 
     const req = await axios.post(
       `${serverURL}/Request/getDataClientRequest.php`,
-      new URLSearchParams(
-        `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
-      )
+      new URLSearchParams(`id_dni_ruc=${dni_ruc.value}`)
     );
     const res = await req.data;
 
@@ -228,14 +216,12 @@ async function getDataClient(e) {
       alertRequest(res);
       document.getElementById("clientId").value = "";
       document.getElementById("clientDNI").value = "";
-      document.getElementById("clientRUC").value = "";
       document.getElementById("clientNames").value = "";
       document.getElementById("clientLastnames").value = "";
     }
     if (!res.Alert && typeof res === "object") {
       document.getElementById("clientId").value = res.client_id;
       document.getElementById("clientDNI").value = res.dni;
-      document.getElementById("clientRUC").value = res.RUC;
       document.getElementById("clientNames").value = res.names;
       document.getElementById("clientLastnames").value = res.lastnames;
     }

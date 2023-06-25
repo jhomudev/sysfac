@@ -26,10 +26,8 @@ class ClientModel extends MainModel
   protected static function getDataClientModel(array $data): mixed
   {
     if (isset($data['client_id']) && !empty($data['client_id'])) $column = "client_id";
-    else {
-      $column = ($data['typeProof'] == TYPE_PROOF->boleta) ? "dni" : (($data['typeProof'] == TYPE_PROOF->factura) ? "RUC" : "");
-    }
-
+    else $column = "dni";
+    
     $id_dni_ruc = $data['id_dni_ruc'];
 
     $client = MainModel::connect()->prepare("SELECT * FROM clients WHERE $column=:id_dni_ruc");
