@@ -11,16 +11,16 @@ if ($request) {
 class PurchaseController extends PurchaseModel
 {
   // Función controlador para obtener las compras
-  public function getPurchasesController()
+  public function getPurchasesController(mixed $start = null, mixed $end = null)
   {
     $filters = [
-      "column" => isset($_POST['column']) ? $_POST['column'] : "",
-      "value" => isset($_POST['value']) ? $_POST['value'] : "",
-      "date_start" => isset($_POST['date_start']) ? $_POST['date_start'] : "",
-      "date_end" => isset($_POST['date_end']) ? $_POST['date_end'] : "",
+      'supplier_id' => MainModel::getCleanGetValue('supplier_id'),
+      'user_id' => MainModel::getCleanGetValue('user_id'),
+      'date_start' => MainModel::getCleanGetValue('date_start'),
+      'date_end' => MainModel::getCleanGetValue('date_end'),
     ];
 
-    $purchases = PurchaseModel::getPurchasesModel($filters);
+    $purchases = PurchaseModel::getPurchasesModel($filters, $start, $end);
     return json_encode($purchases);
   }
 
