@@ -77,7 +77,7 @@
       ?>
     </select>
   </div>
-  <button type="submit" class="filter" title="Filtrar" style="border-radius: 3px; padding:7px 10px;">Filtrar</button>
+  <button type="submit" class="filter filter__btn" title="Filtrar">Filtrar</button>
 </form>
 <div class="actions__prods">
   <form action="<?php echo SERVER_URL; ?>/Request/formProductInvRequest.php" method="POST" class="form__prod box__entries formRequest">

@@ -296,12 +296,6 @@ textarea {
 .notification__p {
   font-size: small;
   font-weight: 300;
-  /* estilos para limitar lineas de texto */
-  /* display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 2;  */ /* aquí se especifica el número de líneas */
 }
 .header__icon {
   position: relative;
@@ -449,6 +443,13 @@ textarea {
   padding: 5px 10px;
   border-radius: 10px;
   cursor: pointer;
+  color: var(--c_green);
+  font-size: small;
+}
+.filter__btn {
+  border-radius: 3px;
+  padding: 7px 10px;
+  color: var(--c_dark);
 }
 .filter__products_all_btn {
   margin-left: auto;
@@ -492,7 +493,6 @@ textarea {
 /* Selector para el icono del calendario en el input de tipo "date" */
 .filter__date::-webkit-calendar-picker-indicator {
   background-color: var(--c_green);
-  /* filter: invert(50%); */
 }
 /* Selector para el texto dentro del input de tipo "date" */
 .filter__date::before {
@@ -590,8 +590,6 @@ textarea {
   display: flex;
   width: 100%;
   height: auto;
-  max-height: 1900px;
-  /* min-height: 600px; */
   overflow: auto;
   border-radius: 5px;
   border: 1px solid var(--c_lightPurple);
@@ -799,6 +797,7 @@ textarea {
   display: none;
   place-items: center;
   padding: 1em;
+  overflow: auto;
 }
 .modal.show {
   display: grid;
@@ -808,11 +807,9 @@ textarea {
   display: flex;
   flex-direction: column;
   width: min(100%, 400px);
-  max-height: 100vh;
   padding: 2rem;
   border-radius: 5px;
   background-color: #fff;
-  overflow: auto;
 }
 .details {
   position: relative;
@@ -947,16 +944,15 @@ textarea {
   z-index: 100;
   width: 100%;
   height: 100vh;
-  background-color: rgba(15, 15, 15, 0.7);
   display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 1em;
   padding: 1em;
+  overflow: auto;
+  background-color: rgba(15, 15, 15, 0.7);
 }
 .cart__modal.show {
-  display: flex;
+  display: grid;
+  place-items: center;
 }
 .cart {
   display: grid;
@@ -969,7 +965,6 @@ textarea {
   padding: 1em;
   background-color: #fff;
   border-radius: 3px;
-  overflow: auto;
 }
 .cart__tableBox {
   grid-area: table;
@@ -994,7 +989,7 @@ textarea {
   font-size: small;
 }
 .cart__table__thead th {
-  padding: 1em;
+  padding: 1em 5px;
 }
 .cart__table__tbody {
   background-color: transparent;

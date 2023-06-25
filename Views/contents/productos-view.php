@@ -37,7 +37,7 @@
       <option value="<?php echo STATE->inactive; ?>">No</option>
     </select>
   </div>
-  <button type="submit" class="filter" title="Filtrar" style="border-radius: 3px; padding:7px 10px;">Filtrar</button>
+  <button type="submit" class="filter filter__btn" title="Filtrar">Filtrar</button>
   <a href="<?php echo SERVER_URL; ?>/inventario" class="filter__products_btn">Productos en inventario</a>
 </form>
 <p class="table__numrows">Mostrando
