@@ -13,16 +13,16 @@ if ($request) {
 class SellController extends SellModel
 {
   // Función controlador para obtener los ventas
-  public function getSellsController()
+  public function getSellsController(mixed $start = null, mixed $end = null)
   {
     $filters = [
-      'words' => isset($_POST['words']) ? $_POST['words'] : "",
-      'column' => isset($_POST['column']) ? $_POST['column'] : "",
-      'value' => isset($_POST['value']) ? $_POST['value'] : "",
-      'date_start' => isset($_POST['date_start']) ? $_POST['date_start'] : "",
-      'date_end' => isset($_POST['date_end']) ? $_POST['date_end'] : "",
+      'words' => MainModel::getCleanGetValue('words'),
+      'user_id' => MainModel::getCleanGetValue('user_id'),
+      'date_start' => MainModel::getCleanGetValue('date_start'),
+      'date_end' => MainModel::getCleanGetValue('date_end'),
     ];
-    $sells = SellModel::getSellsModel($filters);
+
+    $sells = SellModel::getSellsModel($filters, $start, $end);
     return json_encode($sells);
   }
 
