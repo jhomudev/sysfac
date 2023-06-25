@@ -55,7 +55,7 @@ if ($vista == "proof") {
 
         // Condicionales para las vistas dependiendo del tipo de usuario
         $access_views_vendedor = ["ventas", "new_sale", "clientes", "dashboard"];
-        
+
         $style = "";/* para el height del main view , para vista dont_access */
 
         if ($_SESSION['type'] == USER_TYPE->vendedor) {
@@ -170,9 +170,9 @@ if ($vista == "proof") {
     <!-- Script charjs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
   <?php
-    if ($vista != "purchase") echo '<script src="' . SERVER_URL . '/Views/js/' . $vista . '.js"></script>';
+    $no_script_views = ['compras', "ventas"];
+    if (!in_array($vista, $no_script_views)) echo '<script src="' . SERVER_URL . '/Views/js/' . $vista . '.js"></script>';
 
     include "./Views/inc/logout.php";
     include "./Views/inc/scriptMenuBar.php";
