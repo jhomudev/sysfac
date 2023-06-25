@@ -65,6 +65,7 @@
     <label class="filter__for">Local: </label>
     <select name="local_id" data-col="local_id" class="filter__select" required>
       <option selected disabled>--</option>
+      <option value="unassigned">Sin asignar</option>
       <?php
       require_once "./Controllers/LocalController.php";
       $IL = new LocalController();

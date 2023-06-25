@@ -154,8 +154,13 @@ class ProductModel extends MainModel
 
       foreach ($filters as $column => $value) {
         if (!empty($value)) {
-          if ($sentence == "") $sentence .= "pa.$column=" . $value;
-          else $sentence .= " AND pa.$column=" . $value;
+          if ($sentence == "") {
+            if ($value == "unassigned") $sentence .= "pa.$column IS NULL";
+            else $sentence .= "pa.$column=" . $value;
+          } else {
+            if ($value == "unassigned") $sentence .= " AND pa.$column IS NULL";
+            else $sentence .= " AND pa.$column=" . $value;
+          }
         }
       }
       $products_all = MainModel::connect()->prepare("SELECT pa.product_unit_id, pa.serial_number, pa.state, pa.local_id, p.name AS product_name FROM products_all pa INNER JOIN products p ON p.product_id = pa.product_id INNER JOIN categories c ON p.category_id = c.cat_id WHERE $sentence ORDER BY p.product_id DESC $limit");
