@@ -158,7 +158,7 @@
           $ns = $product->serial_number ? $product->serial_number : "N.A.";
           echo '
             <tr>
-              <td><input type="checkbox" class="checkbox__inv" name="p_checkeds[]" value="' . $product->product_unit_id . '"></td>
+              <td><label for="cb_' . $product->product_unit_id . '" class="label__checkbox"><input type="checkbox" id="cb_' . $product->product_unit_id . '" class="checkbox__inv" name="p_checkeds[]" value="' . $product->product_unit_id . '"></label></td>
               <td>' . $product->product_name . '</td>
               <td>' . $ns . '</td>
               <td>' . $local . '</td>

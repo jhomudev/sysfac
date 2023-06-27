@@ -11,7 +11,7 @@ checkboxMain.addEventListener("change", () => {
   checkboxAll.forEach((checkbox) => {
     checkbox.checked = checkboxMain.checked;
 
-    const row = checkbox.parentNode.parentNode;
+    const row = checkbox.parentNode.parentNode.parentNode;
     if (checkbox.checked) row.classList.add("checked");
     else row.classList.remove("checked");
   });
@@ -19,7 +19,7 @@ checkboxMain.addEventListener("change", () => {
 
 checkboxAll.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
-    const row = checkbox.parentNode.parentNode;
+    const row = checkbox.parentNode.parentNode.parentNode;
     if (checkbox.checked) row.classList.add("checked");
     else row.classList.remove("checked");
   });
