@@ -53,7 +53,7 @@ async function setDataProduct(productIdName) {
     const res = await req.data;
 
     document.querySelector(".form__title").textContent = "Modificar usuario";
-    document.querySelector(".form__submit").value = "Modificar";
+    document.getElementById("btnSubmitForm").value = "Modificar";
     document.getElementById("productIdName").value = res.product_id;
     document.getElementById("nombre").value = res.name;
     document.getElementById("precio").value = res.price_sale;

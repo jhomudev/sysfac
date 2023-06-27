@@ -47,7 +47,7 @@ async function getGraphicSales() {
         },
         title: {
           display: true,
-          text: "Chart.js Line Chart",
+          text: "Evolución mensual de ventas y compras",
         },
       },
     },
@@ -98,7 +98,7 @@ async function getGraphicBestSelling() {
       labels: data.quality,
       datasets: [
         {
-          label: "Productos",
+          label: "Ventas",
           data: data.quantity,
           backgroundColor: [
             "coral",

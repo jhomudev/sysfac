@@ -1,6 +1,7 @@
 @import url(http://localhost/sysfac/Views/css/main.css);
 textarea {
   resize: vertical;
+  min-height: 60px;
 }
 .container_all {
   width: 100%;
@@ -898,14 +899,6 @@ textarea {
   background-color: transparent;
   border: none;
   outline: none;
-}
-.form__textarea {
-  width: 100%;
-  /* padding: 7px 10px; */
-  height: 5em;
-  border: none;
-  outline: none;
-  font-size: small;
 }
 .form__submit {
   width: 100%;
