@@ -232,7 +232,7 @@
           <option value="<?php echo STATE->inactive  ?>">No</option>
         </select>
       </fieldset>
-      <input type="submit" value="Agregar" class="form__submit">
+      <input type="submit" value="Agregar" id="btnSubmitForm" class="form__submit">
     </form>
   </div>
 </div>

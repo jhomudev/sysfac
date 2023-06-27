@@ -179,9 +179,9 @@
   .grid {
     grid-template-areas:
       "sell sell sell sell"
-      "bestSells bestSells bestSells bestSells"
+      "movs__box movs__box movs__box movs__box"
       "states states states states"
-      "movs__box movs__box movs__box movs__box";
+      "bestSells bestSells bestSells bestSells";
   }
   .graphic#graphicStates {
     width: 500px !important;
