@@ -40,11 +40,8 @@ class SellController extends SellModel
   {
     $ICart = new CartController();
     $cart_data = json_decode($ICart->getDataCartController());
-
-    // $client_id = $this->decryption($_POST['tx_client_id']);
     $person_id = MainModel::getCleanPostValue('tx_person_id');
     $user_id = $_SESSION['user_id'];
-    // $proof_type = (array_key_exists('tx_proof_type', $_POST)) ? intval($_POST['tx_proof_type']) : "";
     $proof_type = MainModel::getCleanPostValue('tx_proof_type');
     $discount = $cart_data->discount;
     $total_import = $cart_data->total_import;
