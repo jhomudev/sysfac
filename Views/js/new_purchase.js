@@ -199,19 +199,6 @@ formsRequest.forEach((form) => {
 });
 
 // funcionalidad enableProfit, habilitar ganancia
-function disable(elements = [], boolean = true) {
-  elements.forEach((element) => {
-    if (boolean) {
-      element.disabled = boolean;
-      element.querySelector("input").required = !boolean;
-      element.style.display = "none";
-    } else {
-      element.disabled = boolean;
-      element.querySelector("input").required = !boolean;
-      element.style.display = "block";
-    }
-  });
-}
 
 const checkEnabledProfit = document.getElementById("enable_profit");
 const profit = document.getElementById("profit");

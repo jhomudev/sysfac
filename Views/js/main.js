@@ -142,3 +142,18 @@ inputsDecimal.forEach((input) => {
     }
   });
 });
+
+// funcionalidad para deshabiliutar campos
+function disable(elements = [], boolean = true) {
+  elements.forEach((element) => {
+    if (boolean) {
+      element.disabled = boolean;
+      element.querySelector("input").required = !boolean;
+      element.style.display = "none";
+    } else {
+      element.disabled = boolean;
+      element.querySelector("input").required = !boolean;
+      element.style.display = "block";
+    }
+  });
+}
