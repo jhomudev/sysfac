@@ -11,8 +11,8 @@ class LoginController extends LoginModel
   // Función controlador para inicio de sesión
   public function LoginController()
   {
-    $username = MainModel::clearString($_POST['tx_username']);
-    $password = MainModel::clearString($_POST['tx_password']);
+    $username = MainModel::getCleanPostValue('tx_username');
+    $password = MainModel::getCleanPostValue('tx_password');
 
     // Comprabar campos vacios
     if ($username == "" || $password == "") {

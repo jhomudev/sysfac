@@ -18,7 +18,7 @@ class LocalController extends LocalModel
   // Funcion controlador para obetenr los datos de usuario
   public function getDataLocalController()
   {
-    $location_id = intval($_POST['localId']);
+    $location_id = MainModel::getCleanPostValue('localId');
     $location = LocalModel::getDataLocalModel($location_id);
     return json_encode($location);
   }
@@ -26,10 +26,10 @@ class LocalController extends LocalModel
   // Funcion controlador para crear o editar usuario
   public function createLocalController()
   {
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $address = MainModel::clearString($_POST['tx_direccion']);
-    $type = MainModel::clearString($_POST['tx_type']);
-    $canStoreMore = MainModel::clearString($_POST['tx_canStore']);
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $address = MainModel::getCleanPostValue('tx_direccion');
+    $type = MainModel::getCleanPostValue('tx_type');
+    $canStoreMore = MainModel::getCleanPostValue('tx_canStore');
 
     // Validacion de campos vacios
     if (empty($name) || empty($address) || empty($type)) {
@@ -90,11 +90,11 @@ class LocalController extends LocalModel
   // Funcion controlador para crear o editar usuario
   public function editLocalController()
   {
-    $local_id = MainModel::clearString($_POST['tx_local_id']);
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $address = MainModel::clearString($_POST['tx_direccion']);
-    $type = MainModel::clearString($_POST['tx_type']);
-    $canStoreMore = MainModel::clearString($_POST['tx_canStore']);
+    $local_id = MainModel::getCleanPostValue('tx_local_id');
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $address = MainModel::getCleanPostValue('tx_direccion');
+    $type = MainModel::getCleanPostValue('tx_type');
+    $canStoreMore = MainModel::getCleanPostValue('tx_canStore');
 
     // Validacion de campos vacios
     if (empty($name) || empty($address) || empty($type)) {
@@ -156,7 +156,7 @@ class LocalController extends LocalModel
   // Funcion controlador para eliminar usuario
   public function deleteLocalController()
   {
-    $local_id = intval($_POST['tx_local_id']);
+    $local_id = MainModel::getCleanPostValue('tx_local_id');
 
     // Verificacion si hay unidades de productos en el local
     $query_verify = MainModel::executeQuerySimple("SELECT * FROM products_all WHERE local_id=$local_id");

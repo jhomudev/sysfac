@@ -59,9 +59,9 @@ class CategoryController extends CategoryModel
   // Funcion controlador para crear o editar usuario
   public function createCategoryController()
   {
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $link_image = MainModel::clearString($_POST['tx_linkImage']);
-    $description = MainModel::clearString($_POST['tx_descripcion']);
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $link_image = MainModel::getCleanPostValue('tx_linkImage');
+    $description = MainModel::getCleanPostValue('tx_descripcion');
     // valor de file_image
     if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
       $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
@@ -126,10 +126,10 @@ class CategoryController extends CategoryModel
   // Funcion controlador para crear o editar usuario
   public function editCategoryController()
   {
-    $cat_id = MainModel::clearString($_POST['tx_category_id']);
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $link_image = MainModel::clearString($_POST['tx_linkImage']);
-    $description = MainModel::clearString($_POST['tx_descripcion']);
+    $cat_id = MainModel::getCleanPostValue('tx_category_id');
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $link_image = MainModel::getCleanPostValue('tx_linkImage');
+    $description = MainModel::getCleanPostValue('tx_descripcion');
     // valor de file_image
     if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
       $file_image = file_get_contents($_FILES['file_cat']['tmp_name']);
@@ -204,7 +204,7 @@ class CategoryController extends CategoryModel
   // Funcion controlador para eliminar usuario
   public function deleteCategoryController()
   {
-    $category_id = intval($_POST['tx_category_idDel']);
+    $category_id = MainModel::getCleanPostValue('tx_category_idDel');
 
     // Verificacion si usexisten productos de esta categoria
     $query_verify = MainModel::executeQuerySimple("SELECT * FROM products WHERE category_id=$category_id");

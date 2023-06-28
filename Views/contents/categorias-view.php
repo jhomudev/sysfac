@@ -52,7 +52,7 @@
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Descripción</legend>
-        <textarea class="form__textarea" id="descripcion" name="tx_descripcion">
+        <textarea class="form__input" id="descripcion" name="tx_descripcion">
           </textarea>
       </fieldset>
       <fieldset class="form__group">

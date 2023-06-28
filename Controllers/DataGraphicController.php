@@ -11,7 +11,7 @@ class DataGraphicController extends DataGraphicModel
   // Funcion controlador para obtener la data de ventas y compras
   public function getSalesAndPurchasesController()
   {
-    $year = isset($_POST['year']) && !empty($_POST['year']) ? $_POST['year'] : date("Y");
+    $year = MainModel::getCleanPostValue('year') ? MainModel::getCleanPostValue('year') : date("Y");
     // $month = isset($_POST['month']) && !empty($_POST['month']) ? $_POST['month'] : date("m");
 
     if (empty($year)) {
@@ -53,15 +53,15 @@ class DataGraphicController extends DataGraphicModel
   // Funcion controlador para obtener la data de productos mas vendidos
   public function getProductsBestController()
   {
-    $year = isset($_POST['year']) && !empty($_POST['year']) ? $_POST['year'] : date("Y");
-    $month = isset($_POST['month']) && !empty($_POST['month']) ? $_POST['month'] : "";
+    $year = MainModel::getCleanPostValue('year') ? MainModel::getCleanPostValue('year') : date("Y");
+    $month = MainModel::getCleanPostValue('month') ? MainModel::getCleanPostValue('month') : "";
 
     $data = DataGraphicModel::getProductsBestModel($year, $month);
 
     $quality = [];
     $quantity = [];
 
-    foreach ($data as $key => $item) {
+    foreach ($data as $item) {
       array_push($quality, $item['product']);
       array_push($quantity, $item['quantity']);
     }

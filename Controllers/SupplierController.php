@@ -38,10 +38,10 @@ class SupplierController extends SupplierModel
   // Funcion controlador para crear un proveedor
   public function createSupplierController()
   {
-    $RUC = MainModel::clearString($_POST['tx_ruc']);
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $address = MainModel::clearString($_POST['tx_direccion']);
-    $phone = MainModel::clearString($_POST['tx_telefono']);
+    $RUC = MainModel::getCleanPostValue('tx_ruc');
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $address = MainModel::getCleanPostValue('tx_direccion');
+    $phone = MainModel::getCleanPostValue('tx_telefono');
 
     // Validacion de campos vacios
     if (empty($name) || empty($phone) || empty($address) || empty($RUC)) {
@@ -102,11 +102,11 @@ class SupplierController extends SupplierModel
   // Funcion controlador para crear o editar usuario
   public function editSupplierController()
   {
-    $supplier_id = MainModel::clearString($_POST['tx_supplier_id']);
-    $RUC = MainModel::clearString($_POST['tx_ruc']);
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $address = MainModel::clearString($_POST['tx_direccion']);
-    $phone = MainModel::clearString($_POST['tx_telefono']);
+    $supplier_id = MainModel::getCleanPostValue('tx_supplier_id');
+    $RUC = MainModel::getCleanPostValue('tx_ruc');
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $address = MainModel::getCleanPostValue('tx_direccion');
+    $phone = MainModel::getCleanPostValue('tx_telefono');
 
     // Validacion de campos vacios
     if (empty($name) || empty($phone) || empty($address) || empty($RUC)) {
@@ -168,7 +168,7 @@ class SupplierController extends SupplierModel
   // Funcion controlador para eliminar usuario
   public function deleteSupplierController()
   {
-    $supplier_id = intval($_POST['tx_supplier_id']);
+    $supplier_id = MainModel::getCleanPostValue('tx_supplier_id');
 
     // Verificaion si supplier_id fue definido
     if (empty($supplier_id)) {

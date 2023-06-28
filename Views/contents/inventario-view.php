@@ -92,8 +92,8 @@
     </fieldset>
     <fieldset class="form__group hidden" id="localBox">
       <legend class="form__label">Local</legend>
-      <select name="local" data-col="local" class="form__input" required>
-        <option selected disabled>Seleccione el local</option>
+      <select name="local" data-col="local" class="form__input">
+        <option value="" selected disabled>Seleccione el local</option>
         <?php
         require_once "./Controllers/LocalController.php";
         $IL = new LocalController();
@@ -108,8 +108,8 @@
     </fieldset>
     <fieldset class="form__group hidden" id="stateBox">
       <legend class="form__label">Estado</legend>
-      <select name="state" data-col="state" class="form__input" required>
-        <option selected disabled>Seleccione el estado</option>
+      <select name="state" data-col="state" class="form__input">
+        <option value="" selected disabled>Seleccione el estado</option>
         <option value="<?php echo STATE_IN->stock; ?>">En stock</option>
         <option value="<?php echo STATE_IN->damaged; ?>">Dañado</option>
       </select>

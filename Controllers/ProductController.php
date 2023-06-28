@@ -16,7 +16,7 @@ class ProductController extends ProductModel
       "category_id" => MainModel::getCleanGetValue('category_id'),
       "is_active" => MainModel::getCleanGetValue('is_active'),
     ];
-    
+
     if ($_POST) {
       $filters = [
         "words" => MainModel::getCleanPostValue('words'),
@@ -53,7 +53,7 @@ class ProductController extends ProductModel
   // Funcion controlador para obetenr los datos de producto
   public function getDataProductController()
   {
-    $product_id_name = $_POST['productIdName'];
+    $product_id_name = MainModel::getCleanPostValue('productIdName');
     $product = ProductModel::getDataProductModel($product_id_name);
 
     // obtencion de un nuevo array sin version indexada
@@ -72,13 +72,13 @@ class ProductController extends ProductModel
   // Funcion controlador para crear o editar producto
   public function createProductController()
   {
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $price = MainModel::clearString($_POST['tx_precio']);
-    $unit = MainModel::clearString($_POST['tx_unidad']);
-    $min = MainModel::clearString($_POST['tx_minimo']);
-    $link_image = MainModel::clearString($_POST['tx_linkImage']);
-    $sale_for = MainModel::clearString($_POST['tx_sale_for']);
-    $category = MainModel::clearString($_POST['tx_category']);
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $price = MainModel::getCleanPostValue('tx_precio');
+    $unit = MainModel::getCleanPostValue('tx_unidad');
+    $min = MainModel::getCleanPostValue('tx_minimo');
+    $link_image = MainModel::getCleanPostValue('tx_linkImage');
+    $sale_for = MainModel::getCleanPostValue('tx_sale_for');
+    $category = MainModel::getCleanPostValue('tx_category');
     $is_active = intval($_POST['tx_activo']);
 
     // valor de file_image
@@ -93,6 +93,29 @@ class ProductController extends ProductModel
         "Alert" => "simple",
         "title" => "Campos vacios",
         "text" => "Por favor. Complete todos los campos necesarios.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+    // Validacion de precio , numerico
+    if (!is_numeric($price)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Precio de venta inválido",
+        "text" => "Escriba un precio válido.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    // validacion de minimo inventario , numerico , no supera 3 digitos
+    if (strlen($min) > 3 || !is_numeric($min)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Minimo de inventario inválido",
+        "text" => "Escriba la cantidad válida. No puede superar 3 dígitos.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -152,14 +175,14 @@ class ProductController extends ProductModel
   // Funcion controlador para crear o editar producto
   public function editProductController()
   {
-    $product_id = MainModel::clearString($_POST['tx_product_id']);
-    $name = MainModel::clearString($_POST['tx_nombre']);
-    $price = MainModel::clearString($_POST['tx_precio']);
-    $unit = MainModel::clearString($_POST['tx_unidad']);
-    $min = MainModel::clearString($_POST['tx_minimo']);
-    $link_image = MainModel::clearString($_POST['tx_linkImage']);
-    $sale_for = MainModel::clearString($_POST['tx_sale_for']);
-    $category = MainModel::clearString($_POST['tx_category']);
+    $product_id = MainModel::getCleanPostValue('tx_product_id');
+    $name = MainModel::getCleanPostValue('tx_nombre');
+    $price = MainModel::getCleanPostValue('tx_precio');
+    $unit = MainModel::getCleanPostValue('tx_unidad');
+    $min = MainModel::getCleanPostValue('tx_minimo');
+    $link_image = MainModel::getCleanPostValue('tx_linkImage');
+    $sale_for = MainModel::getCleanPostValue('tx_sale_for');
+    $category = MainModel::getCleanPostValue('tx_category');
     $is_active = intval($_POST['tx_activo']);
     // valor de file_image
     if (isset($_FILES['file_cat']) && !empty($_FILES['file_cat']['tmp_name'])) {
@@ -173,6 +196,30 @@ class ProductController extends ProductModel
         "Alert" => "simple",
         "title" => "Campos vacios",
         "text" => "Por favor. Complete todos los campos.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    // Validacion de precio , numerico
+    if (!is_numeric($price)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Precio de venta inválido",
+        "text" => "Escriba un precio válido.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    // validacion de minimo inventario , numerico , no supera 3 digitos
+    if (strlen($min) > 3 || !is_numeric($min)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Minimo de inventario inválido",
+        "text" => "Escriba la cantidad válida. No puede superar 3 dígitos.",
         "icon" => "warning"
       ];
       return json_encode($alert);
@@ -240,7 +287,7 @@ class ProductController extends ProductModel
   // Funcion controlador para eliminar producto
   public function deleteProductController()
   {
-    $product_id = $_POST['tx_product_id'];
+    $product_id = MainModel::getCleanPostValue('tx_product_id');
 
     // Validacion de que el producto no tenga ventas registradas
     $ops = MainModel::executeQuerySimple("SELECT op.product_id FROM operations op INNER JOIN products p ON p.product_id=op.product_id WHERE op.product_id=$product_id");
@@ -309,10 +356,14 @@ class ProductController extends ProductModel
   // Funcion controlador para crear o editar producto
   public function editProductInventaryController()
   {
-    $prods = isset($_POST['prods']) && !empty($_POST['prods']) ? MainModel::clearString($_POST['prods']) : "";
-    $action = isset($_POST['action']) && !empty($_POST['action']) ? MainModel::clearString($_POST['action']) : "";
-    $local_id = isset($_POST['local']) && !empty($_POST['local']) ? MainModel::clearString($_POST['local']) : "";
-    $state = isset($_POST['state']) && !empty($_POST['state']) ? MainModel::clearString($_POST['state']) : "";
+    $prods = MainModel::getCleanPostValue('prods');
+    $action = MainModel::getCleanPostValue('action');
+    $local_id = MainModel::getCleanPostValue('local');
+    $state = MainModel::getCleanPostValue('state');
+    $prods = MainModel::getCleanPostValue('prods');
+    $action = MainModel::getCleanPostValue('action');
+    $local_id = MainModel::getCleanPostValue('local');
+    $state =  MainModel::getCleanPostValue('state');
 
     // Validación de campos vacios en operacion
     if (empty($action) && ($action != "assign_local" || $action != "change_state")) {

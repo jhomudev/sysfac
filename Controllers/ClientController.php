@@ -11,7 +11,7 @@ class ClientController extends ClientModel
   // Función controlador para obtener los clientes
   public function getClientsController()
   {
-    $words = isset($_POST['words']) && !empty($_POST['words']) ? $_POST['words'] : "";
+    $words = mainmodel::getCleanPostValue('words');
     $clients = ClientModel::getClientsModel($words);
 
     foreach ($clients as $key => $client) {

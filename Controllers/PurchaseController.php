@@ -38,8 +38,8 @@ class PurchaseController extends PurchaseModel
     $ICP = new CartPurchaseController();
     $purchase_data = json_decode($ICP->getDataCartPurchaseController());
 
-    $supplier_id = $_POST['tx_supplier_id'];
-    $additional_info = $_POST['tx_add_info'];
+    $supplier_id = MainModel::getCleanPostValue('tx_supplier_id');
+    $additional_info = MainModel::getCleanPostValue('tx_add_info');
     $user_id = $_SESSION['user_id'];
     $purchase_items = json_decode($ICP->getItemsController());
     $purchase_total = $purchase_data->total;
