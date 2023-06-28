@@ -29,21 +29,25 @@
       <div class="form__btnclose toggleForm"><i class="ph ph-x"></i></div>
       <h1 class="form__title">Datos del cliente</h1>
       <input type="hidden" class="form__input" id="userId" name="tx_client_id">
-      <fieldset class="form__group">
+      <fieldset class="form__group" id="dniBox">
         <legend class="form__legend">DNI</legend>
-        <input type="text" class="form__input" id="dni" name="tx_client_dni" maxlength="8" minlength="8" number>
+        <input type="text" class="form__input" id="dni" name="tx_client_dni" disabled>
       </fieldset>
-      <fieldset class="form__group">
+      <fieldset class="form__group" id="RUCBox">
         <legend class="form__legend">RUC</legend>
-        <input type="text" class="form__input" id="RUC" name="tx_client_RUC" maxlength="11" minlength="11" number>
+        <input type="text" class="form__input" id="RUC" name="tx_client_RUC" disabled>
       </fieldset>
-      <fieldset class="form__group">
+      <fieldset class="form__group" id="nameBox">
+        <legend class="form__legend">Nombre</legend>
+        <input type="text" class="form__input" id="nombre" name="tx_client_name" mayus disabled>
+      </fieldset>
+      <fieldset class="form__group" id="namesBox">
         <legend class="form__legend">Nombres</legend>
-        <input type="text" class="form__input" id="nombres" name="tx_client_names" mayus required>
+        <input type="text" class="form__input" id="nombres" name="tx_client_names" mayus disabled>
       </fieldset>
-      <fieldset class="form__group">
+      <fieldset class="form__group" id="lastnamesBox">
         <legend class="form__legend">Apellidos</legend>
-        <input type="text" class="form__input" id="apellidos" name="tx_client_lastnames" mayus required>
+        <input type="text" class="form__input" id="apellidos" name="tx_client_lastnames" mayus disabled>
       </fieldset>
       <fieldset class="form__group">
         <legend class="form__legend">Teléfono</legend>

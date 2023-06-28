@@ -87,12 +87,27 @@ async function setDataClient(clientId) {
 
     document.getElementById("userId").value = res.client_id;
     document.getElementById("dni").value = res.dni;
-    document.getElementById("RUC").value = res.RUC;
     document.getElementById("nombres").value = res.names;
+    document.getElementById("nombre").value = res.names;
     document.getElementById("apellidos").value = res.lastnames;
     document.getElementById("phone").value = res.phone;
     document.getElementById("address").value = res.address;
     document.getElementById("correo").value = res.email;
+    document.getElementById("RUC").value = res.RUC;
+
+    const RUCBox = document.getElementById("RUCBox");
+    const dniBox = document.getElementById("dniBox");
+    const namesBox = document.getElementById("namesBox");
+    const nameBox = document.getElementById("nameBox");
+    const lastnamesBox = document.getElementById("lastnamesBox");
+
+    if (document.getElementById("RUC").value) {
+      disable([dniBox, namesBox, lastnamesBox]);
+      disable([RUCBox, nameBox], false);
+    } else if (document.getElementById("dni").value) {
+      disable([dniBox, namesBox, lastnamesBox], false);
+      disable([RUCBox, nameBox]);
+    }
   } catch (error) {
     console.log(error);
   }

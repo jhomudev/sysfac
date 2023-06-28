@@ -24,53 +24,20 @@ class ClientController extends ClientModel
   // Funcion controlador para obtener los datos de cliente
   public function getDataClientController()
   {
-    $type_proof = isset($_POST['typeProof']) ? intval($_POST['typeProof']) : "";
-    $dni_ruc = isset($_POST['id_dni_ruc']) ? intval($_POST['id_dni_ruc']) : "";
+    $client_id = MainModel::decryption(MainModel::getCleanPostValue('client_id'));
 
-    if (isset($_POST['client_id'])) {
-      // SI ES X ID
-      $client_id = $this->clearString($_POST['client_id']);
-      // Validar campos vacios si es x id
-      if (empty($client_id)) {
-        $alert = [
-          "Alert" => "simple",
-          "title" => "Campos vacios",
-          "text" => "El cliente a modificar no esta definido.",
-          "icon" => "warning"
-        ];
-        return json_encode($alert);
-        exit();
-      }
-
-      $_POST['id_dni_ruc'] = $this->decryption($client_id);
-    } else {
-      // SI ES POR DNI/RUC
-      // validar campos vacios si es por DNI o RUC
-      if (empty($type_proof) || empty($dni_ruc)) {
-        $alert = [
-          "Alert" => "simple",
-          "title" => "Campos vacios",
-          "text" => "Por favor. Elija el tipo de comprobante de pago y escriba el RUC/DNI.",
-          "icon" => "warning"
-        ];
-        return json_encode($alert);
-        exit();
-      }
-
-      if (is_string($type_proof) || !(is_numeric($dni_ruc))) {
-        $alert = [
-          "Alert" => "simple",
-          "title" => "Datos inválidos",
-          "text" => "Por favor. Complete los campos correctamente.",
-          "icon" => "warning"
-        ];
-        return json_encode($alert);
-        exit();
-      }
+    if (empty($client_id)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Campos vacios",
+        "text" => "El cliente a modificar no esta definido.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
     }
 
-    $data_search = $_POST;
-    $client = ClientModel::getDataClientModel($data_search);
+    $client = ClientModel::getDataClientModel($client_id);
 
     if ($client == false) {
       $alert = [
@@ -82,68 +49,104 @@ class ClientController extends ClientModel
       return json_encode($alert);
       exit();
     }
+
     $client['client_id'] = ClientModel::encryption($client['client_id']);
+
     return json_encode($client);
+  }
+  // Funcion controlador para obtener los datos de persona con API
+  public function getDataPersonByIdController()
+  {
+    $ruc_dni = MainModel::getCleanPostValue('ruc_dni');
+    $type_proof = MainModel::getCleanPostValue('typeProof');
+
+    if (empty($type_proof)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Tipo de comprobante no definido",
+        "text" => "Seleccione el tipo de comprobante a generar.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    if (empty($ruc_dni)) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "RUC o DNI no definido",
+        "text" => "Escriba el RUc o DNI del cliente, para obtener sus datos.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    if ($type_proof == TYPE_PROOF->boleta) {
+      if (strlen($ruc_dni) != 8) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "DNI inválido",
+          "text" => "Usted generará una boleta. Ingrese un DNI válido.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+    } else if ($type_proof == TYPE_PROOF->factura) {
+      if (strlen($ruc_dni) != 11) {
+        $alert = [
+          "Alert" => "simple",
+          "title" => "RUC inválido",
+          "text" => "Usted generará una factura. Ingrese un RUC válido.",
+          "icon" => "warning"
+        ];
+        return json_encode($alert);
+        exit();
+      }
+    }
+
+    $data = ClientModel::getDataPersonByIdModel($ruc_dni);
+
+    if ($data == false) {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Persona no encontrada",
+        "text" => "Al paracer el RUC o DNI no existe.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+
+    return json_encode($data);
   }
 
   // Funcion controlador para crear cliente
-  public function createClientController()
+  public function createClientController(string $dni = null, string $RUC = null)
   {
-    $dni = isset($_POST['tx_client_dni']) && !empty($_POST['tx_client_dni']) ? MainModel::clearString($_POST['tx_client_dni']) : "";
-    $RUC = isset($_POST['tx_client_RUC']) && !empty($_POST['tx_client_RUC']) ? MainModel::clearString($_POST['tx_client_RUC']) : "";
-    $names = MainModel::clearString($_POST['tx_client_names']);
-    $lastnames = MainModel::clearString($_POST['tx_client_lastnames']);
-    $address = isset($_POST['tx_client_address']) ? MainModel::clearString($_POST['tx_client_address']) : "";
-    $phone = isset($_POST['tx_client_phone']) ? MainModel::clearString($_POST['tx_client_phone']) : "";
-    $email = isset($_POST['tx_client_email']) ? MainModel::clearString($_POST['tx_client_email']) : "";
-
     // Validacion de campos vacios
-    if (empty($names) || empty($lastnames) || (empty($dni) && empty($RUC))) {
+    if (empty($dni) && empty($RUC)) {
       $alert = [
         "Alert" => "simple",
         "title" => "Campos vacios",
-        "text" => "Por favor. Complete todos los campos.",
+        "text" => "Por favor. Defina el RUC o DNI.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
     }
 
-    // validación de duplicidad de dni o RUC
-    if (!empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE (dni=$dni OR RUC=$RUC)");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (!empty($dni) && empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE dni=$dni");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE RUC=$RUC");
-      $clients = $sql_verify->fetchAll();
-    }
-
-    $duplicated = count($clients) > 0;
-    if ($duplicated) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Duplicidad de datos",
-        "text" => "El DNI/RUC ya está registrado a otro cliente.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
-    }
-
+    $person = $dni ? MainModel::consultDNIRUC($dni) : MainModel::consultDNIRUC($RUC);
+    $names = isset($person->nombres) ? $person->nombres : $person->nombre;
+    $lastname_p = $person->apellidoPaterno ?? '';
+    $lastname_m = $person->apellidoMaterno ?? '';
     $data = [
       "client_id" => uniqid("C-") . strtotime("now"),
-      "dni" => $dni,
-      "RUC" => $RUC,
+      "dni" => $dni ?? "",
+      "RUC" => $RUC ?? "",
       "names" => $names,
-      "lastnames" => $lastnames,
-      "address" => $address,
-      "phone" => $phone,
-      "email" => $email,
+      "lastnames" =>  $lastname_p . ' ' . $lastname_m,
       "created_at" =>  date('Y-m-d H:i:s'),
     ];
 
@@ -172,61 +175,13 @@ class ClientController extends ClientModel
   // Funcion controlador para editar cliente
   public function editClientController()
   {
-    $client_id = isset($_POST['tx_client_id']) && !empty($_POST['tx_client_id']) ? MainModel::clearString($_POST['tx_client_id']) : "";
-    $dni = isset($_POST['tx_client_dni']) && !empty($_POST['tx_client_dni']) ? MainModel::clearString($_POST['tx_client_dni']) : "";
-    $RUC = isset($_POST['tx_client_RUC']) && !empty($_POST['tx_client_RUC']) ? MainModel::clearString($_POST['tx_client_RUC']) : "";
-    $names = MainModel::clearString($_POST['tx_client_names']);
-    $lastnames = MainModel::clearString($_POST['tx_client_lastnames']);
-    $address = isset($_POST['tx_client_address']) ? MainModel::clearString($_POST['tx_client_address']) : "";
-    $phone = isset($_POST['tx_client_phone']) ? MainModel::clearString($_POST['tx_client_phone']) : "";
-    $email = isset($_POST['tx_client_email']) ? MainModel::clearString($_POST['tx_client_email']) : "";
-
-    // Validacion de campos vacios
-    if (empty($client_id) || empty($names) || empty($lastnames) || (empty($dni) && empty($RUC))) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Campos vacios",
-        "text" => "Por favor. Complete todos los campos.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
-    }
-
-    $client_id = $this->decryption($client_id);
-
-    // validación de duplicidad de dni o RUC
-    if (!empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND (dni=$dni OR RUC=$RUC)");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (!empty($dni) && empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND dni=$dni");
-      $clients = $sql_verify->fetchAll();
-    }
-    if (empty($dni) && !empty($RUC)) {
-      $sql_verify =  MainModel::executeQuerySimple("SELECT * FROM clients WHERE client_id<>'$client_id' AND RUC=$RUC");
-      $clients = $sql_verify->fetchAll();
-    }
-
-    $duplicated = count($clients) > 0;
-    if ($duplicated) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Duplicidad de datos",
-        "text" => "El DNI/RUC ya está registrado a otro cliente.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
-    }
+    $client_id = MainModel::decryption(MainModel::getCleanPOSTValue('tx_client_id'));
+    $address = MainModel::getCleanPostValue('tx_client_address');
+    $phone = MainModel::getCleanPostValue('tx_client_phone');
+    $email = MainModel::getCleanPostValue('tx_client_email');
 
     $new_data = [
       "client_id" => $client_id,
-      "dni" => $dni,
-      "RUC" => $RUC,
-      "names" => $names,
-      "lastnames" => $lastnames,
       "address" => $address,
       "phone" => $phone,
       "email" => $email,
