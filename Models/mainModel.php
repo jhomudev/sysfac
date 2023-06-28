@@ -131,4 +131,49 @@ class MainModel
       return true;
     } else return false;
   }
+
+  // Funcion para consultar DNI o RUC
+  protected static function consultDNIRUC(string $id): stdClass
+  {
+    if (strlen($id) == 8) {
+      $curlopt_url = 'https://api.apis.net.pe/v1/dni?numero=' . $id;
+      $curlopt_maxredirs = 2;
+      $referer = 'Referer: https://apis.net.pe/consulta-dni-api';
+    } else if (strlen($id) == 11) {
+      $curlopt_url = 'https://api.apis.net.pe/v1/ruc?numero=' . $id;
+      $curlopt_maxredirs = 10;
+      $referer = 'Referer: http://apis.net.pe/api-ruc';
+    }
+
+    // Datos
+    $token = 'apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N';
+
+    // Iniciar llamada a API
+    $curl = curl_init();
+
+    // Buscar ruc sunat
+    curl_setopt_array($curl, array(
+      // para usar la versión 2
+      CURLOPT_URL => $curlopt_url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_SSL_VERIFYPEER => 0,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => $curlopt_maxredirs,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_HTTPHEADER => array(
+        $referer,
+        'Authorization: Bearer ' . $token
+      ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    // Datos listos para usar
+    $person = json_decode($response);
+
+    return $person;
+  }
 }
