@@ -147,13 +147,14 @@ inputsDecimal.forEach((input) => {
 function disable(elements = [], boolean = true) {
   elements.forEach((element) => {
     if (boolean) {
-      element.disabled = boolean;
-      element.querySelector("input").required = !boolean;
+      element.querySelector(".form__input").disabled = boolean;
+      element.querySelector(".form__input").required = !boolean;
       element.style.display = "none";
     } else {
-      element.disabled = boolean;
-      element.querySelector("input").required = !boolean;
+      element.querySelector(".form__input").disabled = boolean;
+      element.querySelector(".form__input").required = !boolean;
       element.style.display = "block";
     }
+    console.log(element.querySelector(".form__input"));
   });
 }
