@@ -212,39 +212,74 @@ btnApplyDiscount.addEventListener("click", (e) => {
 });
 
 // funcion getDataclient
-async function getDataClient(e) {
+async function getDataPerson(e) {
   try {
     e.preventDefault();
 
     const req = await axios.post(
-      `${serverURL}/Request/getDataClientRequest.php`,
+      `${serverURL}/Request/getDataPersonRequest.php`,
       new URLSearchParams(
-        `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
+        `typeProof=${typeProof.value}&ruc_dni=${dni_ruc.value}`
       )
     );
     const res = await req.data;
 
     if (res.Alert) {
       alertRequest(res);
-      document.getElementById("clientId").value = "";
-      document.getElementById("clientDNI").value = "";
-      document.getElementById("clientRUC").value = "";
-      document.getElementById("clientNames").value = "";
-      document.getElementById("clientLastnames").value = "";
+      document.getElementById("personId").value = "";
+      document.getElementById("personName").value = "";
+      document.getElementById("personNames").value = "";
+      document.getElementById("personLastnames").value = "";
+      document.getElementById("personState").value = "";
     }
-    if (!res.Alert && typeof res === "object") {
-      document.getElementById("clientId").value = res.client_id;
-      document.getElementById("clientDNI").value = res.dni;
-      document.getElementById("clientRUC").value = res.RUC;
-      document.getElementById("clientNames").value = res.names;
-      document.getElementById("clientLastnames").value = res.lastnames;
+    if (!res.Alert) {
+      document.getElementById("personId").value = res.numeroDocumento;
+      document.getElementById("personName").value = res.nombre;
+      document.getElementById("personState").value = res.estado;
+      document.getElementById("personId").value = res.numeroDocumento;
+      document.getElementById("personNames").value = res.nombres ?? "";
+      document.getElementById("personLastnames").value = `${
+        res.apellidoPaterno ?? ""
+      } ${res.apellidoMaterno ?? ""}`;
     }
   } catch (error) {
     console.log(error);
   }
 }
+// // funcion getDataclient
+// async function getDataClient(e) {
+//   try {
+//     e.preventDefault();
 
-btnClientSearch.addEventListener("click", (e) => getDataClient(e));
+//     const req = await axios.post(
+//       `${serverURL}/Request/getDataClientRequest.php`,
+//       new URLSearchParams(
+//         `typeProof=${typeProof.value}&id_dni_ruc=${dni_ruc.value}`
+//       )
+//     );
+//     const res = await req.data;
+
+//     if (res.Alert) {
+//       alertRequest(res);
+//       document.getElementById("clientId").value = "";
+//       document.getElementById("clientDNI").value = "";
+//       document.getElementById("clientRUC").value = "";
+//       document.getElementById("clientNames").value = "";
+//       document.getElementById("clientLastnames").value = "";
+//     }
+//     if (!res.Alert && typeof res === "object") {
+//       document.getElementById("clientId").value = res.client_id;
+//       document.getElementById("clientDNI").value = res.dni;
+//       document.getElementById("clientRUC").value = res.RUC;
+//       document.getElementById("clientNames").value = res.names;
+//       document.getElementById("clientLastnames").value = res.lastnames;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+btnClientSearch.addEventListener("click", (e) => getDataPerson(e));
 
 // generate sell
 formSell.addEventListener("submit", (e) => sendFormRequest(e));

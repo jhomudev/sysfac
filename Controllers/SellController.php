@@ -41,9 +41,11 @@ class SellController extends SellModel
     $ICart = new CartController();
     $cart_data = json_decode($ICart->getDataCartController());
 
-    $client_id = $this->decryption($_POST['tx_client_id']);
+    // $client_id = $this->decryption($_POST['tx_client_id']);
+    $person_id = MainModel::getCleanPostValue('tx_person_id');
     $user_id = $_SESSION['user_id'];
-    $proof_type = (array_key_exists('tx_proof_type', $_POST)) ? intval($_POST['tx_proof_type']) : "";
+    // $proof_type = (array_key_exists('tx_proof_type', $_POST)) ? intval($_POST['tx_proof_type']) : "";
+    $proof_type = MainModel::getCleanPostValue('tx_proof_type');
     $discount = $cart_data->discount;
     $total_import = $cart_data->total_import;
     $total_pay = $cart_data->total_pay;
@@ -61,20 +63,8 @@ class SellController extends SellModel
       exit();
     }
 
-    // validacion campos vacios
-    if (empty($_POST['tx_proof_type']) || empty($_POST['tx_client_names']) || empty($_POST['tx_client_lastnames']) || (empty($_POST['tx_client_RUC']) && empty($_POST['tx_client_dni']))) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Campos vacios",
-        "text" => "Complete los datos del cliente.",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
-    }
-
     // Funcionalidaad de crear cliente si no existe
-    if (empty($client_id)) {
+    if (empty($person_id)) {
       if ($proof_type == TYPE_PROOF->boleta && empty($_POST['tx_client_dni'])) {
         $alert = [
           "Alert" => "simple",
@@ -95,50 +85,39 @@ class SellController extends SellModel
         return json_encode($alert);
         exit();
       }
-
-      $IClient = new ClientController();
-      $res = json_decode($IClient->createClientController());
-
-      if ($res->icon == "warning" || $res->icon == "error") {
-        $alert = [
-          "Alert" => "simple",
-          "title" => "Error al registrar cliente",
-          "text" => "No pudimos registrar al cliente. Es posible que los datos DNI/RUC ya estén registrados a otro cliente.",
-          "icon" => "warning"
-        ];
-        return json_encode($alert);
-        exit();
-      }
-
-      if ($proof_type == TYPE_PROOF->boleta) {
-        $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE dni =" . intval($_POST['tx_client_dni']))->fetchColumn();
-      } else if ($proof_type == TYPE_PROOF->factura) {
-        $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE RUC =" . intval($_POST['tx_client_RUC']))->fetchColumn();
-      }
-    }
-
-    // Validacion de campos vacios
-    if (empty($client_id) || empty($proof_type)) {
-      $alert = [
-        "Alert" => "simple",
-        "title" => "Campos vacios",
-        "text" => "Por favor. Complete los datos del cliente y seleccione el tipo de comprobante .",
-        "icon" => "warning"
-      ];
-      return json_encode($alert);
-      exit();
     }
 
     // Validacion del id cliente
-    if (!(is_string($client_id))) {
+    if (!(is_string($person_id))) {
       $alert = [
         "Alert" => "simple",
-        "title" => "Acción rechazada",
-        "text" => "Por favor. No modifique el código.",
+        "title" => "RUC o DNI inválido",
+        "text" => "Por favor. Escriba un RUC o DNi válido.",
         "icon" => "warning"
       ];
       return json_encode($alert);
       exit();
+    }
+
+    // Creacion de cliente si no existe en la DB
+    $IClient = new ClientController();
+    if (strlen($person_id) == 8) $res = json_decode($IClient->createClientController($person_id, null));
+    if (strlen($person_id) == 11) $res = json_decode($IClient->createClientController(null, $person_id));
+
+    if ($res->icon == "error" || $res->icon == "warning") {
+      $alert = [
+        "Alert" => "simple",
+        "title" => "Error al registrar cliente",
+        "text" => "Ocurrió un error, no pudimos registrar al cliente en el sitema.",
+        "icon" => "warning"
+      ];
+      return json_encode($alert);
+      exit();
+    }
+    if ($proof_type == TYPE_PROOF->boleta) {
+      $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE dni =$person_id")->fetchColumn();
+    } else if ($proof_type == TYPE_PROOF->factura) {
+      $client_id = MainModel::executeQuerySimple("SELECT client_id FROM clients WHERE RUC =$person_id")->fetchColumn();
     }
 
     // Generar codigo de comprobante
