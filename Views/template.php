@@ -116,22 +116,22 @@ if ($vista == "proof") {
             <form action="<?php echo SERVER_URL; ?>/Request/generateSellRequest.php" method="POST" class="form__client formRequest" id="formSell">
               <div class="form__part part_details_client">
                 <div class="form__data__client">
-                  <input type="hidden" name="tx_client_id" id="clientId">
+                  <input type="hidden" name="tx_person_id" id="personId">
                   <fieldset class="form__group">
-                    <legend class="form__legend">DNI</legend>
-                    <input type="text" name="tx_client_dni" id="clientDNI" class="form__input" minlength="8" maxlength="8" number>
+                    <legend class="form__legend">Nombre</legend>
+                    <input type="text" name="tx_person_name" id="personName" class="form__input" disabled>
                   </fieldset>
                   <fieldset class="form__group">
-                    <legend class="form__legend">RUC</legend>
-                    <input type="text" name="tx_client_RUC" id="clientRUC" class="form__input" minlength="11" maxlength="11" number>
+                    <legend class="form__legend">Estado</legend>
+                    <input type="text" name="tx_person_state" id="personState" class="form__input" disabled>
                   </fieldset>
                   <fieldset class="form__group">
                     <legend class="form__legend">Nombres</legend>
-                    <input type="text" name="tx_client_names" id="clientNames" class="form__input" mayus>
+                    <input type="text" name="tx_person_names" id="personNames" class="form__input" disabled>
                   </fieldset>
                   <fieldset class="form__group">
                     <legend class="form__legend">Apellidos</legend>
-                    <input type="text" name="tx_client_lastnames" id="clientLastnames" class="form__input" mayus>
+                    <input type="text" name="tx_person_lastnames" id="personLastnames" class="form__input" disabled>
                   </fieldset>
                 </div>
               </div>
@@ -140,7 +140,7 @@ if ($vista == "proof") {
                 <fieldset class="form__group">
                   <legend class="form__legend">Tipo de comprobante</legend>
                   <select name="tx_proof_type" id="typeProof" class="form__input">
-                    <option selected disabled>Seleccione el tipo de comprobante</option>
+                    <option value="" selected disabled>Seleccione el tipo de comprobante</option>
                     <option value="<?php echo TYPE_PROOF->factura; ?>">Factura</option>
                     <option value="<?php echo TYPE_PROOF->boleta; ?>">Boleta de venta</option>
                   </select>
