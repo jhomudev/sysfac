@@ -28,12 +28,12 @@ checkboxAll.forEach((checkbox) => {
 // Mostrar campo adicional al elegir accion
 action.addEventListener("change", () => {
   if (action.value == "assign_local") {
-    localBox.classList.remove("hidden");
-    stateBox.classList.add("hidden");
+    disable([localBox], false);
+    disable([stateBox]);
   }
   if (action.value == "change_state") {
-    stateBox.classList.remove("hidden");
-    localBox.classList.add("hidden");
+    disable([localBox]);
+    disable([stateBox], false);
   }
 });
 
