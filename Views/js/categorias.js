@@ -9,6 +9,8 @@ const formDelete = document.querySelector(".form_delete");
 btnToggleForm.forEach((btn) => {
   btn.addEventListener("click", () => {
     toggleShowElement(modalForm);
+    document.querySelector(".form__img").src =
+      "https://cdn-icons-png.flaticon.com/512/1524/1524855.png";
     document.querySelector(".form__title").textContent = "Agregar categoría";
     document.querySelector(".form__submit").value = "Agregar";
     document.getElementById("categoryId").value = "";
