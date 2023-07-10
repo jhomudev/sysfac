@@ -68,8 +68,7 @@
   color: var(--cl);
 }
 .movs__item__username {
-  font-family: var(--f_comfortaa);
-  font-size: x-small;
+  font-size: 11px;
   color: white;
 }
 .movs__item__p {
