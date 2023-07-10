@@ -67,7 +67,7 @@
   </div>
   <div class="user">
     <p class="user__name">Hola <span><?php echo $_SESSION['username'] ?></span></p>
-    <span class="user__type">ADMINISTRADOR</span>
+    <span class="user__type"><?php echo ($_SESSION['type'] == USER_TYPE->admin) ? "ADMINISTRADOR" : (($_SESSION['type'] == USER_TYPE->superadmin) ? "SUPERADMINISTRADOR" : "VENDEDOR"); ?></span>
   </div>
   <nav class="nav">
     <ul>

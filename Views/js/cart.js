@@ -88,18 +88,20 @@ async function getItemsCart() {
           <td>${item.quantity}</td>
           <td>S/${item.total}</td>
           <td>
-          <button class="cart__table__btn gratify_item" data-col="${
-            item.serial_number ? "serial_number" : "product_id"
-          }" data-val ="${
-          item.serial_number ? item.serial_number : item.product_id
-        }" title="Gratificar" style="--cl:var(--c_green);"><i class="ph ph-tag"></i>
+          <div class="actions">
+            <button class="cart__table__btn gratify_item" data-col="${
+              item.serial_number ? "serial_number" : "product_id"
+            }" data-val ="${
+            item.serial_number ? item.serial_number : item.product_id
+          }" title="Gratificar" style="--cl:var(--c_green);"><i class="ph ph-tag"></i>
+            </button>
+            <button class="cart__table__btn delete_item" data-col="${
+              item.serial_number ? "serial_number" : "product_id"
+            }" data-val ="${
+            item.serial_number ? item.serial_number : item.product_id
+          }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i>
           </button>
-          <button class="cart__table__btn delete_item" data-col="${
-            item.serial_number ? "serial_number" : "product_id"
-          }" data-val ="${
-          item.serial_number ? item.serial_number : item.product_id
-        }" title="Eliminar" style="--cl:red;"><i class="ph ph-trash"></i>
-        </button>
+          <div/>
         </td>
         </tr>
         `;

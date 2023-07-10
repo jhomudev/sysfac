@@ -67,7 +67,7 @@
       </fieldset>
       <fieldset class="form__group quantityBox hidden">
         <legend class="form__legend">Cantidad</legend>
-        <input type="number" class="form__input" id="quantity" name="tx_quantity" number>
+        <input type="number" class="form__input" id="quantity" value="1" name="tx_quantity" number>
       </fieldset>
       <fieldset class="form__group nsBox hidden">
         <legend class="form__legend">Número(s) de serie</legend>

@@ -72,7 +72,7 @@ if ($vista == "proof") {
       </div>
       <div class="cart__modal">
         <div class="cart" id="cart">
-          <div class="cart__tableBox">
+          <div class="cart__tableBox" style="min-height:auto;">
             <table class="cart__table">
               <thead class="cart__table__thead">
                 <th>Producto</th>
